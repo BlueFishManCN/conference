@@ -11,11 +11,21 @@
  Target Server Version : 50638
  File Encoding         : 65001
 
- Date: 01/06/2018 14:02:09
+ Date: 01/06/2018 14:03:11
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for migration
+-- ----------------------------
+DROP TABLE IF EXISTS `migration`;
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
