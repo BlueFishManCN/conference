@@ -42,7 +42,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
                 <div class="mdl-layout__header-row">
@@ -54,45 +54,27 @@
                     <div class="android-navigation-container">
                         <nav class="android-navigation mdl-navigation">
                             <!-- Flat button with ripple -->
-                            <button disabled class="mdl-button mdl-js-button mdl-js-ripple-effect" id="about">
-                                About
-                            </button>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="about">
-                                <a class="mdl-menu__item" href="">About</a>
-                            </ul>
-                            <button disabled class="mdl-button mdl-js-button mdl-js-ripple-effect" id="schedule">
-                                Program
-                            </button>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="schedule">
-                                <a class="mdl-menu__item" href="">Program</a>
-                            </ul>
-                            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="submission">
+                            <button v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" id="submission">
                                 Submission
                             </button>
                             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="submission">
                                 <a class="mdl-menu__item" href="<?php echo site_url('submission/callforpapers');?>">Call for Papers</a>
                             </ul>
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('register/index');?>">
+                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('register/index');?>">
                             Register
                             </a>
-                            <button disabled class="mdl-button mdl-js-button mdl-js-ripple-effect" id="hotel">
-                                Hotel
-                            </button>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="hotel">
-                                <a class="mdl-menu__item" href="">Hotel</a>
-                            </ul>
                             <!-- Right aligned menu below button -->
-                            <button id="log" class="mdl-button mdl-js-button mdl-button--icon">
+                            <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
                             </button>
-                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="log">
+                            <button id="log" class="mdl-button">
+                                <?php echo $firstname; ?>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
                                 <li v-if="is_login" v-on:click="signOut" class="mdl-menu__item">Sign out</li>
                                 <li v-if="!is_login" @click="signInDialogVisible = true" class="mdl-menu__item">Sign in</li>
-                                <li v-if="!is_login" @click="signUpDialogVisible = true" class="mdl-menu__item">Sign up</li>
+                                <li v-if="!is_login" @click="step1 = true" class="mdl-menu__item">Sign up</li>
                             </ul>
-                            <button disabled class="mdl-button">
-                                <?php echo $username; ?>
-                            </button>
                         </nav>
                     </div>
                     <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
@@ -101,9 +83,9 @@
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
                 <div class="android-be-together-section mdl-typography--text-center">
-                    <div class="logo-font android-slogan">ICTIM 2018</div>
+                    <div class="logo-font android-slogan">GEG 2018</div>
                     <div class="logo-font android-sub-slogan">Shanghai, China</div>
-                    <div class="logo-font android-sub-slogan">December 13-16, 2018</div>
+                    <div class="logo-font android-sub-slogan">October 25-26, 2018</div>
                     <a href="#screens">
                         <button class="android-fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">expand_more</i>
                         </button>
@@ -114,11 +96,7 @@
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                             <div class="mdl-card__supporting-text">
-                                In recent years, many countries especially developing countries are experiencing a tough transition period. In the mean time, rapid changes in regulations and market conditions in developed countries and recent development in many developing countries have generated new challenges in management which require innovative solutions. Such opportunities and challenges have significantly expanded the scopes of traditional research in transformations and innovations in Management.
-                                <br/>
-                                <br/>The 2017 International Conference on Transformations and Innovations in Management (ICTIM) will be held in Shanghai, China, from September 9 to 10, 2017. The conference is jointly organized by SHU-UTS SILC Business School, Shanghai University and UTS Business School, University of Technology, Sydney. ICTIM is a two-day event, featuring invited talks, parallel sessions, roundtable and social activities. It aims to bring together leading professors, researchers, practitioners, and doctoral students from all over the world, for presentation and discussion of the latest trends in transformations and innovations in management particularly in developing countries.
-                                <br/>
-                                <br/>All submitted papers will go through blind review process for acceptance. All accepted full papers will be published by Atlantis Press and be indexed by CPCI-SSH (ISTP). Selected papers will be published in a special issue of the journal Transformations in Business & Economics (SSCI-indexed journal) in March 2018. We will also recommend other high quality papers to several international journals for consideration for publication. All papers should be written in English.
+                                International Conference on Global Economics and Governance is initiatedand hosted by the Institute for Economic Forecasting and co-hosted by the National University of Political Studies and Public Administration. The conference aimsto provide a forum for accessing to the latest theoretical and empirical knowledge from both modern economy and finance. The goal of this conference isto bring researchers, practitioners and officials to the areas of globale conomics and governances to share experiences and original research contributions to those topics. Since 2013, GEG have been organized in Wuhan University, Romania, Ming Chuan University, Ocean University of China, and Poland. In October 2018, the 6th GEG will be organized in Shanghai University.
                             </div>
                         </div>
                     </div>
@@ -132,55 +110,88 @@
                     <a name="screens"></a>
                     <div class="mdl-mega-footer--middle-section">
                         <p class="mdl-typography--font-light">© Copyright 2018 SHU-UTS SILC Business School, Shanghai University (All rights reserved)</p>
-                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Element, Yii.</p>
-                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com). And the logo references Google developer day logo.</p>
+                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Vue and CI.</p>
+                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com).</p>
                     </div>
                 </footer>
             </div>
         </div>
+        <!-- step1 -->
+        <el-dialog title="Sign Up: Step 1" :visible.sync="step1" width="50%">
+            <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
+                <el-form-item label="Firstname" prop="firstname">
+                    <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Lastname" prop="lastname">
+                    <el-input v-model="step1form.lastname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="step1form.email" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Retype Email" prop="retypeemail">
+                    <el-input v-model="step1form.retypeemail" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="step1SignUP('step1form')">Confirm</el-button>
+                <el-button v-on:click="step1 = false">Cancel</el-button>
+            </span>
+        </el-dialog>
+        <!-- step2 -->
+        <el-dialog title="Activate account: Step 2" :visible.sync="step2" width="50%">
+            <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="30%">
+                <el-form-item label="Code" prop="code">
+                    <el-input v-model="step2form.code" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="step2SignUP('step2form')">Confirm</el-button>
+                <el-button v-on:click="step2 = false">Cancel</el-button>
+            </span>
+        </el-dialog>
+        <!-- step3 -->
+        <el-dialog title="Sign Up: Last Step" :visible.sync="step3" width="50%">
+            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
+                <el-form-item label="Firstname">
+                    <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Lastname">
+                    <el-input v-model="step1form.lastname" disabled auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="country">
+                    <el-input v-model="step1form.email" disabled auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Country" prop="country">
+                    <el-input v-model="step3form.country" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Organization" prop="organization">
+                    <el-input v-model="step3form.organization" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Password" prop="password">
+                    <el-input type="password" v-model="step3form.password" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Retype Password" prop="retype_password">
+                    <el-input type="password" v-model="step3form.retype_password" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="step3SignUp('step3form')">Confirm</el-button>
+                <el-button v-on:click="signUpDialogVisible = false">Cancel</el-button>
+            </span>
+        </el-dialog>
+        <!-- sign -->
         <el-dialog title="Sign In" :visible.sync="signInDialogVisible" width="50%">
-            <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="25%">
+            <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="30%">
                 <el-form-item label="Username or Email" prop="username">
                     <el-input v-model="inform.username" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Password" prop="password">
                     <el-input type="password" v-model="inform.password" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="signInDialogVisible = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="signIn('inform')">Confirm</el-button>
-            </span>
-        </el-dialog>
-        <el-dialog title="Sign Up" :visible.sync="signUpDialogVisible" width="50%">
-            <el-form ref="form" :model="form" status-icon :rules="rules" label-width="25%">
-                <el-form-item label="Username" prop="username">
-                    <el-input v-model="form.username" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="form.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Phone" prop="phone">
-                    <el-input type="number" v-model="form.phone" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="form.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="form.organization" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Retype Password" prop="retype_password">
-                    <el-input type="password" v-model="form.retype_password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="signUp('form')">Confirm</el-button>
-                <el-button v-on:click="signUpDialogVisible = false">Cancel</el-button>
             </span>
         </el-dialog>
     </div>
@@ -191,8 +202,15 @@
     <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
-var validatePass2 = (rule, value, callback) => {
-    if (value !== app.form.password) {
+var validateEmail = (rule, value, callback) => {
+    if (value !== app.step1form.email) {
+        callback(new Error('The two entered email are inconsistent!'));
+    } else {
+        callback();
+    }
+};
+var validatePass = (rule, value, callback) => {
+    if (value !== app.step3form.password) {
         callback(new Error('The two entered passwords are inconsistent!'));
     } else {
         callback();
@@ -203,14 +221,26 @@ var app = new Vue({
 
     data: {
         id: "<?php echo $id; ?>",
-        username: "<?php echo $username; ?>",
+        firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
+        step1: false,
+        step2: false,
+        step3: false,
+
+        countries: [],
         signInDialogVisible: false,
-        signUpDialogVisible: false,
-        form: {
-            username: '',
+
+        step1form: {
+            firstname: '',
+            lastname: '',
             email: '',
-            phone: '',
+            retypeemail: ''
+        },
+        step2form: {
+            code: '',
+        },
+
+        step3form: {
             country: '',
             organization: '',
             password: '',
@@ -221,15 +251,31 @@ var app = new Vue({
             password: '',
         },
 
-        rules: {
-            username: [
-                { required: true, message: 'Please input the username', trigger: 'blur' },
+        step1rules: {
+            firstname: [
+                { required: true, message: 'Please input the firstname', trigger: 'blur' },
+                { min: 3, max: 20, message: 'Length is between 3 and 20 characters', trigger: 'blur' }
+            ],
+            lastname: [
+                { required: true, message: 'Please input the lastname', trigger: 'blur' },
                 { min: 3, max: 20, message: 'Length is between 3 and 20 characters', trigger: 'blur' }
             ],
             email: [
                 { required: true, message: 'Please input the email', trigger: 'blur' },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
+            retypeemail: [
+                { required: true, message: 'Please input the email', trigger: 'blur' },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
+                { validator: validateEmail, trigger: 'blur' },
+            ],
+        },
+        step2rules: {
+            code: [
+                { required: true, message: 'Please input the code', trigger: 'blur' },
+            ],
+        },
+        step3rules: {
             country: [
                 { required: true, message: 'Please input the country', trigger: 'blur' },
             ],
@@ -242,7 +288,7 @@ var app = new Vue({
             ],
             retype_password: [
                 { required: true, message: 'Please input the password again', trigger: 'blur' },
-                { validator: validatePass2, trigger: 'blur' },
+                { validator: validatePass, trigger: 'blur' },
                 { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: 'blur' }
             ],
         },
@@ -258,19 +304,71 @@ var app = new Vue({
     },
 
     methods: {
-        signUp(formName) {
+        step1SignUP(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('sign/step1');?>",
+                        data: {
+                            firstname: app.step1form.firstname,
+                            lastname: app.step1form.lastname,
+                            email: app.step1form.email,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                app.step1 = false;
+                                app.step2 = true;
+                            } else {
+                                alert(data['message']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+        step2SignUP(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('sign/step2');?>",
+                        data: {
+                            code: app.step2form.code,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                app.step2 = false;
+                                app.step3 = true;
+                            } else {
+                                alert(data['message']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+        step3SignUp(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     $.ajax({
                         type: "POST",
                         url: "<?php echo site_url('sign/signup');?>",
                         data: {
-                            username: app.form.username,
-                            email: app.form.email,
-                            phone: app.form.phone,
-                            country: app.form.country,
-                            organization: app.form.organization,
-                            password: md5(app.form.password)
+                            firstname: app.step1form.firstname,
+                            lastname: app.step1form.lastname,
+                            email: app.step1form.email,
+                            country: app.step3form.country,
+                            organization: app.step3form.organization,
+                            password: md5(app.step3form.password)
                         },
                         dataType: "json",
                         success: function(data) {

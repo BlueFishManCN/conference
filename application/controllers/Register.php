@@ -12,7 +12,7 @@ class Register extends CI_Controller {
 	public function index() {
 		if (!$this->session->has_userdata('id')) {
 			$data['id'] = 0;
-			$data['username'] = "Not log in";
+			$data['username'] = "Sign In or Sign Up";
 			$data['is_login'] = false;
 			$this->load->view('register.html', $data);
 			return;

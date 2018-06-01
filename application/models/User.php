@@ -7,12 +7,12 @@ class User extends CI_Model {
 		$this->load->database();
 	}
 
-	public function insert($id, $username, $email, $phone, $country, $organization, $password_hash) {
+	public function insert($id, $firstname, $lastname, $email, $country, $organization, $password_hash) {
 		$data = array(
 			'id' => $id,
-			'username' => $username,
+			'firstname' => $firstname,
+			'lastname' => $lastname,
 			'email' => $email,
-			'phone' => $phone,
 			'country' => $country,
 			'organization' => $organization,
 			'password_hash' => $password_hash,

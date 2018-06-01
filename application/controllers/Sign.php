@@ -5,9 +5,75 @@ class Sign extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('User');
+		$this->load->library('email');
 		$this->load->library('session');
 		$this->load->helper('cookie');
+		$this->load->helper('string');
 		$this->load->helper('url_helper');
+
+		$config['protocol'] = 'smtp';
+		$config['smtp_host'] = 'smtp.163.com';
+		$config['smtp_user'] = 'jerrychangcn@163.com';
+		$config['smtp_pass'] = 'zjy897833204';
+		$config['smtp_port'] = '25';
+		$config['charset'] = 'utf-8';
+		$config['wordwrap'] = TRUE;
+		$config['mailtype'] = 'html';
+
+		$this->email->initialize($config);
+	}
+
+	public function step1() {
+		$postdata = $this->input->post();
+
+		$firstname = $postdata['firstname'];
+		$lastname = $postdata['lastname'];
+		$email = $postdata['email'];
+
+		if (!empty($this->User->getUserByEmail($email))) {
+			$data["status"] = false;
+			$data["message"] = "This email has already been registered";
+			echo json_encode($data);
+			return;
+		}
+
+		$token = random_string('alnum', 8);
+
+		$sessiondata = array(
+			'token' => $token,
+		);
+		$this->session->set_userdata($sessiondata);
+
+		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->to($email);
+		$this->email->subject('Verification code');
+		$this->email->message('Verification code:' . $token);
+		$this->email->send();
+
+		$data['status'] = true;
+		echo json_encode($data);
+		return;
+	}
+
+	public function step2() {
+		$postdata = $this->input->post();
+		$code = $postdata['code'];
+
+		if (!$this->session->has_userdata('token')) {
+			$data['status'] = false;
+			echo json_encode($data);
+			return;
+		}
+
+		if ($code != $this->session->userdata('token')) {
+			$data['status'] = false;
+			echo json_encode($data);
+			return;
+		}
+
+		$data['status'] = true;
+		echo json_encode($data);
+		return;
 	}
 
 	public function signup() {
@@ -18,20 +84,13 @@ class Sign extends CI_Controller {
 			$id = rand(1, 9999999);
 		}
 
-		$username = $postdata['username'];
+		$firstname = $postdata['firstname'];
+		$lastname = $postdata['lastname'];
 		$email = $postdata['email'];
-		$phone = $postdata['phone'];
 		$country = $postdata['country'];
 		$organization = $postdata['organization'];
 		$password = $postdata['password'];
 		$password_hash = password_hash($password, PASSWORD_BCRYPT);
-
-		if (!empty($this->User->getUserByUsername($username))) {
-			$data["status"] = false;
-			$data["message"] = "This username has already been registered";
-			echo json_encode($data);
-			return;
-		}
 
 		if (!empty($this->User->getUserByEmail($email))) {
 			$data["status"] = false;
@@ -40,11 +99,12 @@ class Sign extends CI_Controller {
 			return;
 		}
 
-		$this->User->insert($id, $username, $email, $phone, $country, $organization, $password_hash);
+		$this->User->insert($id, $firstname, $lastname, $email, $country, $organization, $password_hash);
 
 		$sessiondata = array(
 			'id' => $id,
-			'username' => $username,
+			'firstname' => $firstname,
+			'lastname' => $lastname,
 			'is_login' => true,
 		);
 		$this->session->set_userdata($sessiondata);
@@ -59,10 +119,7 @@ class Sign extends CI_Controller {
 		$username = $postdata['username'];
 		$password = $postdata['password'];
 
-		$user = $this->User->getUserByUsername($username);
-		if (empty($user)) {
-			$user = $this->User->getUserByEmail($username);
-		}
+		$user = $this->User->getUserByEmail($username);
 		if (empty($user)) {
 			$data["status"] = false;
 			$data["message"] = "This user does not exist";
@@ -78,7 +135,7 @@ class Sign extends CI_Controller {
 
 		$sessiondata = array(
 			'id' => $user[0]->id,
-			'username' => $user[0]->username,
+			'firstname' => $user[0]->firstname,
 			'is_login' => true,
 		);
 		$this->session->set_userdata($sessiondata);

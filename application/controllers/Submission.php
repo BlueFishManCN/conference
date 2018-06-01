@@ -12,7 +12,7 @@ class Submission extends CI_Controller {
 	public function callforpapers() {
 		if (!$this->session->has_userdata('id')) {
 			$data['id'] = 0;
-			$data['username'] = "Not log in";
+			$data['username'] = "Sign In or Sign Up";
 			$data['is_login'] = false;
 			$this->load->view('callforpapers.html', $data);
 			return;
