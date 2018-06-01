@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Register extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('session');
@@ -14,13 +14,13 @@ class Home extends CI_Controller {
 			$data['id'] = 0;
 			$data['username'] = "Not log in";
 			$data['is_login'] = false;
-			$this->load->view('home.html', $data);
+			$this->load->view('register.html', $data);
 			return;
 		}
 		$data['id'] = $this->session->userdata('id');
 		$data['username'] = $this->session->userdata('username');
 		$data['is_login'] = true;
-		$this->load->view('home.html', $data);
+		$this->load->view('register.html', $data);
 		return;
 	}
 }
