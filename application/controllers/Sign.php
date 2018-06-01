@@ -17,7 +17,6 @@ class Sign extends CI_Controller {
 		$config['smtp_pass'] = 'zjy897833204';
 		$config['smtp_port'] = '25';
 		$config['charset'] = 'utf-8';
-		$config['wordwrap'] = TRUE;
 		$config['mailtype'] = 'html';
 
 		$this->email->initialize($config);
@@ -109,6 +108,12 @@ class Sign extends CI_Controller {
 		);
 		$this->session->set_userdata($sessiondata);
 
+		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->to($email);
+		$this->email->subject('Registration message');
+		$this->email->message('Congratulations, your registration was successful');
+		$this->email->send();
+
 		$data['status'] = true;
 		echo json_encode($data);
 		return;
@@ -116,10 +121,10 @@ class Sign extends CI_Controller {
 
 	public function signin() {
 		$postdata = $this->input->post();
-		$username = $postdata['username'];
+		$email = $postdata['email'];
 		$password = $postdata['password'];
 
-		$user = $this->User->getUserByEmail($username);
+		$user = $this->User->getUserByEmail($email);
 		if (empty($user)) {
 			$data["status"] = false;
 			$data["message"] = "This user does not exist";
@@ -148,16 +153,93 @@ class Sign extends CI_Controller {
 	public function signout() {
 		$postdata = $this->input->post();
 		$id = $postdata['id'];
-		$username = $postdata['username'];
+		$firstname = $postdata['firstname'];
 
 		$s_id = $this->session->userdata('id');
-		$s_username = $this->session->userdata('username');
+		$s_firstname = $this->session->userdata('firstname');
 
-		if ($id == $s_id && $username == $s_username) {
+		if ($id == $s_id && $firstname == $s_firstname) {
 			session_destroy();
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
 		}
+	}
+
+	public function forgetstep1() {
+		$postdata = $this->input->post();
+
+		$email = $postdata['email'];
+
+		if (empty($this->User->getUserByEmail($email))) {
+			$data["status"] = false;
+			$data["message"] = "This email does not exist";
+			echo json_encode($data);
+			return;
+		}
+
+		$token = random_string('alnum', 10);
+
+		$sessiondata = array(
+			'token' => $token,
+		);
+		$this->session->set_userdata($sessiondata);
+
+		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->to($email);
+		$this->email->subject('Reset verification code');
+		$this->email->message('Reset verification code:' . $token);
+		$this->email->send();
+
+		$data['status'] = true;
+		echo json_encode($data);
+		return;
+	}
+
+	public function forgetstep2() {
+		$postdata = $this->input->post();
+		$code = $postdata['code'];
+
+		if (!$this->session->has_userdata('token')) {
+			$data['status'] = false;
+			echo json_encode($data);
+			return;
+		}
+
+		if ($code != $this->session->userdata('token')) {
+			$data['status'] = false;
+			echo json_encode($data);
+			return;
+		}
+
+		$data['status'] = true;
+		echo json_encode($data);
+		return;
+	}
+
+	public function forgetstep3() {
+		$postdata = $this->input->post();
+		$email = $postdata['email'];
+		$password = $postdata['password'];
+		$password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+		if (empty($this->User->getUserByEmail($email))) {
+			$data["status"] = false;
+			$data["message"] = "This email does not exist";
+			echo json_encode($data);
+			return;
+		}
+
+		$this->User->resetPassword($email, $password_hash);
+
+		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->to($email);
+		$this->email->subject('Security message');
+		$this->email->message('You have changed your password');
+		$this->email->send();
+
+		$data['status'] = true;
+		echo json_encode($data);
+		return;
 	}
 }

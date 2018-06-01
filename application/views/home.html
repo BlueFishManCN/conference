@@ -119,10 +119,10 @@
         <!-- step1 -->
         <el-dialog title="Sign Up: Step 1" :visible.sync="step1" width="50%">
             <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
-                <el-form-item label="Firstname" prop="firstname">
+                <el-form-item label="First name" prop="firstname">
                     <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="Lastname" prop="lastname">
+                <el-form-item label="Last name" prop="lastname">
                     <el-input v-model="step1form.lastname" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Email" prop="email">
@@ -139,6 +139,11 @@
         </el-dialog>
         <!-- step2 -->
         <el-dialog title="Activate account: Step 2" :visible.sync="step2" width="50%">
+            <el-form>
+                <el-form-item>
+                    <span>The verification code has been sent to your mailbox.</span>
+                </el-form-item>
+            </el-form>
             <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="30%">
                 <el-form-item label="Code" prop="code">
                     <el-input v-model="step2form.code" auto-complete="off"></el-input>
@@ -152,10 +157,10 @@
         <!-- step3 -->
         <el-dialog title="Sign Up: Last Step" :visible.sync="step3" width="50%">
             <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
-                <el-form-item label="Firstname">
+                <el-form-item label="First name">
                     <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="Lastname">
+                <el-form-item label="Last name">
                     <el-input v-model="step1form.lastname" disabled auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Email" prop="country">
@@ -176,22 +181,67 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" v-on:click="step3SignUp('step3form')">Confirm</el-button>
-                <el-button v-on:click="signUpDialogVisible = false">Cancel</el-button>
+                <el-button v-on:click="step3 = false">Cancel</el-button>
             </span>
         </el-dialog>
         <!-- sign -->
         <el-dialog title="Sign In" :visible.sync="signInDialogVisible" width="50%">
             <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="30%">
-                <el-form-item label="Username or Email" prop="username">
-                    <el-input v-model="inform.username" auto-complete="off"></el-input>
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="inform.email" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Password" prop="password">
                     <el-input type="password" v-model="inform.password" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
+                <el-button type="warning" v-on:click="forget">Forget password?</el-button>
                 <el-button v-on:click="signInDialogVisible = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="signIn('inform')">Confirm</el-button>
+            </span>
+        </el-dialog>
+        <!-- forget step1 -->
+        <el-dialog title="Enter account: Step 1" :visible.sync="forgetstep1" width="50%">
+            <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="30%">
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="forgetstep1 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep1('forgetstep1form')">Confirm</el-button>
+            </span>
+        </el-dialog>
+        <!-- forget step2 -->
+        <el-dialog title="Verify account: Step 2" :visible.sync="forgetstep2" width="50%">
+            <el-form>
+                <el-form-item>
+                    <span>Reset verification code has been sent to your mailbox.</span>
+                </el-form-item>
+            </el-form>
+            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
+                <el-form-item label="Code" prop="code">
+                    <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="forgetStep2('forgetstep2form')">Confirm</el-button>
+                <el-button v-on:click="forgetstep2 = false">Cancel</el-button>
+            </span>
+        </el-dialog>
+        <!-- forget step3 -->
+        <el-dialog title="Reset password: Last Step" :visible.sync="forgetstep3" width="50%">
+            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
+                <el-form-item label="Password" prop="password">
+                    <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Retype Password" prop="retype_password">
+                    <el-input type="password" v-model="forgetstep3form.retype_password" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Confirm</el-button>
+                <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
             </span>
         </el-dialog>
     </div>
@@ -216,6 +266,13 @@ var validatePass = (rule, value, callback) => {
         callback();
     }
 };
+var validatePass2 = (rule, value, callback) => {
+    if (value !== app.forgetstep3form.password) {
+        callback(new Error('The two entered passwords are inconsistent!'));
+    } else {
+        callback();
+    }
+};
 var app = new Vue({
     el: '#app',
 
@@ -227,8 +284,11 @@ var app = new Vue({
         step2: false,
         step3: false,
 
-        countries: [],
         signInDialogVisible: false,
+
+        forgetstep1: false,
+        forgetstep2: false,
+        forgetstep3: false,
 
         step1form: {
             firstname: '',
@@ -239,7 +299,6 @@ var app = new Vue({
         step2form: {
             code: '',
         },
-
         step3form: {
             country: '',
             organization: '',
@@ -247,8 +306,18 @@ var app = new Vue({
             retype_password: ''
         },
         inform: {
-            username: '',
+            email: '',
             password: '',
+        },
+        forgetstep1form: {
+            email: '',
+        },
+        forgetstep2form: {
+            code: '',
+        },
+        forgetstep3form: {
+            password: '',
+            retype_password: ''
         },
 
         step1rules: {
@@ -294,12 +363,35 @@ var app = new Vue({
         },
 
         signInRules: {
-            username: [
-                { required: true, message: 'Please input the username or email', trigger: 'blur' }
+            email: [
+                { required: true, message: 'Please input the email', trigger: 'blur' }
             ],
             password: [
                 { required: true, message: 'Please input the password', trigger: 'blur' }
             ]
+        },
+
+        forgetstep1rules: {
+            email: [
+                { required: true, message: 'Please input the email', trigger: 'blur' },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
+            ],
+        },
+        forgetstep2rules: {
+            code: [
+                { required: true, message: 'Please input the code', trigger: 'blur' },
+            ],
+        },
+        forgetstep3rules: {
+            password: [
+                { required: true, message: 'Please input the password', trigger: 'blur' },
+                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: 'blur' }
+            ],
+            retype_password: [
+                { required: true, message: 'Please input the password again', trigger: 'blur' },
+                { validator: validatePass2, trigger: 'blur' },
+                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: 'blur' }
+            ],
         },
     },
 
@@ -346,7 +438,7 @@ var app = new Vue({
                                 app.step2 = false;
                                 app.step3 = true;
                             } else {
-                                alert(data['message']);
+                                window.location.href = "<?php echo site_url('home/index');?>";
                             }
                         }
                     });
@@ -373,6 +465,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
+                                alert('success');
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
                                 alert(data['message']);
@@ -393,7 +486,7 @@ var app = new Vue({
                         type: "POST",
                         url: "<?php echo site_url('sign/signin');?>",
                         data: {
-                            username: app.inform.username,
+                            email: app.inform.email,
                             password: md5(app.inform.password)
                         },
                         dataType: "json",
@@ -418,7 +511,7 @@ var app = new Vue({
                 url: "<?php echo site_url('sign/signout');?>",
                 data: {
                     id: app.id,
-                    username: app.username
+                    firstname: app.firstname
                 },
                 dataType: "json",
                 success: function(data) {
@@ -426,10 +519,93 @@ var app = new Vue({
                         window.location.href = "<?php echo site_url('home/index');?>";
                     } else {
                         alert(data['message']);
+                        window.location.href = "<?php echo site_url('home/index');?>";
                     }
                 }
             });
 
+        },
+
+        forget() {
+            app.signInDialogVisible = false;
+            app.forgetstep1 = true;
+        },
+
+        forgetStep1(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('sign/forgetstep1');?>",
+                        data: {
+                            email: app.forgetstep1form.email,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                app.forgetstep1 = false;
+                                app.forgetstep2 = true;
+                            } else {
+                                alert(data['message']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+        forgetStep2(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('sign/forgetstep2');?>",
+                        data: {
+                            code: app.forgetstep2form.code,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                app.forgetstep2 = false;
+                                app.forgetstep3 = true;
+                            } else {
+                                window.location.href = "<?php echo site_url('home/index');?>";
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+        forgetStep3(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('sign/forgetstep3');?>",
+                        data: {
+                            email: app.forgetstep1form.email,
+                            password: md5(app.forgetstep3form.password)
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                alert('success');
+                                window.location.href = "<?php echo site_url('home/index');?>";
+                            } else {
+                                alert(data['message']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
         },
     }
 })

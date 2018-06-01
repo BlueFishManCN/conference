@@ -44,4 +44,12 @@ class User extends CI_Model {
 		return $query;
 	}
 
+	public function resetPassword($email, $password_hash) {
+		$data = array(
+			'password_hash' => $password_hash,
+		);
+		$this->db->where('email', $email);
+		$this->db->update('user', $data);
+	}
+
 }
