@@ -92,13 +92,27 @@
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
                 <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Your Submission</div>
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Your Submission
+                    </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subpaper = true">
+                                <i class="material-icons">add</i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
                             <el-table :data="paperindex" stripe border style="width: 100%">
-                                <el-table-column type="expand" label="Detail" width="100">
+                                <el-table-column fixed type="expand" label="Detail" width="60">
                                     <template slot-scope="props">
                                         <el-form label-position="left" inline class="demo-table-expand">
+                                            <el-form-item label="Topic">
+                                                <span>{{ props.row.topic }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Title">
+                                                <span>{{ props.row.title }}</span>
+                                            </el-form-item>
                                             <el-form-item label="Abstract">
                                                 <span>{{ props.row.abstract }}</span>
                                             </el-form-item>
@@ -111,20 +125,25 @@
                                         </el-form>
                                     </template>
                                 </el-table-column>
-                                <el-table-column fixed prop="created_at" label="Submission time(UTC+8)" width="200">
+                                <el-table-column prop="title" label="Title" width="470">
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="500">
+                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="190">
                                 </el-table-column>
-                                <el-table-column prop="is_check" label="Is it viewed" width="150">
+                                <el-table-column prop="updated_at" label="Update time(UTC+8)" width="160">
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Is it accepted" width="150">
-                                </el-table-column>
-                                <el-table-column prop="updated_at" label="Update time(UTC+8)" width="200">
-                                </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="100">
+                                <el-table-column fixed="right" label="Options" width="130">
                                     <template slot-scope="scope">
-                                        <el-button @click="viewAuthor(scope.row.id)" type="text" size="small">Authors</el-button>
-                                        <el-button @click="handleClick(scope.row)" type="text" size="small">Edit</el-button>
+                                        <ul>
+                                            <li>
+                                                <el-button @click="viewAuthor(scope.row.id)" type="text" size="mini">Authors</el-button>
+                                            </li>
+                                            <li>
+                                                <el-button @click="uploadFile(scope.row.id)" type="text" size="mini">Upload file</el-button>
+                                            </li>
+                                            <li>
+                                                <el-button @click="handleClick(scope.row)" type="text" size="mini">Edit</el-button>
+                                            </li>
+                                        </ul>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -296,12 +315,44 @@
                 <el-button v-on:click="authordialog = false">Confirm</el-button>
             </span>
         </el-dialog>
+        <!-- sub paper -->
+        <el-dialog title="Submit Paper" :visible.sync="subpaper" width="75%">
+            <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="15%">
+                <el-form-item label="Topic" prop="topic">
+                    <el-select v-model="subpaperform.topic" placeholder="Please select the topic">
+                        <el-option label="Micro Finance" value="Micro Finance"></el-option>
+                        <el-option label="Macro Finance" value="Macro Finance"></el-option>
+                        <el-option label="Environment, Resource and Sustainable Development" value="Environment, Resource and Sustainable Development"></el-option>
+                        <el-option label="Chinese Economy" value="Chinese Economy"></el-option>
+                        <el-option label="Public Administration and Role of Government" value="Public Administration and Role of Government"></el-option>
+                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="Title" prop="title">
+                    <el-input v-model="subpaperform.title" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Abstract" prop="abstract">
+                    <el-input type="textarea" v-model="subpaperform.abstract" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Keywords" prop="keywords">
+                    <el-input v-model="subpaperform.keywords" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="subpaper = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="subPaper('subpaperform')">Submit</el-button>
+            </span>
+        </el-dialog>
     </div>
     <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
     <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
+    <script>
+    ELEMENT.locale(ELEMENT.lang.en)
+    </script>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
 var validateEmail = (rule, value, callback) => {
@@ -342,6 +393,8 @@ var app = new Vue({
         forgetstep2: false,
         forgetstep3: false,
 
+        subpaper: false,
+
         step1form: {
             firstname: '',
             lastname: '',
@@ -370,6 +423,13 @@ var app = new Vue({
         forgetstep3form: {
             password: '',
             retype_password: ''
+        },
+
+        subpaperform: {
+            topic: '',
+            title: '',
+            abstract: '',
+            keywords: '',
         },
 
         step1rules: {
@@ -446,6 +506,21 @@ var app = new Vue({
             ],
         },
 
+        subpaperrules: {
+            topic: [
+                { required: true, message: 'Please select the topic', trigger: 'blur' },
+            ],
+            title: [
+                { required: true, message: 'Please input the title', trigger: 'blur' },
+            ],
+            abstract: [
+                { required: true, message: 'Please input the abstract', trigger: 'blur' },
+            ],
+            keywords: [
+                { required: true, message: 'Please input the keywords', trigger: 'blur' },
+            ],
+        },
+
         paperindex: [],
         authorindex: [],
         authordialog: false,
@@ -469,6 +544,24 @@ var app = new Vue({
         });
     },
     methods: {
+        getpaper() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('submission/paper');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>"
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "paperindex", data['index']);
+                    } else {
+                        alert(data['message']);
+                    }
+                }
+            });
+        },
         step1SignUP(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -704,8 +797,39 @@ var app = new Vue({
             console.log(row);
         },
 
-
-
+        subPaper(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('submission/submit');?>",
+                        data: {
+                            id: "<?php echo $id; ?>",
+                            firstname: "<?php echo $firstname; ?>",
+                            topic: app.subpaperform.topic,
+                            title: app.subpaperform.title,
+                            abstract: app.subpaperform.abstract,
+                            keywords: app.subpaperform.keywords,
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                Vue.set(app, "subpaper", false);
+                                window.location.href = "<?php echo site_url('submission/index');?>";
+                            } else {
+                                alert(data['message']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+        uploadFile(paperid) {
+            console.log(paperid);
+        },
     }
 })
 </script>

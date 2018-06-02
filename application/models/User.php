@@ -24,6 +24,8 @@ class User extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result();
 		return $query;
 	}
@@ -32,6 +34,8 @@ class User extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where('username', $username);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result();
 		return $query;
 	}
@@ -40,6 +44,8 @@ class User extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('user');
 		$this->db->where('email', $email);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result();
 		return $query;
 	}
@@ -49,6 +55,7 @@ class User extends CI_Model {
 			'password_hash' => $password_hash,
 		);
 		$this->db->where('email', $email);
+		$this->db->where('is_delete', 0);
 		$this->db->update('user', $data);
 	}
 

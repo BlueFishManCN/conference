@@ -58,4 +58,29 @@ class Submission extends CI_Controller {
 			return;
 		}
 	}
+
+	public function submit() {
+		$postdata = $this->input->post();
+		$id = rand(1, 9999999);
+		while (!empty($this->Paper->getPaperById($id))) {
+			$id = rand(1, 9999999);
+		}
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$topic = $postdata['topic'];
+		$title = $postdata['title'];
+		$abstract = $postdata['abstract'];
+		$keywords = $postdata['keywords'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+
+			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
 }

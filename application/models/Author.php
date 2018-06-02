@@ -11,6 +11,7 @@ class Author extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('author');
 		$this->db->where('paper_id', $paper_id);
+		$this->db->where('is_delete', 0);
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
