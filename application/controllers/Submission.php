@@ -4,23 +4,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Submission extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('Paper');
+		$this->load->model('Author');
 		$this->load->library('session');
 		$this->load->helper('cookie');
 		$this->load->helper('url_helper');
 	}
 
-	public function callforpapers() {
+	public function index() {
 		if (!$this->session->has_userdata('id')) {
 			$data['id'] = 0;
-			$data['username'] = "Sign In or Sign Up";
+			$data['firstname'] = "Sign In or Sign Up";
 			$data['is_login'] = false;
-			$this->load->view('callforpapers.html', $data);
+			$this->load->view('submission.html', $data);
 			return;
 		}
 		$data['id'] = $this->session->userdata('id');
-		$data['username'] = $this->session->userdata('username');
+		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;
-		$this->load->view('callforpapers.html', $data);
+		$this->load->view('submission.html', $data);
 		return;
+	}
+
+	public function paper() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$data['index'] = $this->Paper->index($user_id);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function author() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$data['index'] = $this->Author->index($paper_id);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
 	}
 }

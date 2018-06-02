@@ -38,6 +38,21 @@
         margin-bottom: 40px;
         z-index: 900;
     }
+
+    .demo-table-expand {
+        font-size: 0;
+    }
+
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 100%;
+    }
     </style>
 </head>
 
@@ -76,22 +91,43 @@
             </div>
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
-                <div class="android-be-together-section mdl-typography--text-center">
-                    <div class="logo-font android-slogan">GEG 2018</div>
-                    <div class="logo-font android-sub-slogan">Shanghai, China</div>
-                    <div class="logo-font android-sub-slogan">October 25-26, 2018</div>
-                    <a href="#screens">
-                        <button class="android-fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">expand_more</i>
-                        </button>
-                    </a>
-                </div>
                 <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Welcome</div>
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Your Submission</div>
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
-                            <div class="mdl-card__supporting-text">
-                                International Conference on Global Economics and Governance is initiatedand hosted by the Institute for Economic Forecasting and co-hosted by the National University of Political Studies and Public Administration. The conference aimsto provide a forum for accessing to the latest theoretical and empirical knowledge from both modern economy and finance. The goal of this conference isto bring researchers, practitioners and officials to the areas of globale conomics and governances to share experiences and original research contributions to those topics. Since 2013, GEG have been organized in Wuhan University, Romania, Ming Chuan University, Ocean University of China, and Poland. In October 2018, the 6th GEG will be organized in Shanghai University.
-                            </div>
+                            <el-table :data="paperindex" stripe border style="width: 100%">
+                                <el-table-column type="expand" label="Detail" width="100">
+                                    <template slot-scope="props">
+                                        <el-form label-position="left" inline class="demo-table-expand">
+                                            <el-form-item label="Abstract">
+                                                <span>{{ props.row.abstract }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Keywords">
+                                                <span>{{ props.row.keywords }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="File">
+                                                <span>{{ props.row.file }}</span>
+                                            </el-form-item>
+                                        </el-form>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column fixed prop="created_at" label="Submission time(UTC+8)" width="200">
+                                </el-table-column>
+                                <el-table-column prop="title" label="Title" width="500">
+                                </el-table-column>
+                                <el-table-column prop="is_check" label="Is it viewed" width="150">
+                                </el-table-column>
+                                <el-table-column prop="is_accept" label="Is it accepted" width="150">
+                                </el-table-column>
+                                <el-table-column prop="updated_at" label="Update time(UTC+8)" width="200">
+                                </el-table-column>
+                                <el-table-column fixed="right" label="Options" width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="viewAuthor(scope.row.id)" type="text" size="small">Authors</el-button>
+                                        <el-button @click="handleClick(scope.row)" type="text" size="small">Edit</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
                         </div>
                     </div>
                 </div>
@@ -236,6 +272,28 @@
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Confirm</el-button>
                 <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
+            </span>
+        </el-dialog>
+        <!-- author index -->
+        <el-dialog title="Authors list" :visible.sync="authordialog" width="75%">
+            <el-table :data="authorindex" stripe border style="width: 100%">
+                <el-table-column fixed type="index">
+                </el-table-column>
+                <el-table-column prop="corresponding" label="Corresponding" width="150">
+                </el-table-column>
+                <el-table-column prop="firstname" label="First name" width="150">
+                </el-table-column>
+                <el-table-column prop="lastname" label="Last name" width="150">
+                </el-table-column>
+                <el-table-column prop="email" label="Email" width="200">
+                </el-table-column>
+                <el-table-column prop="country" label="Country" width="100">
+                </el-table-column>
+                <el-table-column prop="organization" label="Organization" width="500">
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="authordialog = false">Confirm</el-button>
             </span>
         </el-dialog>
     </div>
@@ -387,8 +445,29 @@ var app = new Vue({
                 { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: 'blur' }
             ],
         },
-    },
 
+        paperindex: [],
+        authorindex: [],
+        authordialog: false,
+    },
+    mounted: function() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('submission/paper');?>",
+            data: {
+                id: "<?php echo $id; ?>",
+                firstname: "<?php echo $firstname; ?>"
+            },
+            dataType: "json",
+            success: function(data) {
+                if (data['status'] == true) {
+                    Vue.set(app, "paperindex", data['index']);
+                } else {
+                    alert(data['message']);
+                }
+            }
+        });
+    },
     methods: {
         step1SignUP(formName) {
             this.$refs[formName].validate((valid) => {
@@ -601,6 +680,32 @@ var app = new Vue({
                 }
             });
         },
+        viewAuthor(paperid) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('submission/author');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    paper_id: paperid,
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "authorindex", data['index']);
+                        Vue.set(app, "authordialog", true);
+                    } else {
+                        alert(data['message']);
+                    }
+                }
+            });
+        },
+        handleClick(row) {
+            console.log(row);
+        },
+
+
+
     }
 })
 </script>
