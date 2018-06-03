@@ -7,7 +7,9 @@ class Submission extends CI_Controller {
 		$this->load->model('Paper');
 		$this->load->model('Author');
 		$this->load->library('session');
+		$this->load->library('upload');
 		$this->load->helper('cookie');
+		$this->load->helper('download');
 		$this->load->helper('url_helper');
 	}
 
@@ -16,7 +18,7 @@ class Submission extends CI_Controller {
 			$data['id'] = 0;
 			$data['firstname'] = "Sign In or Sign Up";
 			$data['is_login'] = false;
-			$this->load->view('submission.html', $data);
+			$this->load->view('home.html', $data);
 			return;
 		}
 		$data['id'] = $this->session->userdata('id');
@@ -76,8 +78,61 @@ class Submission extends CI_Controller {
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-
 			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function uploadfile() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$config['upload_path'] = './application/uploads/';
+			$config['allowed_types'] = 'pdf';
+			$config['file_name'] = $paper_id;
+			$config['file_ext_tolower'] = TRUE;
+			$config['overwrite'] = true;
+			$config['max_size'] = '2048';
+
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('file')) {
+				$data['message'] = $this->upload->display_errors('', '');
+				$data['status'] = false;
+				echo json_encode($data);
+
+			} else {
+				$this->Paper->upload($paper_id);
+				$data['status'] = true;
+				echo json_encode($data);
+
+			}
+			return;
+		}
+	}
+
+	public function download() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$file = $postdata['file'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+
+			force_download('./application/uploads/' . $file, NULL);
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

@@ -38,4 +38,13 @@ class Paper extends CI_Model {
 		);
 		$this->db->insert("paper", $data);
 	}
+
+	public function upload($paper_id) {
+		$data = array(
+			'file' => $paper_id . '.pdf',
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('paper', $data);
+	}
 }

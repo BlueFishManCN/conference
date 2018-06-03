@@ -120,7 +120,7 @@
                                                 <span>{{ props.row.keywords }}</span>
                                             </el-form-item>
                                             <el-form-item label="File">
-                                                <span>{{ props.row.file }}</span>
+                                                <el-button @click="download(props.row.file)" type="text" size="mini">{{ props.row.file }}</el-button>
                                             </el-form-item>
                                         </el-form>
                                     </template>
@@ -343,6 +343,18 @@
                 <el-button type="primary" v-on:click="subPaper('subpaperform')">Submit</el-button>
             </span>
         </el-dialog>
+        <!-- upload file -->
+        <el-dialog title="Upload File" :visible.sync="uploadfile" width="75%">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-remove="handleRemove" :before-upload="handleBeforeUpload" :on-progress="handleProgress" :on-success="handleSuccess" :on-error="handleError" accept="pdf" :auto-upload="false" :limit="1">
+                <el-button slot="trigger" size="small" type="primary">Select file</el-button>
+                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
+                <div slot="tip" class="el-upload__tip">Only pdf files can be uploaded and no more than 2Mb</div>
+                <el-progress v-if="in_progress" :status="progress_status" :percentage="progress"></el-progress>
+            </el-upload>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="uploadfile = false">Confirm</el-button>
+            </span>
+        </el-dialog>
     </div>
     <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
@@ -394,6 +406,14 @@ var app = new Vue({
         forgetstep3: false,
 
         subpaper: false,
+        authordialog: false,
+        uploadfile: false,
+        paperindex: [],
+        authorindex: [],
+
+        in_progress: false,
+        progress_status: "",
+        progress: 0,
 
         step1form: {
             firstname: '',
@@ -430,6 +450,12 @@ var app = new Vue({
             title: '',
             abstract: '',
             keywords: '',
+        },
+
+        uploaddata: {
+            id: "<?php echo $id; ?>",
+            firstname: "<?php echo $firstname; ?>",
+            paper_id: "",
         },
 
         step1rules: {
@@ -520,10 +546,6 @@ var app = new Vue({
                 { required: true, message: 'Please input the keywords', trigger: 'blur' },
             ],
         },
-
-        paperindex: [],
-        authorindex: [],
-        authordialog: false,
     },
     mounted: function() {
         $.ajax({
@@ -828,7 +850,74 @@ var app = new Vue({
             });
         },
         uploadFile(paperid) {
-            console.log(paperid);
+            Vue.set(app.uploaddata, "paper_id", paperid);
+            Vue.set(app, "uploadfile", true);
+        },
+        submitUpload() {
+            this.$refs.upload.submit();
+        },
+        handleRemove(file, fileList) {
+            Vue.set(app, "progress", 0);
+            Vue.set(app, "in_progress", false);
+            Vue.set(app, "progress_status", "");
+        },
+        handleSuccess(response, file, fileList) {
+            if (response['status']) {
+                Vue.set(app, "progress", 100);
+                Vue.set(app, "progress_status", "success");
+            } else {
+                Vue.set(app, "progress", 50);
+                Vue.set(app, "progress_status", "exception");
+                alert(response['message']);
+            }
+
+        },
+        handleError(response, file, fileList) {
+            Vue.set(app, "progress", 50);
+            Vue.set(app, "progress_status", "exception");
+        },
+
+        handleBeforeUpload(file) {
+            Vue.set(app, "in_progress", true);
+        },
+        handleProgress(event, file, fileList) {
+            Vue.set(app, "progress", 50);
+        },
+
+
+        download(file) {
+            if (file != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('submission/download');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        file: file
+                    },
+                    success: function(response, status, request) {
+                        var disp = request.getResponseHeader('Content-Disposition');
+                        if (disp && disp.search('attachment') != -1) {
+                            var form = $('<form method="POST" action="' + "<?php echo site_url('submission/download');?>" + '">');
+                            $.each({
+                                id: "<?php echo $id; ?>",
+                                firstname: "<?php echo $firstname; ?>",
+                                file: file
+                            }, function(k, v) {
+                                form.append($('<input type="hidden" name="' + k +
+                                    '" value="' + v + '">'));
+                            });
+                            form.appendTo('body').submit().remove();
+                            return;
+                        }
+                        if (response.status == "ok") {
+                            showResult(response.data);
+                        } else {
+                            showError('Error: ', response.msg);
+                        }
+                    }
+                });
+            }
         },
     }
 })
