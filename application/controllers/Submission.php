@@ -79,6 +79,36 @@ class Submission extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
+			$data['paper_id'] = $id;
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function addauthor() {
+		$postdata = $this->input->post();
+
+		$id = rand(1, 9999999);
+		while (!empty($this->Author->getAuthorById($id))) {
+			$id = rand(1, 9999999);
+		}
+
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+		$authorfirstname = $postdata['authorfirstname'];
+		$authorlastname = $postdata['authorlastname'];
+		$email = $postdata['email'];
+		$country = $postdata['country'];
+		$organization = $postdata['organization'];
+		$corresponding = $postdata['corresponding'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$this->Author->insert($id, $paper_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -114,7 +144,6 @@ class Submission extends CI_Controller {
 				$this->Paper->upload($paper_id);
 				$data['status'] = true;
 				echo json_encode($data);
-
 			}
 			return;
 		}

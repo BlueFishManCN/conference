@@ -135,13 +135,13 @@
                                     <template slot-scope="scope">
                                         <ul>
                                             <li>
-                                                <el-button @click="viewAuthor(scope.row.id)" type="text" size="mini">Authors</el-button>
+                                                <el-button @click="viewAuthor(scope.row.id)" type="text" size="mini">Add Author</el-button>
                                             </li>
                                             <li>
                                                 <el-button @click="uploadFile(scope.row.id)" type="text" size="mini">Upload file</el-button>
                                             </li>
                                             <li>
-                                                <el-button @click="handleClick(scope.row)" type="text" size="mini">Edit</el-button>
+                                                <el-button @click="edit(scope.row)" type="text" size="mini">Edit</el-button>
                                             </li>
                                         </ul>
                                     </template>
@@ -212,7 +212,7 @@
                 <el-form-item label="Last name">
                     <el-input v-model="step1form.lastname" disabled auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="Email" prop="country">
+                <el-form-item label="Email">
                     <el-input v-model="step1form.email" disabled auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Country" prop="country">
@@ -293,30 +293,8 @@
                 <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
             </span>
         </el-dialog>
-        <!-- author index -->
-        <el-dialog title="Authors list" :visible.sync="authordialog" width="75%">
-            <el-table :data="authorindex" stripe border style="width: 100%">
-                <el-table-column fixed type="index">
-                </el-table-column>
-                <el-table-column prop="corresponding" label="Corresponding" width="150">
-                </el-table-column>
-                <el-table-column prop="firstname" label="First name" width="150">
-                </el-table-column>
-                <el-table-column prop="lastname" label="Last name" width="150">
-                </el-table-column>
-                <el-table-column prop="email" label="Email" width="200">
-                </el-table-column>
-                <el-table-column prop="country" label="Country" width="100">
-                </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="500">
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="authordialog = false">Confirm</el-button>
-            </span>
-        </el-dialog>
         <!-- sub paper -->
-        <el-dialog title="Submit Paper" :visible.sync="subpaper" width="75%">
+        <el-dialog title="Submit Paper: Step 1, add paper information" :visible.sync="subpaper" width="75%">
             <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="15%">
                 <el-form-item label="Topic" prop="topic">
                     <el-select v-model="subpaperform.topic" placeholder="Please select the topic">
@@ -340,20 +318,74 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="subpaper = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subPaper('subpaperform')">Submit</el-button>
+                <el-button type="primary" v-on:click="subPaper('subpaperform')">Next</el-button>
+            </span>
+        </el-dialog>
+        <!-- author index -->
+        <el-dialog title="Submit Paper: Step 2, add authors" :visible.sync="authordialog" width="75%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="addauthor = true">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </div>
+            <el-table :data="authorindex" stripe border style="width: 100%">
+                <el-table-column fixed type="index">
+                </el-table-column>
+                <el-table-column prop="corresponding" label="Corresponding" width="150">
+                </el-table-column>
+                <el-table-column prop="firstname" label="First name" width="150">
+                </el-table-column>
+                <el-table-column prop="lastname" label="Last name" width="150">
+                </el-table-column>
+                <el-table-column prop="email" label="Email" width="200">
+                </el-table-column>
+                <el-table-column prop="country" label="Country" width="100">
+                </el-table-column>
+                <el-table-column prop="organization" label="Organization" width="500">
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="authordialog = false">Do it later</el-button>
+            </span>
+        </el-dialog>
+        <!-- add author -->
+        <el-dialog title="Sign Up: Last Step" :visible.sync="addauthor" width="50%">
+            <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="30%">
+                <el-form-item label="First name" prop="firstname">
+                    <el-input v-model="addauthorform.firstname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Last name" prop="lastname">
+                    <el-input v-model="addauthorform.lastname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Country" prop="country">
+                    <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Organization" prop="organization">
+                    <el-input v-model="addauthorform.organization" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Corresponding" prop="corresponding">
+                    <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
+                    <el-radio v-model="addauthorform.corresponding" label="YES" border>YES</el-radio>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" v-on:click="addAuthor('addauthorform')">Confirm</el-button>
+                <el-button v-on:click="addauthor = false">Cancel</el-button>
             </span>
         </el-dialog>
         <!-- upload file -->
         <el-dialog title="Upload File" :visible.sync="uploadfile" width="75%">
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-remove="handleRemove" :before-upload="handleBeforeUpload" :on-progress="handleProgress" :on-success="handleSuccess" :on-error="handleError" accept="pdf" :auto-upload="false" :limit="1">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-remove="handleRemove" :before-upload="handleBeforeUpload" :on-progress="handleProgress" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only pdf files can be uploaded and no more than 2Mb</div>
+                <div slot="tip" class="el-upload__tip">Only 1 pdf file can be uploaded and no more than 2Mb</div>
                 <el-progress v-if="in_progress" :status="progress_status" :percentage="progress"></el-progress>
             </el-upload>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="uploadfile = false">Confirm</el-button>
-            </span>
         </el-dialog>
     </div>
     <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
@@ -407,6 +439,7 @@ var app = new Vue({
 
         subpaper: false,
         authordialog: false,
+        addauthor: false,
         uploadfile: false,
         paperindex: [],
         authorindex: [],
@@ -414,6 +447,8 @@ var app = new Vue({
         in_progress: false,
         progress_status: "",
         progress: 0,
+
+        add_paper_id: "",
 
         step1form: {
             firstname: '',
@@ -452,6 +487,15 @@ var app = new Vue({
             keywords: '',
         },
 
+        addauthorform: {
+            firstname: '',
+            lastname: '',
+            email: '',
+            country: '',
+            organization: '',
+            corresponding: 'NO'
+        },
+
         uploaddata: {
             id: "<?php echo $id; ?>",
             firstname: "<?php echo $firstname; ?>",
@@ -460,93 +504,114 @@ var app = new Vue({
 
         step1rules: {
             firstname: [
-                { required: true, message: 'Please input the firstname', trigger: 'blur' },
-                { min: 3, max: 20, message: 'Length is between 3 and 20 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
             ],
             lastname: [
-                { required: true, message: 'Please input the lastname', trigger: 'blur' },
-                { min: 3, max: 20, message: 'Length is between 3 and 20 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
             ],
             email: [
-                { required: true, message: 'Please input the email', trigger: 'blur' },
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
             retypeemail: [
-                { required: true, message: 'Please input the email', trigger: 'blur' },
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
-                { validator: validateEmail, trigger: 'blur' },
+                { validator: validateEmail, trigger: ['blur', 'change'] },
             ],
         },
         step2rules: {
             code: [
-                { required: true, message: 'Please input the code', trigger: 'blur' },
+                { required: true, message: 'Please input the code', trigger: ['blur', 'change'] },
             ],
         },
         step3rules: {
             country: [
-                { required: true, message: 'Please input the country', trigger: 'blur' },
+                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
             ],
             organization: [
-                { required: true, message: 'Please input the organization', trigger: 'blur' },
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
             ],
             password: [
-                { required: true, message: 'Please input the password', trigger: 'blur' },
-                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] },
+                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change'] }
             ],
             retype_password: [
-                { required: true, message: 'Please input the password again', trigger: 'blur' },
-                { validator: validatePass, trigger: 'blur' },
-                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the password again', trigger: ['blur', 'change'] },
+                { validator: validatePass, trigger: ['blur', 'change'] },
+                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change'] }
             ],
         },
 
         signInRules: {
             email: [
-                { required: true, message: 'Please input the email', trigger: 'blur' }
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] }
             ],
             password: [
-                { required: true, message: 'Please input the password', trigger: 'blur' }
+                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] }
             ]
         },
 
         forgetstep1rules: {
             email: [
-                { required: true, message: 'Please input the email', trigger: 'blur' },
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
         },
         forgetstep2rules: {
             code: [
-                { required: true, message: 'Please input the code', trigger: 'blur' },
+                { required: true, message: 'Please input the code', trigger: ['blur', 'change'] },
             ],
         },
         forgetstep3rules: {
             password: [
-                { required: true, message: 'Please input the password', trigger: 'blur' },
-                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] },
+                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change'] }
             ],
             retype_password: [
-                { required: true, message: 'Please input the password again', trigger: 'blur' },
-                { validator: validatePass2, trigger: 'blur' },
-                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: 'blur' }
+                { required: true, message: 'Please input the password again', trigger: ['blur', 'change'] },
+                { validator: validatePass2, trigger: ['blur', 'change'] },
+                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change'] }
             ],
         },
 
         subpaperrules: {
             topic: [
-                { required: true, message: 'Please select the topic', trigger: 'blur' },
+                { required: true, message: 'Please select the topic', trigger: ['blur', 'change'] },
             ],
             title: [
-                { required: true, message: 'Please input the title', trigger: 'blur' },
+                { required: true, message: 'Please input the title', trigger: ['blur', 'change'] },
             ],
             abstract: [
-                { required: true, message: 'Please input the abstract', trigger: 'blur' },
+                { required: true, message: 'Please input the abstract', trigger: ['blur', 'change'] },
             ],
             keywords: [
-                { required: true, message: 'Please input the keywords', trigger: 'blur' },
+                { required: true, message: 'Please input the keywords', trigger: ['blur', 'change'] },
+            ],
+        },
+
+        addauthorrules: {
+            firstname: [
+                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
+            ],
+            lastname: [
+                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
+            ],
+            email: [
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
+            ],
+            country: [
+                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
+            ],
+            organization: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
+            ],
+            corresponding: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
             ],
         },
     },
+
     mounted: function() {
         $.ajax({
             type: "POST",
@@ -559,31 +624,11 @@ var app = new Vue({
             success: function(data) {
                 if (data['status'] == true) {
                     Vue.set(app, "paperindex", data['index']);
-                } else {
-                    alert(data['message']);
                 }
             }
         });
     },
     methods: {
-        getpaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('submission/paper');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>"
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        Vue.set(app, "paperindex", data['index']);
-                    } else {
-                        alert(data['message']);
-                    }
-                }
-            });
-        },
         step1SignUP(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -611,6 +656,7 @@ var app = new Vue({
                 }
             });
         },
+
         step2SignUP(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -636,6 +682,7 @@ var app = new Vue({
                 }
             });
         },
+
         step3SignUp(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -744,6 +791,7 @@ var app = new Vue({
                 }
             });
         },
+
         forgetStep2(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -769,6 +817,7 @@ var app = new Vue({
                 }
             });
         },
+
         forgetStep3(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -795,28 +844,22 @@ var app = new Vue({
                 }
             });
         },
-        viewAuthor(paperid) {
+
+        getpaper() {
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('submission/author');?>",
+                url: "<?php echo site_url('submission/paper');?>",
                 data: {
                     id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: paperid,
+                    firstname: "<?php echo $firstname; ?>"
                 },
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
-                        Vue.set(app, "authorindex", data['index']);
-                        Vue.set(app, "authordialog", true);
-                    } else {
-                        alert(data['message']);
+                        Vue.set(app, "paperindex", data['index']);
                     }
                 }
             });
-        },
-        handleClick(row) {
-            console.log(row);
         },
 
         subPaper(formName) {
@@ -837,7 +880,62 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "subpaper", false);
-                                window.location.href = "<?php echo site_url('submission/index');?>";
+                                alert("Submit paper information successful");
+                                app.getpaper();
+                                app.viewAuthor(data['paper_id']);
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+
+        viewAuthor(paperid) {
+            Vue.set(app, "add_paper_id", paperid);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('submission/author');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    paper_id: paperid,
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "authorindex", data['index']);
+                        Vue.set(app, "authordialog", true);
+                    }
+                }
+            });
+        },
+
+        addAuthor(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('submission/addauthor');?>",
+                        data: {
+                            id: "<?php echo $id; ?>",
+                            firstname: "<?php echo $firstname; ?>",
+                            paper_id: app.add_paper_id,
+                            authorfirstname: app.addauthorform.firstname,
+                            authorlastname: app.addauthorform.lastname,
+                            email: app.addauthorform.email,
+                            country: app.addauthorform.country,
+                            organization: app.addauthorform.organization,
+                            corresponding: app.addauthorform.corresponding
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                app.viewAuthor(app.add_paper_id);
+                                Vue.set(app, "addauthor", false);
+                                alert("Add author successful");
                             } else {
                                 alert(data['message']);
                             }
@@ -849,6 +947,7 @@ var app = new Vue({
                 }
             });
         },
+
         uploadFile(paperid) {
             Vue.set(app.uploaddata, "paper_id", paperid);
             Vue.set(app, "uploadfile", true);
@@ -865,23 +964,35 @@ var app = new Vue({
             if (response['status']) {
                 Vue.set(app, "progress", 100);
                 Vue.set(app, "progress_status", "success");
+                alert("success");
+                window.location.href = "<?php echo site_url('submission/index');?>";
             } else {
                 Vue.set(app, "progress", 50);
                 Vue.set(app, "progress_status", "exception");
                 alert(response['message']);
             }
-
         },
         handleError(response, file, fileList) {
             Vue.set(app, "progress", 50);
             Vue.set(app, "progress_status", "exception");
+            alert(response);
+            window.location.href = "<?php echo site_url('submission/index');?>";
         },
-
         handleBeforeUpload(file) {
             Vue.set(app, "in_progress", true);
         },
         handleProgress(event, file, fileList) {
             Vue.set(app, "progress", 50);
+        },
+        handleExceed(files, fileList) {
+            alert("Can only upload one file");
+        },
+
+
+
+
+        edit(row) {
+            console.log(row);
         },
 
 
