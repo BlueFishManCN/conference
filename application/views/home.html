@@ -111,7 +111,7 @@
             </div>
         </div>
         <!-- step1 -->
-        <el-dialog title="Sign Up: Step 1" :visible.sync="step1" width="50%">
+        <el-dialog title="Sign Up: Step 1" :visible.sync="step1" width="30%">
             <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
                 <el-form-item label="First name" prop="firstname">
                     <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
@@ -127,30 +127,30 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="step1SignUP('step1form')">Confirm</el-button>
                 <el-button v-on:click="step1 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="step1SignUP('step1form')">Next</el-button>
             </span>
         </el-dialog>
         <!-- step2 -->
-        <el-dialog title="Activate account: Step 2" :visible.sync="step2" width="50%">
+        <el-dialog title="Activate account: Step 2" :visible.sync="step2" width="30%">
             <el-form>
                 <el-form-item>
                     <span>The verification code has been sent to your mailbox.</span>
                 </el-form-item>
             </el-form>
-            <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="30%">
+            <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="25%">
                 <el-form-item label="Code" prop="code">
                     <el-input v-model="step2form.code" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="step2SignUP('step2form')">Confirm</el-button>
                 <el-button v-on:click="step2 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="step2SignUP('step2form')">Next</el-button>
             </span>
         </el-dialog>
         <!-- step3 -->
         <el-dialog title="Sign Up: Last Step" :visible.sync="step3" width="50%">
-            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
+            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="25%">
                 <el-form-item label="First name">
                     <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
                 </el-form-item>
@@ -174,13 +174,13 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="step3SignUp('step3form')">Confirm</el-button>
                 <el-button v-on:click="step3 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="step3SignUp('step3form')">Finish</el-button> 
             </span>
         </el-dialog>
         <!-- sign -->
-        <el-dialog title="Sign In" :visible.sync="signInDialogVisible" width="50%">
-            <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="30%">
+        <el-dialog title="Sign In" :visible.sync="signInDialogVisible" width="30%">
+            <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="25%">
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="inform.email" auto-complete="off"></el-input>
                 </el-form-item>
@@ -195,37 +195,37 @@
             </span>
         </el-dialog>
         <!-- forget step1 -->
-        <el-dialog title="Enter account: Step 1" :visible.sync="forgetstep1" width="50%">
-            <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="30%">
+        <el-dialog title="Step 1: Enter email" :visible.sync="forgetstep1" width="30%">
+            <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="25%">
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="forgetstep1 = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="forgetStep1('forgetstep1form')">Confirm</el-button>
+                <el-button type="primary" v-on:click="forgetStep1('forgetstep1form')">Next</el-button>
             </span>
         </el-dialog>
         <!-- forget step2 -->
-        <el-dialog title="Verify account: Step 2" :visible.sync="forgetstep2" width="50%">
+        <el-dialog title="Step 2: Verify account" :visible.sync="forgetstep2" width="30%">
             <el-form>
                 <el-form-item>
                     <span>Reset verification code has been sent to your mailbox.</span>
                 </el-form-item>
             </el-form>
-            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
+            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="25%">
                 <el-form-item label="Code" prop="code">
                     <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="forgetStep2('forgetstep2form')">Confirm</el-button>
                 <el-button v-on:click="forgetstep2 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep2('forgetstep2form')">Next</el-button>
             </span>
         </el-dialog>
         <!-- forget step3 -->
-        <el-dialog title="Reset password: Last Step" :visible.sync="forgetstep3" width="50%">
-            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
+        <el-dialog title="Last Step: Reset password" :visible.sync="forgetstep3" width="30%">
+            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="35%">
                 <el-form-item label="Password" prop="password">
                     <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
                 </el-form-item>
@@ -234,8 +234,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Confirm</el-button>
                 <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Next</el-button>
             </span>
         </el-dialog>
     </div>
@@ -360,7 +360,8 @@ var app = new Vue({
 
         signInRules: {
             email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] }
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
             password: [
                 { required: true, message: 'Please input the password', trigger: ['blur', 'change'] }
@@ -406,8 +407,8 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                app.step1 = false;
-                                app.step2 = true;
+                                Vue.set(app, "step1", false);
+                                Vue.set(app, "step2", true);
                             } else {
                                 alert(data['message']);
                             }
@@ -431,8 +432,8 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                app.step2 = false;
-                                app.step3 = true;
+                                Vue.set(app, "step2", false);
+                                Vue.set(app, "step3", true);
                             } else {
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             }
@@ -490,6 +491,8 @@ var app = new Vue({
                             if (data['status'] == true) {
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
+                                Vue.set(app.inform, "email", "");
+                                Vue.set(app.inform, "password", "");
                                 alert(data['message']);
                             }
                         }
@@ -539,8 +542,8 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                app.forgetstep1 = false;
-                                app.forgetstep2 = true;
+                                Vue.set(app, 'forgetstep1', false);
+                                Vue.set(app, 'forgetstep2', true);
                             } else {
                                 alert(data['message']);
                             }
@@ -564,8 +567,8 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                app.forgetstep2 = false;
-                                app.forgetstep3 = true;
+                                Vue.set(app, 'forgetstep2', false);
+                                Vue.set(app, 'forgetstep3', true);
                             } else {
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             }

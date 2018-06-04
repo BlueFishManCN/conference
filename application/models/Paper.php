@@ -14,6 +14,17 @@ class Paper extends CI_Model {
 		$this->db->where('is_delete', 0);
 		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result_array();
+
+		foreach ($query as &$key) {
+			$this->db->select('*');
+			$this->db->from('author');
+			$this->db->where('paper_id', $key['id']);
+			$this->db->where('is_delete', 0);
+			$this->db->order_by('updated_at', 'DESC');
+			$author = $this->db->get()->result_array();
+			$key['author'] = $author;
+		}
+
 		return $query;
 	}
 
@@ -42,6 +53,18 @@ class Paper extends CI_Model {
 	public function upload($paper_id) {
 		$data = array(
 			'file' => $paper_id . '.pdf',
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('paper', $data);
+	}
+
+	public function update($paper_id, $topic, $title, $abstract, $keywords) {
+		$data = array(
+			'topic' => $topic,
+			'title' => $title,
+			'abstract' => $abstract,
+			'keywords' => $keywords,
 		);
 		$this->db->where('id', $paper_id);
 		$this->db->where('is_delete', 0);

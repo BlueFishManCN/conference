@@ -12,6 +12,7 @@ class Author extends CI_Model {
 		$this->db->from('author');
 		$this->db->where('paper_id', $paper_id);
 		$this->db->where('is_delete', 0);
+		$this->db->order_by('created_at', 'ASC');
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
@@ -38,5 +39,14 @@ class Author extends CI_Model {
 			'corresponding' => $corresponding,
 		);
 		$this->db->insert("author", $data);
+	}
+
+	public function deleteauthor($author_id) {
+		$data = array(
+			'is_delete' => 1,
+		);
+		$this->db->where('id', $author_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('author', $data);
 	}
 }
