@@ -21,10 +21,6 @@ body {
 
 
 
-
-
-
-
 /* Disable ugly boxes around images in IE10 */
 
 a img {
@@ -70,8 +66,8 @@ a img {
 
 
 .android-logo-image {
-    height: 28px;
-    width: 140px;
+    height: 50px;
+    width: 65px;
 }
 
 
@@ -471,6 +467,27 @@ a img {
 .android-link-menu:hover {
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
