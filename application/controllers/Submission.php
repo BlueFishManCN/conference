@@ -15,10 +15,7 @@ class Submission extends CI_Controller {
 
 	public function index() {
 		if (!$this->session->has_userdata('id')) {
-			$data['id'] = 0;
-			$data['firstname'] = "Sign In or Sign Up";
-			$data['is_login'] = false;
-			$this->load->view('home.html', $data);
+			redirect('/home/index');
 			return;
 		}
 		$data['id'] = $this->session->userdata('id');
@@ -178,14 +175,14 @@ class Submission extends CI_Controller {
 			$this->upload->initialize($config);
 
 			if (!$this->upload->do_upload('file')) {
-				$data['message'] = $this->upload->display_errors('', '');
-				$data['status'] = false;
-				echo json_encode($data);
-
+				$this->output
+					->set_content_type('application/json')
+					->set_status_header(400)
+					->set_output($this->upload->display_errors('', ''));
 			} else {
 				$this->Paper->upload($paper_id);
-				$data['status'] = true;
-				echo json_encode($data);
+				$this->output
+					->set_output(json_encode(array('status' => false)));
 			}
 			return;
 		}

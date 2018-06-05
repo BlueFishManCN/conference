@@ -270,11 +270,10 @@
         </el-dialog>
         <!-- subuploadfile -->
         <el-dialog title="Submit Paper: Last Step, upload file" :visible.sync="subuploadfile" width="50%">
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-remove="handleRemove" :before-upload="handleBeforeUpload" :on-progress="handleProgress" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
                 <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
-                <el-progress v-if="in_progress" :status="progress_status" :percentage="progress"></el-progress>
             </el-upload>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="subuploadfile = false">Finish or Do It Later</el-button>
@@ -372,11 +371,10 @@
         </el-dialog>
         <!-- edituploadfile -->
         <el-dialog title="Upload file" :visible.sync="edituploadfile" width="50%">
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-remove="handleRemove" :before-upload="handleBeforeUpload" :on-progress="handleProgress" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
                 <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
-                <el-progress v-if="in_progress" :status="progress_status" :percentage="progress"></el-progress>
             </el-upload>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>
@@ -427,19 +425,13 @@ var app = new Vue({
         subauthor: false,
         subaddauthor: false,
         subuploadfile: false,
-        in_progress: false,
-        progress: 0,
-        progress_status: "",
         editpaper: false,
         editauthor: false,
         editaddauthor: false,
         edituploadfile: false,
 
-
         paperindex: [],
         authorindex: [],
-
-
 
         add_paper_id: "",
         edit_paper_id: "",
@@ -470,10 +462,6 @@ var app = new Vue({
             abstract: '',
             keywords: '',
         },
-
-
-
-
 
         subpaperrules: {
             topic: [
@@ -697,42 +685,16 @@ var app = new Vue({
         },
         editUploadFile(paper_id) {
             Vue.set(app.uploaddata, "paper_id", paper_id);
-            Vue.set(app, "subauthor", false);
             Vue.set(app, "edituploadfile", true);
         },
         submitUpload() {
             this.$refs.upload.submit();
         },
-        handleRemove(file, fileList) {
-            Vue.set(app, "progress", 0);
-            Vue.set(app, "in_progress", false);
-            Vue.set(app, "progress_status", "");
-        },
         handleSuccess(response, file, fileList) {
-            if (response['status']) {
-                Vue.set(app, "progress", 100);
-                Vue.set(app, "progress_status", "success");
-                alert("Upload file successful");
-                Vue.set(app, "edituploadfile", false);
-                Vue.set(app, "subuploadfile", false);
-                app.getpaper();
-            } else {
-                Vue.set(app, "progress", 50);
-                Vue.set(app, "progress_status", "exception");
-                alert(response['message']);
-            }
+            alert("Upload file successful");
         },
         handleError(response, file, fileList) {
-            Vue.set(app, "progress", 50);
-            Vue.set(app, "progress_status", "exception");
             alert(response);
-            window.location.href = "<?php echo site_url('submission/index');?>";
-        },
-        handleBeforeUpload(file) {
-            Vue.set(app, "in_progress", true);
-        },
-        handleProgress(event, file, fileList) {
-            Vue.set(app, "progress", 50);
         },
         handleExceed(files, fileList) {
             alert("Can only upload one file");
