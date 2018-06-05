@@ -1,26 +1,30 @@
-/*
- Navicat Premium Data Transfer
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 127.0.0.1 (MySQL 5.6.38)
+# Database: conference
+# Generation Time: 2018-06-05 05:18:01 +0000
+# ************************************************************
 
- Source Server         : 127.0.0.1
- Source Server Type    : MySQL
- Source Server Version : 50638
- Source Host           : localhost:3306
- Source Schema         : conference
 
- Target Server Type    : MySQL
- Target Server Version : 50638
- File Encoding         : 65001
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
- Date: 02/06/2018 11:44:35
-*/
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+# Dump of table author
+# ------------------------------------------------------------
 
--- ----------------------------
--- Table structure for author
--- ----------------------------
 DROP TABLE IF EXISTS `author`;
+
 CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `paper_id` int(11) NOT NULL COMMENT '论文id',
@@ -34,41 +38,38 @@ CREATE TABLE `author` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_delete` tinyint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for migration
--- ----------------------------
-DROP TABLE IF EXISTS `migration`;
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for paper
--- ----------------------------
+
+
+# Dump of table paper
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `paper`;
+
 CREATE TABLE `paper` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '作者id',
+  `topic` varchar(255) NOT NULL COMMENT 'topic',
   `title` varchar(255) NOT NULL COMMENT '标题',
   `abstract` varchar(4096) NOT NULL COMMENT '摘要',
   `keywords` varchar(255) NOT NULL COMMENT '关键字',
-  `file` varchar(255) DEFAULT NULL COMMENT '论文',
+  `file` varchar(255) NOT NULL DEFAULT '' COMMENT '论文',
   `is_check` varchar(7) DEFAULT 'No' COMMENT '查看状态',
   `is_accept` varchar(7) DEFAULT 'No' COMMENT '录用状态',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_delete` tinyint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for user
--- ----------------------------
+
+
+# Dump of table user
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '名',
@@ -83,6 +84,14 @@ CREATE TABLE `user` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新状态',
   `is_delete` smallint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9529971 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
