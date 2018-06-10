@@ -17,6 +17,10 @@ class Home extends CI_Controller {
 			$this->load->view('home.html', $data);
 			return;
 		}
+		if ($this->session->userdata('id') == 1) {
+			redirect('/adminpaper/index');
+			return;
+		}
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;

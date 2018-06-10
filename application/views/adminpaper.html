@@ -1,0 +1,352 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>ICTIM</title>
+    <!-- Page styles -->
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.css" rel="stylesheet">
+    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+    <style>
+    #view-source {
+        position: fixed;
+        display: block;
+        right: 0;
+        bottom: 0;
+        margin-right: 40px;
+        margin-bottom: 40px;
+        z-index: 900;
+    }
+
+    .demo-table-expand {
+        font-size: 0;
+    }
+
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+                <div class="mdl-layout__header-row">
+                    <span class="android-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>">
+                </span>
+                    <!-- Add spacer, to align navigation to the left in desktop -->
+                    <div class="android-header-spacer mdl-layout-spacer"></div>
+                    <!-- Navigation -->
+                    <div class="android-navigation-container">
+                        <nav class="android-navigation mdl-navigation">
+                            <!-- Flat button with ripple -->
+                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminpaper/index');?>">
+                             Papers
+                            </a>
+                            <!-- Right aligned menu below button -->
+                            <button class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">account_circle</i>
+                            </button>
+                            <button id="log" class="mdl-button">
+                                <?php echo $firstname; ?>
+                            </button>
+                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
+                                <li v-if="is_login" v-on:click="signOut" class="mdl-menu__item">Sign out</li>
+                                <li v-if="!is_login" @click="signInDialogVisible = true" class="mdl-menu__item">Sign in</li>
+                                <li v-if="!is_login" @click="step1 = true" class="mdl-menu__item">Sign up</li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
+                </div>
+            </div>
+            <div class="android-content mdl-layout__content">
+                <a name="top"></a>
+                <div class="android-more-section">
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Papers
+                    </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                            <div style="margin-top: 15px;">
+                                <el-input placeholder="paper_id/title/keywords" v-model="keywords" class="input-with-select">
+                                    <el-select v-model="select" slot="prepend" placeholder="All Topics">
+                                        <el-option label="All Topics" value=""></el-option>
+                                        <el-option label="Micro Finance" value="Micro Finance"></el-option>
+                                        <el-option label="Macro Finance" value="Macro Finance"></el-option>
+                                        <el-option label="Environment, Resource and Sustainable Development" value="Environment, Resource and Sustainable Development"></el-option>
+                                        <el-option label="Chinese Economy" value="Chinese Economy"></el-option>
+                                        <el-option label="Public Administration and Role of Government" value="Public Administration and Role of Government"></el-option>
+                                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
+                                    </el-select>
+                                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                                </el-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="android-card-container mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
+                            <el-table :data="paperindex" stripe border style="width: 100%">
+                                <el-table-column fixed type="index">
+                                </el-table-column>
+                                <el-table-column fixed type="expand" label="Detail" width="60">
+                                    <template slot-scope="props">
+                                        <el-form label-position="left" inline class="demo-table-expand">
+                                            <el-form-item label="Topic">
+                                                <span>{{ props.row.topic }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Title">
+                                                <span>{{ props.row.title }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Authors">
+                                                <el-table size="mini" :data="props.row.author" stripe border style="width: 100%">
+                                                    <el-table-column fixed type="index">
+                                                    </el-table-column>
+                                                    <el-table-column prop="corresponding" label="Corresponding" width="110">
+                                                    </el-table-column>
+                                                    <el-table-column prop="firstname" label="Firstname" width="80">
+                                                    </el-table-column>
+                                                    <el-table-column prop="lastname" label="Lastname" width="80">
+                                                    </el-table-column>
+                                                    <el-table-column prop="country" label="Country" width="80">
+                                                    </el-table-column>
+                                                    <el-table-column prop="organization" label="Organization" width="250">
+                                                    </el-table-column>
+                                                    <el-table-column prop="email" label="Email" width="150">
+                                                    </el-table-column>
+                                                </el-table>
+                                            </el-form-item>
+                                            <el-form-item label="Abstract">
+                                                <span>{{ props.row.abstract }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Keywords">
+                                                <span>{{ props.row.keywords }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="File">
+                                                <el-button @click="download(props.row.file)" type="text" size="mini">{{ props.row.file }}</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column prop="id" label="Paper_id" width="160">
+                                </el-table-column>
+                                <el-table-column prop="title" label="Title" width="400">
+                                </el-table-column>
+                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="190">
+                                </el-table-column>
+                                <el-table-column fixed="right" label="Download" width="150">
+                                    <template slot-scope="scope">
+                                        <el-button @click="download(scope.row.file)" type="text" size="mini">{{ scope.row.file }}</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="5" layout="total, prev, pager, next" :total.sync="total">
+                        </el-pagination>
+                    </div>
+                </div>
+                <footer class="android-footer mdl-mega-footer">
+                    <div class="mdl-mega-footer--top-section">
+                        <div class="mdl-mega-footer--right-section">
+                            <a class="mdl-typography--font-light" href="#top ">Back to Top<i class="material-icons">expand_less</i></a>
+                        </div>
+                    </div>
+                    <a name="screens"></a>
+                    <div class="mdl-mega-footer--middle-section">
+                        <p class="mdl-typography--font-light">© Copyright 2018 SHU-UTS SILC Business School, Shanghai University (All rights reserved)</p>
+                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Vue and CI.</p>
+                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com).</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
+    <script>
+    ELEMENT.locale(ELEMENT.lang.en)
+    </script>
+    <style>
+    .el-select .el-input {
+        width: 400px;
+    }
+
+    .input-with-select .el-input-group__prepend {
+        background-color: #fff;
+    }
+    </style>
+</body>
+<script type="text/javascript" charset="utf-8" async defer>
+var app = new Vue({
+    el: '#app',
+
+    data: {
+        id: "<?php echo $id; ?>",
+        firstname: "<?php echo $firstname; ?>",
+        is_login: "<?php echo $is_login; ?>",
+
+        paperindex: [],
+        authorindex: [],
+        total: 0,
+        currentPage: 1,
+        select: '',
+        keywords: '',
+    },
+
+    mounted: function() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('adminpaper/paper');?>",
+            data: {
+                id: "<?php echo $id; ?>",
+                firstname: "<?php echo $firstname; ?>",
+                currentPage: this.currentPage,
+            },
+            dataType: "json",
+            success: function(data) {
+                if (data['status'] == true) {
+                    Vue.set(app, "total", data['total']);
+                    Vue.set(app, "paperindex", data['index']);
+                }
+            }
+        });
+    },
+
+    methods: {
+        signOut(formName) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('sign/signout');?>",
+                data: {
+                    id: app.id,
+                    firstname: app.firstname
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        window.location.href = "<?php echo site_url('home/index');?>";
+                    } else {
+                        alert(data['message']);
+                        window.location.href = "<?php echo site_url('home/index');?>";
+                    }
+                }
+            });
+        },
+
+        getpaper() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('adminpaper/paper');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    currentPage: app.currentPage,
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "total", data['total']);
+                        Vue.set(app, "paperindex", data['index']);
+                    }
+                }
+            });
+        },
+
+        download(file) {
+            if (file != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/download');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        file: file
+                    },
+                    success: function(response, status, request) {
+                        var disp = request.getResponseHeader('Content-Disposition');
+                        if (disp && disp.search('attachment') != -1) {
+                            var form = $('<form method="POST" action="' + "<?php echo site_url('adminpaper/download');?>" + '">');
+                            $.each({
+                                id: "<?php echo $id; ?>",
+                                firstname: "<?php echo $firstname; ?>",
+                                file: file
+                            }, function(k, v) {
+                                form.append($('<input type="hidden" name="' + k +
+                                    '" value="' + v + '">'));
+                            });
+                            form.appendTo('body').submit().remove();
+                            return;
+                        }
+                        if (response.status == "ok") {
+                            showResult(response.data);
+                        } else {
+                            showError('Error: ', response.msg);
+                        }
+                    }
+                });
+            }
+        },
+
+        handleCurrentChange(val) {
+            app.getpaper();
+        },
+
+        search(val) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('adminpaper/searchpaper');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    currentPage: app.currentPage,
+                    select: app.select,
+                    keywords: app.keywords
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "total", data['total']);
+                        Vue.set(app, "paperindex", data['index']);
+                    }
+                }
+            });
+        }
+    }
+})
+</script>
+
+</html>
