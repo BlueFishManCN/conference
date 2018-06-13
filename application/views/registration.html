@@ -69,10 +69,10 @@
                     <div class="android-navigation-container">
                         <nav class="android-navigation mdl-navigation">
                             <!-- Flat button with ripple -->
-                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
+                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
                              Submit
                             </a>
-                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('registration/index');?>">
+                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('registration/index');?>">
                              Register
                             </a>
                             <!-- Right aligned menu below button -->
@@ -83,9 +83,7 @@
                                 <?php echo $firstname; ?>
                             </button>
                             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
-                                <li v-if="is_login" v-on:click="signOut" class="mdl-menu__item">Sign out</li>
-                                <li v-if="!is_login" @click="signInDialogVisible = true" class="mdl-menu__item">Sign in</li>
-                                <li v-if="!is_login" @click="step1 = true" class="mdl-menu__item">Sign up</li>
+                                <li v-on:click="signOut" class="mdl-menu__item">Sign out</li>
                             </ul>
                         </nav>
                     </div>
@@ -115,7 +113,10 @@
                                 </el-table-column>
                                 <el-table-column prop="email" label="Email" width="200">
                                 </el-table-column>
-                                <el-table-column prop="file" label="File" width="100">
+                                <el-table-column label="File" width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
+                                    </template>
                                 </el-table-column>
                                 <el-table-column prop="is_check" label="Checked" width="100">
                                 </el-table-column>
@@ -398,6 +399,7 @@ var app = new Vue({
                         },
                         dataType: "json",
                         success: function(data) {
+                            console.log(data);
                             if (data['status'] == true) {
                                 Vue.set(app, "editattendee", false);
                                 alert("Edit attendee successful");
@@ -435,7 +437,7 @@ var app = new Vue({
             if (file != "") {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('submission/download');?>",
+                    url: "<?php echo site_url('registration/download');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
@@ -444,7 +446,7 @@ var app = new Vue({
                     success: function(response, status, request) {
                         var disp = request.getResponseHeader('Content-Disposition');
                         if (disp && disp.search('attachment') != -1) {
-                            var form = $('<form method="POST" action="' + "<?php echo site_url('submission/download');?>" + '">');
+                            var form = $('<form method="POST" action="' + "<?php echo site_url('registration/download');?>" + '">');
                             $.each({
                                 id: "<?php echo $id; ?>",
                                 firstname: "<?php echo $firstname; ?>",

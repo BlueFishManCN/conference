@@ -83,7 +83,7 @@
                                 <?php echo $firstname; ?>
                             </button>
                             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
-                                <li v-if="is_login" v-on:click="signOut" class="mdl-menu__item">Sign out</li>
+                                <li v-on:click="signOut" class="mdl-menu__item">Sign out</li>
                             </ul>
                         </nav>
                     </div>
@@ -93,38 +93,12 @@
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
                 <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Papers
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Attendees
                     </div>
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                             <div style="margin-top: 15px;">
                                 <el-input placeholder="paper_id/title/keywords" v-model="keywords" class="input-with-select">
-                                    <el-select v-model="select" slot="prepend" placeholder="All Topics">
-                                        <el-option label="All Topics" value=""></el-option>
-                                        <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
-                                        <el-option label="Banking" value="Banking"></el-option>
-                                        <el-option label="Behavioral Finance" value="Behavioral Finance"></el-option>
-                                        <el-option label="Big Data,Artificial intelligence, and Blockchain in Economics and Finance" value="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"></el-option>
-                                        <el-option label="Corporate Finance and Corporate Sustainability" value="Corporate Finance and Corporate Sustainability"></el-option>
-                                        <el-option label="Economic Modeling and Forecasting" value="Economic Modeling and Forecasting"></el-option>
-                                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
-                                        <el-option label="Empirical Economics" value="Empirical Economics"></el-option>
-                                        <el-option label="Environment and Social Responsibility" value="Environment and Social Responsibility"></el-option>
-                                        <el-option label="Financial Accounting and Reporting" value="Financial Accounting and Reporting"></el-option>
-                                        <el-option label="Finance, Investment& Real Estate Development" value="Finance, Investment& Real Estate Development"></el-option>
-                                        <el-option label="Governance of Private and Public Sectors" value="Governance of Private and Public Sectors"></el-option>
-                                        <el-option label="Inclusive Finance" value="Inclusive Finance"></el-option>
-                                        <el-option label="Information Technology & e-Governance" value="Information Technology & e-Governance"></el-option>
-                                        <el-option label="Insurance and Risk Management" value="Insurance and Risk Management"></el-option>
-                                        <el-option label="International Finance" value="International Finance"></el-option>
-                                        <el-option label="Management and Marketing Issues" value="Management and Marketing Issues"></el-option>
-                                        <el-option label="Market Microstructure" value="Market Microstructure"></el-option>
-                                        <el-option label="New Sustainable Development Paradigms" value="New Sustainable Development Paradigms"></el-option>
-                                        <el-option label="Public Administration Performance and Management" value="Public Administration Performance and Management"></el-option>
-                                        <el-option label="Security and Defence Issues" value="Security and Defence Issues"></el-option>
-                                        <el-option label="Socio-Economic Innovation and Local Development" value="Socio-Economic Innovation and Local Development"></el-option>
-                                        <el-option label="Others" value="Others"></el-option>
-                                    </el-select>
                                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                                 </el-input>
                             </div>
@@ -132,57 +106,25 @@
                     </div>
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
-                            <el-table :data="paperindex" stripe border style="width: 100%">
+                            <el-table :data="attendeeindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
-                                <el-table-column fixed type="expand" label="Detail" width="100">
-                                    <template slot-scope="props">
-                                        <el-form label-position="left" inline class="demo-table-expand">
-                                            <el-form-item label="Topic">
-                                                <span>{{ props.row.topic }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Title">
-                                                <span>{{ props.row.title }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Authors">
-                                                <el-table size="mini" :data="props.row.author" stripe border style="width: 100%">
-                                                    <el-table-column fixed type="index">
-                                                    </el-table-column>
-                                                    <el-table-column prop="corresponding" label="Corresponding" width="110">
-                                                    </el-table-column>
-                                                    <el-table-column prop="firstname" label="Firstname" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="lastname" label="Lastname" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="country" label="Country" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="organization" label="Organization" width="250">
-                                                    </el-table-column>
-                                                    <el-table-column prop="email" label="Email" width="150">
-                                                    </el-table-column>
-                                                </el-table>
-                                            </el-form-item>
-                                            <el-form-item label="Abstract">
-                                                <span>{{ props.row.abstract }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Keywords">
-                                                <span>{{ props.row.keywords }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="File">
-                                                <el-button @click="download(props.row.file)" type="text" size="mini">{{ props.row.file }}</el-button>
-                                            </el-form-item>
-                                        </el-form>
+                                <el-table-column prop="firstname" label="Firstname" width="100">
+                                </el-table-column>
+                                <el-table-column prop="lastname" label="Lirstname" width="100">
+                                </el-table-column>
+                                <el-table-column prop="email" label="Email" width="200">
+                                </el-table-column>
+                                <el-table-column label="File" width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="id" label="Paper_id" width="100">
+                                <el-table-column prop="is_check" label="Checked" width="100">
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="300">
+                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
                                 </el-table-column>
-                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="200">
-                                </el-table-column>
-                                <el-table-column prop="is_accept" label="Accepted" width="100">
-                                </el-table-column>
-                                <el-table-column fixed="right" label="Option" width="150">
+                                <el-table-column fixed="right" label="Options" width="250">
                                     <template slot-scope="scope">
                                         <el-button v-on:click="acceptDialog(scope.row.id)" type="text" size="mini">Accept Status</el-button>
                                     </template>
@@ -211,7 +153,7 @@
             </div>
         </div>
         <!-- subauthor -->
-        <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="25%">
+        <el-dialog title="Comfirm the attendee or not?" :visible.sync="accept" width="25%">
             <span slot="footer" class="dialog-footer">
                 <el-button type="danger" v-on:click="notAcceptPaper">Not Accept</el-button>
                 <el-button type="primary" v-on:click="acceptPaper">Accept</el-button>
@@ -227,15 +169,6 @@
     <script>
     ELEMENT.locale(ELEMENT.lang.en)
     </script>
-    <style>
-    .el-select .el-input {
-        width: 400px;
-    }
-
-    .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-    }
-    </style>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
 var app = new Vue({
@@ -245,22 +178,30 @@ var app = new Vue({
         id: "<?php echo $id; ?>",
         firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
+        attendeeDue: false,
 
-        paperindex: [],
-        authorindex: [],
+        attendeeindex: [],
+
+
         total: 0,
         currentPage: 1,
-        select: '',
-        keywords: '',
 
         accept: false,
-        acceptpaperid: '',
+        acceptattendeeid: '',
+        keywords: '',
     },
 
     mounted: function() {
+        var deadLine = "2018-09-30 23:59:59";
+        if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
+            Vue.set(this, "attendeeDue", true);
+        } else {
+            Vue.set(this, "attendeeDue", false);
+        }
+
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('adminpaper/paper');?>",
+            url: "<?php echo site_url('registration/adminattendee');?>",
             data: {
                 id: "<?php echo $id; ?>",
                 firstname: "<?php echo $firstname; ?>",
@@ -270,7 +211,7 @@ var app = new Vue({
             success: function(data) {
                 if (data['status'] == true) {
                     Vue.set(app, "total", data['total']);
-                    Vue.set(app, "paperindex", data['index']);
+                    Vue.set(app, "attendeeindex", data['index']);
                 }
             }
         });
@@ -283,7 +224,7 @@ var app = new Vue({
                 url: "<?php echo site_url('sign/signout');?>",
                 data: {
                     id: app.id,
-                    firstname: app.firstname
+                    firstname: app.firstname,
                 },
                 dataType: "json",
                 success: function(data) {
@@ -297,10 +238,10 @@ var app = new Vue({
             });
         },
 
-        getpaper() {
+        getattendee() {
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('adminpaper/paper');?>",
+                url: "<?php echo site_url('registration/adminattendee');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
@@ -310,7 +251,73 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         Vue.set(app, "total", data['total']);
-                        Vue.set(app, "paperindex", data['index']);
+                        Vue.set(app, "attendeeindex", data['index']);
+                    }
+                }
+            });
+        },
+
+        handleCurrentChange(val) {
+            app.getattendee();
+        },
+
+        search(val) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('registration/searchattendee');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    currentPage: app.currentPage,
+                    keywords: app.keywords
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        Vue.set(app, "total", data['total']);
+                        Vue.set(app, "attendeeindex", data['index']);
+                    }
+                }
+            });
+        },
+
+        acceptPaper() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('registration/accept');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    attendee_id: app.acceptattendeeid,
+                    is_check: 'Yes',
+                    is_accept: 'Yes'
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        app.getattendee();
+                        Vue.set(app, 'accept', false);
+                    }
+                }
+            });
+        },
+
+        notAcceptPaper() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('registration/accept');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    attendee_id: app.acceptattendeeid,
+                    is_check: 'Yes',
+                    is_accept: 'No'
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        app.getattendee();
+                        Vue.set(app, 'accept', false);
                     }
                 }
             });
@@ -320,7 +327,7 @@ var app = new Vue({
             if (file != "") {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('adminpaper/download');?>",
+                    url: "<?php echo site_url('registration/download');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
@@ -329,7 +336,7 @@ var app = new Vue({
                     success: function(response, status, request) {
                         var disp = request.getResponseHeader('Content-Disposition');
                         if (disp && disp.search('attachment') != -1) {
-                            var form = $('<form method="POST" action="' + "<?php echo site_url('adminpaper/download');?>" + '">');
+                            var form = $('<form method="POST" action="' + "<?php echo site_url('registration/download');?>" + '">');
                             $.each({
                                 id: "<?php echo $id; ?>",
                                 firstname: "<?php echo $firstname; ?>",
@@ -351,78 +358,10 @@ var app = new Vue({
             }
         },
 
-        handleCurrentChange(val) {
-            app.getpaper();
-        },
-
-        search(val) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/searchpaper');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    currentPage: app.currentPage,
-                    select: app.select,
-                    keywords: app.keywords
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        Vue.set(app, "total", data['total']);
-                        Vue.set(app, "paperindex", data['index']);
-                    }
-                }
-            });
-        },
-
         acceptDialog(id) {
             Vue.set(app, 'accept', true);
-            Vue.set(app, 'acceptpaperid', id);
+            Vue.set(app, 'acceptattendeeid', id);
         },
-
-        acceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/accept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.acceptpaperid,
-                    is_check: 'Yes',
-                    is_accept: 'Yes'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getpaper();
-                        Vue.set(app, 'accept', false);
-                    }
-                }
-            });
-        },
-
-        notAcceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/accept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.acceptpaperid,
-                    is_check: 'Yes',
-                    is_accept: 'No'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getpaper();
-                        Vue.set(app, 'accept', false);
-                    }
-                }
-            });
-        }
-
     }
 })
 </script>

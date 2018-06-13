@@ -91,6 +91,25 @@ class Registration extends CI_Controller {
 		}
 	}
 
+	public function accept() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$attendee_id = $postdata['attendee_id'];
+		$is_check = $postdata['is_check'];
+		$is_accept = $postdata['is_accept'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$this->Attendee->accept($attendee_id, $is_accept, $is_accept);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
 	public function uploadfile() {
 		$postdata = $this->input->post();
 		$user_id = $postdata['id'];
@@ -117,7 +136,9 @@ class Registration extends CI_Controller {
 					->set_status_header(400)
 					->set_output($this->upload->display_errors('', ''));
 			} else {
-				$this->Attendee->upload($attendee_id);
+				$filename = $this->upload->data()['file_name'];
+
+				$this->Attendee->upload($attendee_id, $filename);
 				$this->output
 					->set_output(json_encode(array('status' => false)));
 			}
@@ -135,6 +156,63 @@ class Registration extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$data['index'] = $this->Attendee->index($user_id);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function adminattendee() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$currentPage = $postdata['currentPage'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$data['total'] = $this->Attendee->adminindextotal();
+			$data['index'] = $this->Attendee->adminindex($currentPage);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function searchattendee() {
+
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$currentPage = $postdata['currentPage'];
+		$keywords = $postdata['keywords'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$data['total'] = $this->Attendee->adminsearchtotal($keywords);
+			$data['index'] = $this->Attendee->adminsearch($currentPage, $keywords);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function download() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$file = $postdata['file'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+
+			force_download('./application/uploads/attendee/' . $file, NULL);
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

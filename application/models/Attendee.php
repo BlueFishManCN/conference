@@ -37,9 +37,19 @@ class Attendee extends CI_Model {
 		$this->db->update("attendee", $data);
 	}
 
-	public function upload($attendee_id) {
+	public function accept($attendee_id, $is_check, $is_accept) {
 		$data = array(
-			'file' => $attendee_id,
+			'is_check' => $is_check,
+			'is_accept' => $is_accept,
+		);
+		$this->db->where('id', $attendee_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('attendee', $data);
+	}
+
+	public function upload($attendee_id, $filename) {
+		$data = array(
+			'file' => $filename,
 		);
 		$this->db->where('id', $attendee_id);
 		$this->db->where('is_delete', 0);
@@ -53,6 +63,59 @@ class Attendee extends CI_Model {
 		$this->db->where('is_delete', 0);
 		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result_array();
+		return $query;
+	}
+
+	public function adminindextotal() {
+		$this->db->select('*');
+		$this->db->from('attendee');
+		$this->db->where('is_delete', 0);
+		return $this->db->count_all_results();
+	}
+
+	public function adminindex($currentPage) {
+		$this->db->select('*');
+		$this->db->from('attendee');
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$this->db->limit(5, ($currentPage - 1) * 5);
+		$query = $this->db->get()->result_array();
+
+		return $query;
+	}
+
+	public function adminsearchtotal($keywords) {
+		$this->db->select('*');
+		$this->db->from('attendee');
+		$this->db->where('is_delete', 0);
+
+		if ($keywords != "") {
+			$this->db->like('id', $keywords);
+			$this->db->or_like('firstname', $keywords);
+			$this->db->or_like('lastname', $keywords);
+			$this->db->or_like('email', $keywords);
+
+		}
+		return $this->db->count_all_results();
+	}
+
+	public function adminsearch($currentPage, $keywords) {
+		$this->db->select('*');
+		$this->db->from('attendee');
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+
+		if ($keywords != "") {
+			$this->db->like('id', $keywords);
+			$this->db->or_like('firstname', $keywords);
+			$this->db->or_like('lastname', $keywords);
+			$this->db->or_like('email', $keywords);
+
+		}
+
+		$this->db->limit(5, ($currentPage - 1) * 5);
+		$query = $this->db->get()->result_array();
+
 		return $query;
 	}
 }
