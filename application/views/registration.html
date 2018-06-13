@@ -70,10 +70,10 @@
                         <nav class="android-navigation mdl-navigation">
                             <!-- Flat button with ripple -->
                             <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
-                             Submission
+                             Submit
                             </a>
-                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
-                             Registration
+                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('registration/index');?>">
+                             Register
                             </a>
                             <!-- Right aligned menu below button -->
                             <button class="mdl-button mdl-js-button mdl-button--icon">
@@ -95,70 +95,37 @@
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
                 <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Your Submission
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Your Registration
                     </div>
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                            <button :disabled.sync="abstractDue" isabled class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subpaper = true">
+                            <button :disabled.sync="attendeeDue" isabled class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="addattendee = true">
                                 <i class="material-icons">add</i>
                             </button>
                         </div>
                     </div>
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
-                            <el-table :data="paperindex" stripe border style="width: 100%">
+                            <el-table :data="attendeeindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
-                                <el-table-column fixed type="expand" label="Detail" width="60">
-                                    <template slot-scope="props">
-                                        <el-form label-position="left" inline class="demo-table-expand">
-                                            <el-form-item label="Topic">
-                                                <span>{{ props.row.topic }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Title">
-                                                <span>{{ props.row.title }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Authors">
-                                                <el-table size="mini" :data="props.row.author" stripe border style="width: 100%">
-                                                    <el-table-column fixed type="index">
-                                                    </el-table-column>
-                                                    <el-table-column prop="corresponding" label="Corresponding" width="110">
-                                                    </el-table-column>
-                                                    <el-table-column prop="firstname" label="Firstname" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="lastname" label="Lastname" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="country" label="Country" width="80">
-                                                    </el-table-column>
-                                                    <el-table-column prop="organization" label="Organization" width="250">
-                                                    </el-table-column>
-                                                    <el-table-column prop="email" label="Email" width="150">
-                                                    </el-table-column>
-                                                </el-table>
-                                            </el-form-item>
-                                            <el-form-item label="Abstract">
-                                                <span>{{ props.row.abstract }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="Keywords">
-                                                <span>{{ props.row.keywords }}</span>
-                                            </el-form-item>
-                                            <el-form-item label="File">
-                                                <el-button @click="download(props.row.file)" type="text" size="mini">{{ props.row.file }}</el-button>
-                                            </el-form-item>
-                                        </el-form>
-                                    </template>
+                                <el-table-column prop="firstname" label="Firstname" width="100">
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="400">
+                                <el-table-column prop="lastname" label="Lirstname" width="100">
                                 </el-table-column>
-                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="190">
+                                <el-table-column prop="email" label="Email" width="200">
                                 </el-table-column>
-                                <el-table-column prop="updated_at" label="Update time(UTC+8)" width="160">
+                                <el-table-column prop="file" label="File" width="100">
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Edit options" width="150">
+                                <el-table-column prop="is_check" label="Checked" width="100">
+                                </el-table-column>
+                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
+                                </el-table-column>
+                                <el-table-column fixed="right" label="Options" width="250">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Info</el-button>
-                                        <el-button :disabled.sync="abstractDue" @click="editAuthor(scope.row.id)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="paperDue" @click="editUploadFile(scope.row.id)" type="text" size="mini">File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="editAttendee(scope.row)" type="text" size="mini">Edit Info</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" size="mini" type="danger" @click="deleteAttendee(scope.row.id)" icon="el-icon-delete" circle></el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -180,241 +147,51 @@
                 </footer>
             </div>
         </div>
-        <!-- subpaper -->
-        <el-dialog title="Submit Paper: Step 1, add paper basic information" :visible.sync="subpaper" width="75%">
-            <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="10%">
-                <el-form-item label="Topic" prop="topic">
-                    <el-select v-model="subpaperform.topic" placeholder="Please select the topic">
-                        <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
-                        <el-option label="Banking" value="Banking"></el-option>
-                        <el-option label="Behavioral Finance" value="Behavioral Finance"></el-option>
-                        <el-option label="Big Data,Artificial intelligence, and Blockchain in Economics and Finance" value="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"></el-option>
-                        <el-option label="Corporate Finance and Corporate Sustainability" value="Corporate Finance and Corporate Sustainability"></el-option>
-                        <el-option label="Economic Modeling and Forecasting" value="Economic Modeling and Forecasting"></el-option>
-                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
-                        <el-option label="Empirical Economics" value="Empirical Economics"></el-option>
-                        <el-option label="Environment and Social Responsibility" value="Environment and Social Responsibility"></el-option>
-                        <el-option label="Financial Accounting and Reporting" value="Financial Accounting and Reporting"></el-option>
-                        <el-option label="Finance, Investment& Real Estate Development" value="Finance, Investment& Real Estate Development"></el-option>
-                        <el-option label="Governance of Private and Public Sectors" value="Governance of Private and Public Sectors"></el-option>
-                        <el-option label="Inclusive Finance" value="Inclusive Finance"></el-option>
-                        <el-option label="Information Technology & e-Governance" value="Information Technology & e-Governance"></el-option>
-                        <el-option label="Insurance and Risk Management" value="Insurance and Risk Management"></el-option>
-                        <el-option label="International Finance" value="International Finance"></el-option>
-                        <el-option label="Management and Marketing Issues" value="Management and Marketing Issues"></el-option>
-                        <el-option label="Market Microstructure" value="Market Microstructure"></el-option>
-                        <el-option label="New Sustainable Development Paradigms" value="New Sustainable Development Paradigms"></el-option>
-                        <el-option label="Public Administration Performance and Management" value="Public Administration Performance and Management"></el-option>
-                        <el-option label="Security and Defence Issues" value="Security and Defence Issues"></el-option>
-                        <el-option label="Socio-Economic Innovation and Local Development" value="Socio-Economic Innovation and Local Development"></el-option>
-                        <el-option label="Others" value="Others"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Title" prop="title">
-                    <el-input v-model="subpaperform.title" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Abstract" prop="abstract">
-                    <el-input type="textarea" v-model="subpaperform.abstract" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Keywords" prop="keywords">
-                    <el-input v-model="subpaperform.keywords" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="subpaper = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subPaper('subpaperform')">Next</el-button>
-            </span>
-        </el-dialog>
-        <!-- subauthor -->
-        <el-dialog title="Submit Paper: Step 2, add authors" :visible.sync="subauthor" width="75%">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subaddauthor = true">
-                        <i class="material-icons">add</i>
-                    </button>
-                </div>
-            </div>
-            <el-table :data="authorindex" size="small" stripe border style="width: 100%">
-                <el-table-column fixed type="index">
-                </el-table-column>
-                <el-table-column prop="corresponding" label="Corresponding" width="110">
-                </el-table-column>
-                <el-table-column prop="firstname" label="First name" width="95">
-                </el-table-column>
-                <el-table-column prop="lastname" label="Last name" width="95">
-                </el-table-column>
-                <el-table-column prop="country" label="Country" width="95">
-                </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="350">
-                </el-table-column>
-                <el-table-column prop="email" label="Email" width="195">
-                </el-table-column>
-                <el-table-column fixed="right" width="50">
-                    <template slot-scope="scope">
-                        <el-button size="mini" type="danger" @click="subDeleteAuthor(scope.row.id)" icon="el-icon-delete" circle></el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="subauthor = false">Finish: Do It Later</el-button>
-                <el-button type="primary" v-on:click="subUploadFile(add_paper_id)">Next: Upload File</el-button>
-            </span>
-        </el-dialog>
-        <!-- subaddauthor -->
-        <el-dialog title="Add author" :visible.sync="subaddauthor" width="50%">
-            <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="25%">
+        <!-- addattendee -->
+        <el-dialog title="Add attendee" :visible.sync="addattendee" width="50%">
+            <el-form ref="addattendeeform" :model="addattendeeform" status-icon :rules="addattendeerules" label-width="25%">
                 <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="addauthorform.firstname" auto-complete="off"></el-input>
+                    <el-input v-model="addattendeeform.firstname" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="addauthorform.lastname" auto-complete="off"></el-input>
+                    <el-input v-model="addattendeeform.lastname" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Email" prop="email">
-                    <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="addauthorform.organization" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Corresponding" prop="corresponding">
-                    <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
-                    <el-radio v-model="addauthorform.corresponding" label="YES" border>YES</el-radio>
+                    <el-input v-model="addattendeeform.email" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="subaddauthor = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subAddAuthor('addauthorform')">Add</el-button>
+                <el-button v-on:click="addattendee = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="subAddAttendee('addattendeeform')">Add</el-button>
             </span>
         </el-dialog>
-        <!-- subuploadfile -->
-        <el-dialog title="Submit Paper: Last Step, upload file" :visible.sync="subuploadfile" width="50%">
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
+        <!-- editattendee -->
+        <el-dialog title="Edit attendee" :visible.sync="editattendee" width="50%">
+            <el-form ref="editattendeeform" :model="editattendeeform" status-icon :rules="editattendeerules" label-width="25%">
+                <el-form-item label="First name" prop="firstname">
+                    <el-input v-model="editattendeeform.firstname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Last name" prop="lastname">
+                    <el-input v-model="editattendeeform.lastname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="editattendeeform.email" auto-complete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="editattendee = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="editAttendeePost('editattendeeform')">Confirm</el-button>
+            </span>
+        </el-dialog>
+        <!-- uploadfile -->
+        <el-dialog title="Upload file" :visible.sync="uploadfile" width="50%">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('registration/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
                 <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
             </el-upload>
             <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="subuploadfile = false">Finish or Do It Later</el-button>
-            </span>
-        </el-dialog>
-        <!-- editpaper -->
-        <el-dialog title="Edit paper basic information" :visible.sync="editpaper" width="75%">
-            <el-form ref="editpaperform" :model="editpaperform" status-icon :rules="editpaperrules" label-width="10%">
-                <el-form-item label="Topic" prop="topic">
-                    <el-select v-model="editpaperform.topic" placeholder="Please select the topic">
-                        <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
-                        <el-option label="Banking" value="Banking"></el-option>
-                        <el-option label="Behavioral Finance" value="Behavioral Finance"></el-option>
-                        <el-option label="Big Data,Artificial intelligence, and Blockchain in Economics and Finance" value="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"></el-option>
-                        <el-option label="Corporate Finance and Corporate Sustainability" value="Corporate Finance and Corporate Sustainability"></el-option>
-                        <el-option label="Economic Modeling and Forecasting" value="Economic Modeling and Forecasting"></el-option>
-                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
-                        <el-option label="Empirical Economics" value="Empirical Economics"></el-option>
-                        <el-option label="Environment and Social Responsibility" value="Environment and Social Responsibility"></el-option>
-                        <el-option label="Financial Accounting and Reporting" value="Financial Accounting and Reporting"></el-option>
-                        <el-option label="Finance, Investment& Real Estate Development" value="Finance, Investment& Real Estate Development"></el-option>
-                        <el-option label="Governance of Private and Public Sectors" value="Governance of Private and Public Sectors"></el-option>
-                        <el-option label="Inclusive Finance" value="Inclusive Finance"></el-option>
-                        <el-option label="Information Technology & e-Governance" value="Information Technology & e-Governance"></el-option>
-                        <el-option label="Insurance and Risk Management" value="Insurance and Risk Management"></el-option>
-                        <el-option label="International Finance" value="International Finance"></el-option>
-                        <el-option label="Management and Marketing Issues" value="Management and Marketing Issues"></el-option>
-                        <el-option label="Market Microstructure" value="Market Microstructure"></el-option>
-                        <el-option label="New Sustainable Development Paradigms" value="New Sustainable Development Paradigms"></el-option>
-                        <el-option label="Public Administration Performance and Management" value="Public Administration Performance and Management"></el-option>
-                        <el-option label="Security and Defence Issues" value="Security and Defence Issues"></el-option>
-                        <el-option label="Socio-Economic Innovation and Local Development" value="Socio-Economic Innovation and Local Development"></el-option>
-                        <el-option label="Others" value="Others"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Title" prop="title">
-                    <el-input v-model="editpaperform.title" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Abstract" prop="abstract">
-                    <el-input type="textarea" v-model="editpaperform.abstract" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Keywords" prop="keywords">
-                    <el-input v-model="editpaperform.keywords" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="editpaper = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="editPaperPost('editpaperform')">Confirm</el-button>
-            </span>
-        </el-dialog>
-        <!-- editauthor -->
-        <el-dialog title="Edit authors" :visible.sync="editauthor" width="75%">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="editaddauthor = true">
-                        <i class="material-icons">add</i>
-                    </button>
-                </div>
-            </div>
-            <el-table :data="authorindex" size="small" stripe border style="width: 100%">
-                <el-table-column fixed type="index">
-                </el-table-column>
-                <el-table-column prop="corresponding" label="Corresponding" width="110">
-                </el-table-column>
-                <el-table-column prop="firstname" label="First name" width="95">
-                </el-table-column>
-                <el-table-column prop="lastname" label="Last name" width="95">
-                </el-table-column>
-                <el-table-column prop="country" label="Country" width="95">
-                </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="350">
-                </el-table-column>
-                <el-table-column prop="email" label="Email" width="195">
-                </el-table-column>
-                <el-table-column fixed="right" width="50">
-                    <template slot-scope="scope">
-                        <el-button size="mini" type="danger" @click="editDeleteAuthor(scope.row.id)" icon="el-icon-delete" circle></el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="editauthor = false">Finish</el-button>
-            </span>
-        </el-dialog>
-        <!-- editaddauthor -->
-        <el-dialog title="Add author" :visible.sync="editaddauthor" width="50%">
-            <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="25%">
-                <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="addauthorform.firstname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="addauthorform.lastname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="addauthorform.organization" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Corresponding" prop="corresponding">
-                    <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
-                    <el-radio v-model="addauthorform.corresponding" label="YES" border>YES</el-radio>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="editaddauthor = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="editAddAuthor('addauthorform')">Add</el-button>
-            </span>
-        </el-dialog>
-        <!-- edituploadfile -->
-        <el-dialog title="Upload file" :visible.sync="edituploadfile" width="50%">
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
-                <el-button slot="trigger" size="small" type="primary">Select file</el-button>
-                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
-            </el-upload>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>
+                <el-button type="info" v-on:click="uploadfile = false">Finish</el-button>
             </span>
         </el-dialog>
     </div>
@@ -429,27 +206,6 @@
     </script>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
-var validateEmail = (rule, value, callback) => {
-    if (value !== app.step1form.email) {
-        callback(new Error('The two entered email are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass = (rule, value, callback) => {
-    if (value !== app.step3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass2 = (rule, value, callback) => {
-    if (value !== app.forgetstep3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
-    } else {
-        callback();
-    }
-};
 var app = new Vue({
     el: '#app',
 
@@ -457,67 +213,31 @@ var app = new Vue({
         id: "<?php echo $id; ?>",
         firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
-
-        subpaper: false,
-        subauthor: false,
-        subaddauthor: false,
-        subuploadfile: false,
-        editpaper: false,
-        editauthor: false,
-        editaddauthor: false,
-        edituploadfile: false,
-
-        paperindex: [],
-        authorindex: [],
-
-        add_paper_id: "",
-        edit_paper_id: "",
-
-        abstractDue: true,
-        paperDue: true,
-
-        subpaperform: {
-            topic: '',
-            title: '',
-            abstract: '',
-            keywords: '',
-        },
-        addauthorform: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            country: '',
-            organization: '',
-            corresponding: 'NO'
-        },
+        attendeeDue: false,
+        addattendee: false,
+        editattendee: false,
+        uploadfile: false,
         uploaddata: {
             id: "<?php echo $id; ?>",
             firstname: "<?php echo $firstname; ?>",
-            paper_id: "",
+            attendee_id: "",
         },
-        editpaperform: {
-            id: '',
-            topic: '',
-            title: '',
-            abstract: '',
-            keywords: '',
+        attendeeindex: [],
+
+        addattendeeform: {
+            firstname: '',
+            lastname: '',
+            email: '',
         },
 
-        subpaperrules: {
-            topic: [
-                { required: true, message: 'Please select the topic', trigger: ['blur', 'change'] },
-            ],
-            title: [
-                { required: true, message: 'Please input the title', trigger: ['blur', 'change'] },
-            ],
-            abstract: [
-                { required: true, message: 'Please input the abstract', trigger: ['blur', 'change'] },
-            ],
-            keywords: [
-                { required: true, message: 'Please input the keywords', trigger: ['blur', 'change'] },
-            ],
+        editattendeeform: {
+            id: '',
+            firstname: '',
+            lastname: '',
+            email: '',
         },
-        addauthorrules: {
+
+        addattendeerules: {
             firstname: [
                 { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
             ],
@@ -528,50 +248,33 @@ var app = new Vue({
                 { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
-            country: [
-                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
-            ],
-            organization: [
-                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
-            ],
-            corresponding: [
-                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
-            ],
         },
-        editpaperrules: {
-            topic: [
-                { required: true, message: 'Please select the topic', trigger: ['blur', 'change'] },
+
+        editattendeerules: {
+            firstname: [
+                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
             ],
-            title: [
-                { required: true, message: 'Please input the title', trigger: ['blur', 'change'] },
+            lastname: [
+                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
             ],
-            abstract: [
-                { required: true, message: 'Please input the abstract', trigger: ['blur', 'change'] },
-            ],
-            keywords: [
-                { required: true, message: 'Please input the keywords', trigger: ['blur', 'change'] },
+            email: [
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
         },
     },
 
     mounted: function() {
-        var deadLine1 = "2018-07-10 23:59:59";
-        var deadLine2 = "2018-08-15 23:59:59";
-        if (new Date() > new Date(Date.parse(deadLine1.replace(/\-/g, "/")))) {
-            Vue.set(this, "abstractDue", true);
+        var deadLine = "2018-09-30 23:59:59";
+        if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
+            Vue.set(this, "attendeeDue", true);
         } else {
-            Vue.set(this, "abstractDue", false);
-        }
-
-        if (new Date() > new Date(Date.parse(deadLine2.replace(/\-/g, "/")))) {
-            Vue.set(this, "paperDue", true);
-        } else {
-            Vue.set(this, "paperDue", false);
+            Vue.set(this, "attendeeDue", false);
         }
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('submission/paper');?>",
+            url: "<?php echo site_url('registration/attendee');?>",
             data: {
                 id: "<?php echo $id; ?>",
                 firstname: "<?php echo $firstname; ?>"
@@ -579,11 +282,12 @@ var app = new Vue({
             dataType: "json",
             success: function(data) {
                 if (data['status'] == true) {
-                    Vue.set(app, "paperindex", data['index']);
+                    Vue.set(app, "attendeeindex", data['index']);
                 }
             }
         });
     },
+
     methods: {
         signOut(formName) {
             $.ajax({
@@ -605,10 +309,10 @@ var app = new Vue({
             });
         },
 
-        getpaper() {
+        getattendee() {
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('submission/paper');?>",
+                url: "<?php echo site_url('registration/attendee');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>"
@@ -616,33 +320,31 @@ var app = new Vue({
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
-                        Vue.set(app, "paperindex", data['index']);
+                        Vue.set(app, "attendeeindex", data['index']);
                     }
                 }
             });
         },
 
-        subPaper(formName) {
+        subAddAttendee(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     $.ajax({
                         type: "POST",
-                        url: "<?php echo site_url('submission/submit');?>",
+                        url: "<?php echo site_url('registration/addattendee');?>",
                         data: {
                             id: "<?php echo $id; ?>",
                             firstname: "<?php echo $firstname; ?>",
-                            topic: app.subpaperform.topic,
-                            title: app.subpaperform.title,
-                            abstract: app.subpaperform.abstract,
-                            keywords: app.subpaperform.keywords,
+                            attendeefirstname: app.addattendeeform.firstname,
+                            lastname: app.addattendeeform.lastname,
+                            email: app.addattendeeform.email,
                         },
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                Vue.set(app, "subpaper", false);
-                                alert("Submit paper basic information successful");
-                                app.getpaper();
-                                app.subAuthor(data['paper_id']);
+                                alert("Add attendee successful");
+                                Vue.set(app, 'addattendee', false);
+                                app.getattendee();
                             }
                         }
                     });
@@ -653,56 +355,53 @@ var app = new Vue({
             });
         },
 
-        subAuthor(paperid) {
-            Vue.set(app, "add_paper_id", paperid);
+        deleteAttendee(id) {
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('submission/author');?>",
+                url: "<?php echo site_url('registration/deleteattendee');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.add_paper_id,
+                    attendee_id: id
                 },
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
-                        Vue.set(app, "authorindex", data['index']);
-                        Vue.set(app, "subauthor", true);
+                        app.getattendee();
                     }
                 }
             });
         },
 
-        subAddAuthor(formName) {
+        editAttendee(row) {
+
+            Vue.set(app.editattendeeform, "id", row.id);
+            Vue.set(app.editattendeeform, "firstname", row.firstname);
+            Vue.set(app.editattendeeform, "lastname", row.lastname);
+            Vue.set(app.editattendeeform, "email", row.email);
+            Vue.set(app, "editattendee", true);
+        },
+
+        editAttendeePost(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     $.ajax({
                         type: "POST",
-                        url: "<?php echo site_url('submission/addauthor');?>",
+                        url: "<?php echo site_url('registration/edit');?>",
                         data: {
                             id: "<?php echo $id; ?>",
                             firstname: "<?php echo $firstname; ?>",
-                            paper_id: app.add_paper_id,
-                            authorfirstname: app.addauthorform.firstname,
-                            authorlastname: app.addauthorform.lastname,
-                            email: app.addauthorform.email,
-                            country: app.addauthorform.country,
-                            organization: app.addauthorform.organization,
-                            corresponding: app.addauthorform.corresponding
+                            attendee_id: app.editattendeeform.id,
+                            attendeefirstname: app.editattendeeform.firstname,
+                            lastname: app.editattendeeform.lastname,
+                            email: app.editattendeeform.email,
                         },
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                app.subAuthor(app.add_paper_id);
-                                app.getpaper();
-                                Vue.set(app, "subaddauthor", false);
-                                Vue.set(app.addauthorform, "firstname", "");
-                                Vue.set(app.addauthorform, "lastname", "");
-                                Vue.set(app.addauthorform, "email", "");
-                                Vue.set(app.addauthorform, "country", "");
-                                Vue.set(app.addauthorform, "organization", "");
-                                Vue.set(app.addauthorform, "corresponding", "NO");
-                                alert("Add author successful");
+                                Vue.set(app, "editattendee", false);
+                                alert("Edit attendee successful");
+                                app.getattendee();
                             }
                         }
                     });
@@ -713,166 +412,23 @@ var app = new Vue({
             });
         },
 
-        subDeleteAuthor(id) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('submission/deleteauthor');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    author_id: id
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.subAuthor(app.add_paper_id);
-                        app.getpaper();
-                    }
-                }
-            });
-        },
-
-        subUploadFile(paper_id) {
-            Vue.set(app.uploaddata, "paper_id", paper_id);
-            Vue.set(app, "subauthor", false);
-            Vue.set(app, "subuploadfile", true);
-        },
-        editUploadFile(paper_id) {
-            Vue.set(app.uploaddata, "paper_id", paper_id);
-            Vue.set(app, "edituploadfile", true);
+        uploadFile(attendee_id) {
+            Vue.set(app.uploaddata, 'attendee_id', attendee_id)
+            Vue.set(app, "uploadfile", true);
         },
         submitUpload() {
             this.$refs.upload.submit();
         },
         handleSuccess(response, file, fileList) {
-            app.getpaper();
+            app.getattendee();
             alert("Upload file successful");
         },
         handleError(response, file, fileList) {
-            app.getpaper();
+            app.getattendee();
             alert(response);
         },
         handleExceed(files, fileList) {
             alert("Can only upload one file");
-        },
-
-        editPaper(row) {
-            Vue.set(app.editpaperform, "id", row.id);
-            Vue.set(app.editpaperform, "topic", row.topic);
-            Vue.set(app.editpaperform, "title", row.title);
-            Vue.set(app.editpaperform, "abstract", row.abstract);
-            Vue.set(app.editpaperform, "keywords", row.keywords);
-            Vue.set(app, "editpaper", true);
-        },
-
-        editPaperPost(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('submission/edit');?>",
-                        data: {
-                            id: "<?php echo $id; ?>",
-                            firstname: "<?php echo $firstname; ?>",
-                            paper_id: app.editpaperform.id,
-                            topic: app.editpaperform.topic,
-                            title: app.editpaperform.title,
-                            abstract: app.editpaperform.abstract,
-                            keywords: app.editpaperform.keywords,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                Vue.set(app, "editpaper", false);
-                                alert("Edit paper basic information successful");
-                                app.getpaper();
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-
-        editAuthor(paperid) {
-            Vue.set(app, "edit_paper_id", paperid);
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('submission/author');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: paperid,
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        Vue.set(app, "authorindex", data['index']);
-                        Vue.set(app, "editauthor", true);
-                    }
-                }
-            });
-        },
-
-        editAddAuthor(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('submission/addauthor');?>",
-                        data: {
-                            id: "<?php echo $id; ?>",
-                            firstname: "<?php echo $firstname; ?>",
-                            paper_id: app.edit_paper_id,
-                            authorfirstname: app.addauthorform.firstname,
-                            authorlastname: app.addauthorform.lastname,
-                            email: app.addauthorform.email,
-                            country: app.addauthorform.country,
-                            organization: app.addauthorform.organization,
-                            corresponding: app.addauthorform.corresponding
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                app.editAuthor(app.edit_paper_id);
-                                app.getpaper();
-                                Vue.set(app, "editaddauthor", false);
-                                Vue.set(app.addauthorform, "firstname", "");
-                                Vue.set(app.addauthorform, "lastname", "");
-                                Vue.set(app.addauthorform, "email", "");
-                                Vue.set(app.addauthorform, "country", "");
-                                Vue.set(app.addauthorform, "organization", "");
-                                Vue.set(app.addauthorform, "corresponding", "NO");
-                                alert("Add author successful");
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-
-        editDeleteAuthor(id) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('submission/deleteauthor');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    author_id: id
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.editAuthor(app.edit_paper_id);
-                        app.getpaper();
-                    }
-                }
-            });
         },
 
         download(file) {

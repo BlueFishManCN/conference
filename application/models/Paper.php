@@ -114,6 +114,21 @@ class Paper extends CI_Model {
 		return $query;
 	}
 
+	public function checkaccept($user_id) {
+		$this->db->select('*');
+		$this->db->from('paper');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('is_accept', 'Yes');
+		$this->db->where('is_delete', 0);
+		$query = $this->db->get()->result_array();
+
+		if (empty($query)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public function insert($id, $user_id, $topic, $title, $abstract, $keywords) {
 		$data = array(
 			'id' => $id,
@@ -141,6 +156,16 @@ class Paper extends CI_Model {
 			'title' => $title,
 			'abstract' => $abstract,
 			'keywords' => $keywords,
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('paper', $data);
+	}
+
+	public function accept($paper_id, $is_check, $is_accept) {
+		$data = array(
+			'is_check' => $is_check,
+			'is_accept' => $is_accept,
 		);
 		$this->db->where('id', $paper_id);
 		$this->db->where('is_delete', 0);

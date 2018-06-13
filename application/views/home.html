@@ -55,7 +55,10 @@
                         <nav class="android-navigation mdl-navigation">
                             <!-- Flat button with ripple -->
                             <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
-                             Submission
+                             Submit
+                            </a>
+                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('registration/index');?>">
+                             Register
                             </a>
                             <!-- Right aligned menu below button -->
                             <button class="mdl-button mdl-js-button mdl-button--icon">

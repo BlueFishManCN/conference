@@ -99,4 +99,23 @@ class Adminpaper extends CI_Controller {
 			return;
 		}
 	}
+
+	public function accept() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+		$is_check = $postdata['is_check'];
+		$is_accept = $postdata['is_accept'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$this->Paper->accept($paper_id, $is_accept, $is_accept);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
 }
