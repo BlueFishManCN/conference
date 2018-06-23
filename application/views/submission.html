@@ -105,7 +105,7 @@
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
                             <el-table :data="paperindex" stripe border style="width: 100%">
-                                <el-table-column fixed type="expand" label="Detail" width="100">
+                                <el-table-column fixed type="expand" label="CLICK for Detail" width="200">
                                     <template slot-scope="props">
                                         <el-form label-position="left" inline class="demo-table-expand">
                                             <el-form-item label="Topic">
@@ -144,17 +144,17 @@
                                         </el-form>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="450">
+                                <el-table-column prop="title" label="Title" width="350">
                                 </el-table-column>
-                                <el-table-column prop="is_check" label="Checked" width="100">
+                                <el-table-column prop="percentage" label="Progress(%)" width="110">
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Accepted" width="100">
+                                <el-table-column prop="is_accept" label="Accepted" width="90">
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="250">
                                     <template slot-scope="scope">
                                         <el-button :disabled.sync="abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Edit Info</el-button>
-                                        <el-button :disabled.sync="abstractDue" @click="editAuthor(scope.row.id)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="paperDue" @click="editUploadFile(scope.row.id)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
+                                        <el-button :disabled.sync="paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -177,8 +177,16 @@
             </div>
         </div>
         <!-- subpaper -->
-        <el-dialog title="Submit Paper: Step 1, add paper basic information" :visible.sync="subpaper" width="75%">
-            <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="10%">
+        <el-dialog title="Submit Paper: Step 1, add paper basic information" :visible.sync="subpaper" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="0"></el-progress>
+                </div>
+            </div>
+            <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="20%">
                 <el-form-item label="Topic" prop="topic">
                     <el-select v-model="subpaperform.topic" placeholder="Please select the topic">
                         <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
@@ -207,18 +215,18 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Title" prop="title">
-                    <el-input v-model="subpaperform.title" auto-complete="off"></el-input>
+                    <el-input v-model="subpaperform.title" placeholder="Please input the title" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Abstract" prop="abstract">
-                    <el-input type="textarea" autosize={true} v-model="subpaperform.abstract" auto-complete="off"></el-input>
+                    <el-input type="textarea" v-model="subpaperform.abstract" maxlength=2000 placeholder="Up to 200 words" autosize={true} :autosize="{ minRows: 6, maxRows: 10}" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Keywords" prop="keywords">
-                    <el-input v-model="subpaperform.keywords" auto-complete="off"></el-input>
+                    <el-input v-model="subpaperform.keywords" placeholder="3 to 5 keywords separated by semicolons, eg: keyword A; keyword B" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="subpaper = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subPaper('subpaperform')">Next</el-button>
+                <el-button type="primary" v-on:click="subPaper('subpaperform')">Next: Add authors</el-button>
             </span>
         </el-dialog>
         <!-- subauthor -->
@@ -228,6 +236,12 @@
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subaddauthor = true">
                         <i class="material-icons">add</i>
                     </button>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="add_paper_percentage"></el-progress>
                 </div>
             </div>
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
@@ -252,7 +266,6 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="subauthor = false">Finish: Do It Later</el-button>
                 <el-button type="primary" v-on:click="subUploadFile(add_paper_id)">Next: Upload File</el-button>
             </span>
         </el-dialog>
@@ -260,19 +273,19 @@
         <el-dialog title="Add author" :visible.sync="subaddauthor" width="50%">
             <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="25%">
                 <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="addauthorform.firstname" auto-complete="off"></el-input>
+                    <el-input v-model="addauthorform.firstname" placeholder="Please input the firstname" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="addauthorform.lastname" auto-complete="off"></el-input>
+                    <el-input v-model="addauthorform.lastname" placeholder="Please input the lastname" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Email" prop="email">
-                    <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
+                    <el-input v-model="addauthorform.email" placeholder="Please input the email" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Country" prop="country">
-                    <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
+                    <el-input v-model="addauthorform.country" placeholder="Please input the country" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="addauthorform.organization" auto-complete="off"></el-input>
+                    <el-input v-model="addauthorform.organization" placeholder="Please input the organization" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Corresponding" prop="corresponding">
                     <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
@@ -286,18 +299,34 @@
         </el-dialog>
         <!-- subuploadfile -->
         <el-dialog title="Submit Paper: Last Step, upload file" :visible.sync="subuploadfile" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="add_paper_percentage"></el-progress>
+                </div>
+            </div>
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
+                <div slot="tip" class="el-upload__tip">Only one pdf or zip file can be uploaded and no more than 2Mb</div>
             </el-upload>
             <span slot="footer" class="dialog-footer">
-                <el-button type="info" v-on:click="subuploadfile = false">Finish or Do It Later</el-button>
+                <el-button type="info" v-on:click="subuploadfile = false">Finish</el-button>
             </span>
         </el-dialog>
         <!-- editpaper -->
-        <el-dialog title="Edit paper basic information" :visible.sync="editpaper" width="75%">
-            <el-form ref="editpaperform" :model="editpaperform" status-icon :rules="editpaperrules" label-width="10%">
+        <el-dialog title="Edit paper basic information" :visible.sync="editpaper" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="edit_paper_percentage"></el-progress>
+                </div>
+            </div>
+            <el-form ref="editpaperform" :model="editpaperform" status-icon :rules="editpaperrules" label-width="20%">
                 <el-form-item label="Topic" prop="topic">
                     <el-select v-model="editpaperform.topic" placeholder="Please select the topic">
                         <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
@@ -326,13 +355,13 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Title" prop="title">
-                    <el-input v-model="editpaperform.title" auto-complete="off"></el-input>
+                    <el-input v-model="editpaperform.title" placeholder="Please input the title" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Abstract" prop="abstract">
-                    <el-input type="textarea" autosize={true} v-model="editpaperform.abstract" auto-complete="off"></el-input>
+                    <el-input type="textarea" v-model="editpaperform.abstract" maxlength=2000 placeholder="Up to 200 words" autosize={true} :autosize="{ minRows: 6, maxRows: 10}" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Keywords" prop="keywords">
-                    <el-input v-model="editpaperform.keywords" auto-complete="off"></el-input>
+                    <el-input v-model="editpaperform.keywords" placeholder="3 to 5 keywords separated by semicolons, eg: keyword A; keyword B" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -347,6 +376,12 @@
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="editaddauthor = true">
                         <i class="material-icons">add</i>
                     </button>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="edit_paper_percentage"></el-progress>
                 </div>
             </div>
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
@@ -404,10 +439,18 @@
         </el-dialog>
         <!-- edituploadfile -->
         <el-dialog title="Upload file" :visible.sync="edituploadfile" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="edit_paper_percentage"></el-progress>
+                </div>
+            </div>
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
+                <div slot="tip" class="el-upload__tip">Only one pdf or zip file can be uploaded and no more than 2Mb</div>
             </el-upload>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>
@@ -467,7 +510,9 @@ var app = new Vue({
         authorindex: [],
 
         add_paper_id: "",
+        add_paper_percentage: 0,
         edit_paper_id: "",
+        edit_paper_percentage: 0,
 
         abstractDue: true,
         paperDue: true,
@@ -637,8 +682,12 @@ var app = new Vue({
                             if (data['status'] == true) {
                                 Vue.set(app, "subpaper", false);
                                 alert("Submit paper basic information successful");
+                                Vue.set(app.subpaperform, "topic", "");
+                                Vue.set(app.subpaperform, "title", "");
+                                Vue.set(app.subpaperform, "abstract", "");
+                                Vue.set(app.subpaperform, "keywords", "");
                                 app.getpaper();
-                                app.subAuthor(data['paper_id']);
+                                app.subAuthor(data['paper_id'], data['paper_percentage']);
                             }
                         }
                     });
@@ -649,8 +698,9 @@ var app = new Vue({
             });
         },
 
-        subAuthor(paperid) {
+        subAuthor(paperid, paperpercentage) {
             Vue.set(app, "add_paper_id", paperid);
+            Vue.set(app, "add_paper_percentage", paperpercentage);
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('submission/author');?>",
@@ -663,6 +713,7 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         Vue.set(app, "authorindex", data['index']);
+                        Vue.set(app, "add_paper_percentage", data['paper_percentage']);
                         Vue.set(app, "subauthor", true);
                     }
                 }
@@ -689,6 +740,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
+                                Vue.set(app, "add_paper_percentage", data['paper_percentage']);
                                 app.subAuthor(app.add_paper_id);
                                 app.getpaper();
                                 Vue.set(app, "subaddauthor", false);
@@ -716,11 +768,13 @@ var app = new Vue({
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
+                    paper_id: app.add_paper_id,
                     author_id: id
                 },
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
+                        Vue.set(app, "add_paper_percentage", data['paper_percentage']);
                         app.subAuthor(app.add_paper_id);
                         app.getpaper();
                     }
@@ -733,14 +787,17 @@ var app = new Vue({
             Vue.set(app, "subauthor", false);
             Vue.set(app, "subuploadfile", true);
         },
-        editUploadFile(paper_id) {
+        editUploadFile(paper_id, paperpercentage) {
             Vue.set(app.uploaddata, "paper_id", paper_id);
+            Vue.set(app, "edit_paper_percentage", parseInt(paperpercentage));
             Vue.set(app, "edituploadfile", true);
         },
         submitUpload() {
             this.$refs.upload.submit();
         },
         handleSuccess(response, file, fileList) {
+            Vue.set(app, "add_paper_percentage", response['paper_percentage']);
+            Vue.set(app, "edit_paper_percentage", response['paper_percentage']);
             app.getpaper();
             alert("Upload file successful");
         },
@@ -758,6 +815,7 @@ var app = new Vue({
             Vue.set(app.editpaperform, "title", row.title);
             Vue.set(app.editpaperform, "abstract", row.abstract);
             Vue.set(app.editpaperform, "keywords", row.keywords);
+            Vue.set(app, "edit_paper_percentage", parseInt(row.percentage));
             Vue.set(app, "editpaper", true);
         },
 
@@ -792,8 +850,9 @@ var app = new Vue({
             });
         },
 
-        editAuthor(paperid) {
+        editAuthor(paperid, paperpercentage) {
             Vue.set(app, "edit_paper_id", paperid);
+            Vue.set(app, "edit_paper_percentage", parseInt(paperpercentage));
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('submission/author');?>",
@@ -806,6 +865,7 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         Vue.set(app, "authorindex", data['index']);
+                        Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
                         Vue.set(app, "editauthor", true);
                     }
                 }
@@ -841,6 +901,7 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
+                                Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
                                 alert("Add author successful");
                             }
                         }
@@ -859,12 +920,14 @@ var app = new Vue({
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
+                    paper_id: app.edit_paper_id,
                     author_id: id
                 },
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
                         app.editAuthor(app.edit_paper_id);
+                        Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
                         app.getpaper();
                     }
                 }

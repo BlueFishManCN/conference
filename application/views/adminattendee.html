@@ -109,7 +109,7 @@
                             <el-table :data="attendeeindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
-                                <el-table-column prop="firstname" label="Firstname" width="100">
+                                <el-table-column prop="firstname" label="Firstname" width="200">
                                 </el-table-column>
                                 <el-table-column prop="lastname" label="Lirstname" width="100">
                                 </el-table-column>
@@ -119,8 +119,6 @@
                                     <template slot-scope="scope">
                                         <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
                                     </template>
-                                </el-table-column>
-                                <el-table-column prop="is_check" label="Checked" width="100">
                                 </el-table-column>
                                 <el-table-column prop="is_accept" label="Comfirmed" width="100">
                                 </el-table-column>
@@ -181,7 +179,6 @@ var app = new Vue({
         attendeeDue: false,
 
         attendeeindex: [],
-
 
         total: 0,
         currentPage: 1,

@@ -114,6 +114,35 @@ class Paper extends CI_Model {
 		return $query;
 	}
 
+	public function getPercentageByid($id) {
+		$this->db->select('percentage');
+		$this->db->from('paper');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return (int) $query[0]->percentage;
+	}
+
+	public function addPercentageByid($paper_id, $sum) {
+		$data = array(
+			'percentage' => $sum,
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('paper', $data);
+	}
+
+	public function getFileByid($id) {
+		$this->db->select('file');
+		$this->db->from('paper');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return $query[0]->file;
+	}
+
 	public function checkaccept($user_id) {
 		$this->db->select('*');
 		$this->db->from('paper');

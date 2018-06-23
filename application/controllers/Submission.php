@@ -52,6 +52,7 @@ class Submission extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$data['index'] = $this->Author->index($paper_id);
+			$data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -77,6 +78,7 @@ class Submission extends CI_Controller {
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
 			$data['paper_id'] = $id;
+			$data['paper_percentage'] = 30;
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -128,7 +130,13 @@ class Submission extends CI_Controller {
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
+			if (empty($this->Author->index($paper_id))) {
+				$sum = $this->Paper->getPercentageByid($paper_id);
+				$this->Paper->addPercentageByid($paper_id, $sum + 30);
+			}
 			$this->Author->insert($id, $paper_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
+
+			$data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -137,10 +145,9 @@ class Submission extends CI_Controller {
 
 	public function deleteauthor() {
 		$postdata = $this->input->post();
-
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
-
+		$paper_id = $postdata['paper_id'];
 		$author_id = $postdata['author_id'];
 
 		$s_id = $this->session->userdata('id');
@@ -148,6 +155,11 @@ class Submission extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$this->Author->deleteauthor($author_id);
+			if (empty($this->Author->index($paper_id))) {
+				$sum = $this->Paper->getPercentageByid($paper_id);
+				$this->Paper->addPercentageByid($paper_id, $sum - 30);
+			}
+			$data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -165,7 +177,7 @@ class Submission extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$config['upload_path'] = './application/uploads/';
-			$config['allowed_types'] = 'pdf';
+			$config['allowed_types'] = 'pdf|zip';
 			$config['file_name'] = $paper_id;
 			$config['file_ext_tolower'] = TRUE;
 			$config['overwrite'] = true;
@@ -180,9 +192,14 @@ class Submission extends CI_Controller {
 					->set_status_header(400)
 					->set_output($this->upload->display_errors('', ''));
 			} else {
+				if (empty($this->Paper->getFileById($paper_id))) {
+					$sum = $this->Paper->getPercentageByid($paper_id);
+					$this->Paper->addPercentageByid($paper_id, $sum + 40);
+				}
+				$paper_percentage = $this->Paper->getPercentageByid($paper_id);
 				$this->Paper->upload($paper_id);
 				$this->output
-					->set_output(json_encode(array('status' => false)));
+					->set_output(json_encode(array('status' => false, 'paper_percentage' => $paper_percentage)));
 			}
 			return;
 		}
