@@ -13,8 +13,8 @@ class Sign extends CI_Controller {
 
 		$config['protocol'] = 'smtp';
 		$config['smtp_host'] = 'smtp.163.com';
-		$config['smtp_user'] = 'jerrychangcn@163.com';
-		$config['smtp_pass'] = 'zjy897833204';
+		$config['smtp_user'] = 'geg2018@163.com';
+		$config['smtp_pass'] = 'shugeg2018';
 		$config['mailtype'] = 'html';
 		$config['charset'] = 'utf-8';
 		$config['validate'] = true;
@@ -44,7 +44,7 @@ class Sign extends CI_Controller {
 		);
 		$this->session->set_userdata($sessiondata);
 
-		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Registration message');
 		$this->email->message('Verification code:' . $token);
@@ -108,7 +108,7 @@ class Sign extends CI_Controller {
 		);
 		$this->session->set_userdata($sessiondata);
 
-		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Registration message');
 		$this->email->message('Congratulations, your registration was successful');
@@ -185,7 +185,7 @@ class Sign extends CI_Controller {
 		);
 		$this->session->set_userdata($sessiondata);
 
-		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Security message');
 		$this->email->message('Reset verification code:' . $token);
@@ -231,7 +231,7 @@ class Sign extends CI_Controller {
 
 		$this->User->resetPassword($email, $password_hash);
 
-		$this->email->from('jerrychangcn@163.com', 'GEG2018');
+		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Security message');
 		$this->email->message('You have changed your password');
