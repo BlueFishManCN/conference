@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.38)
 # Database: conference
-# Generation Time: 2018-06-24 11:01:25 +0000
+# Generation Time: 2018-06-24 11:12:46 +0000
 # ************************************************************
 
 
@@ -83,37 +83,6 @@ CREATE TABLE `paper` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-# Dump of table user
-# ------------------------------------------------------------
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '名',
-  `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '姓',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '邮箱',
-  `country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '国家',
-  `organization` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '单位',
-  `auth_key` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
-  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建状态',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新状态',
-  `is_delete` smallint(4) DEFAULT '0' COMMENT '删除状态',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `country`, `organization`, `auth_key`, `password_hash`, `password_reset_token`, `created_at`, `updated_at`, `is_delete`)
-VALUES
-	(1,'admin','admin','admin@shu.edu.cn','China','SHU',NULL,'$2y$10$8uzdfrUjTCP.4kZObkwR3.rENDY.0LGVXufdiCCwrO18.PKoy0LKC',NULL,'2018-06-10 11:07:59','2018-06-10 11:10:09',0),
-	(1396008,'Jerry','Chang','jerrychangcn@qq.com','China','SHU',NULL,'$2y$10$TiqodIETiSC5imF2HRxUnOo7dgWEwLHnuW.RO/ard7NuIkTNA3WzC',NULL,'2018-06-10 11:31:50','2018-06-10 11:31:50',0);
-
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 
