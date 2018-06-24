@@ -144,7 +144,7 @@
                                         </el-form>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="350">
+                                <el-table-column prop="title" label="Title" width="250">
                                 </el-table-column>
                                 <el-table-column prop="percentage" label="Progress(%)" width="110">
                                     <template slot-scope="scope1">
@@ -156,11 +156,12 @@
                                         <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'No' ? 'danger' : 'success'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="250">
+                                <el-table-column fixed="right" label="Options" width="350">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Edit Info</el-button>
-                                        <el-button :disabled.sync="abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Edit Info</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!='Yes'" @click="posterPaper(scope.row.id)" type="text" size="mini">Poster paper</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -1032,6 +1033,25 @@ var app = new Vue({
                     }
                 });
             }
+        },
+
+        posterPaper(id) {
+            Vue.set(app, "edit_paper_id", id);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('submission/posterpaper');?>",
+                data: {
+                    id: "<?php echo $id; ?>",
+                    firstname: "<?php echo $firstname; ?>",
+                    paper_id: app.edit_paper_id,
+                },
+                dataType: "json",
+                success: function(data) {
+                    if (data['status'] == true) {
+                        app.getpaper();
+                    }
+                }
+            });
         },
     }
 })

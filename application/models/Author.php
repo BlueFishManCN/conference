@@ -27,6 +27,16 @@ class Author extends CI_Model {
 		return $query;
 	}
 
+	public function getAuthorByPaperid($paper_id) {
+		$this->db->select('*');
+		$this->db->from('author');
+		$this->db->where('paper_id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
 	public function insert($id, $paper_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding) {
 		$data = array(
 			'id' => $id,

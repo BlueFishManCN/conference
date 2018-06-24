@@ -216,12 +216,14 @@ class Submission extends CI_Controller {
 					$this->Paper->addPercentageByid($paper_id, $sum + 40);
 				}
 
-				$email = $this->User->getEmailById($user_id);
-				$this->email->from('geg2018@163.com', 'GEG2018');
-				$this->email->to($email);
-				$this->email->subject('GEG2018: Submission message');
-				$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
-				$this->email->send();
+				$emails = $this->Author->getAuthorByPaperid($paper_id);
+				foreach ($emails as $item) {
+					$this->email->from('geg2018@163.com', 'GEG2018');
+					$this->email->to($item->email);
+					$this->email->subject('GEG2018: Submission message');
+					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+					$this->email->send();
+				}
 
 				$paper_percentage = $this->Paper->getPercentageByid($paper_id);
 				$this->Paper->upload($paper_id);
@@ -244,6 +246,25 @@ class Submission extends CI_Controller {
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 
 			force_download('./application/uploads/' . $file, NULL);
+
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function posterpaper() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+
+			$this->Paper->accept($paper_id, 'Poster');
 
 			$data['status'] = true;
 			echo json_encode($data);

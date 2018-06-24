@@ -97,7 +97,7 @@
                     </div>
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                            <button :disabled.sync="attendeeDue" isabled class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="addattendee = true">
+                            <button :disabled.sync="attendeeDue" isabled class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="addattendee=true">
                                 <i class="material-icons">add</i>
                             </button>
                         </div>
@@ -140,12 +140,12 @@
                                 </el-table-column>
                                 <el-table-column prop="percentage" label="Progress(%)" width="150">
                                     <template slot-scope="scope1">
-                                        <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
+                                        <el-tag :type="scope1.row.percentage==='100'?'success':'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="is_accept" label="Comfirmed" width="100">
                                     <template slot-scope="scope2">
-                                        <el-tag :type="scope2.row.is_accept==='Yes'?'success':scope2.row.is_accept === 'No' ? 'danger' : 'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                        <el-tag :type="scope2.row.is_accept==='Yes'?'success':scope2.row.is_accept==='No'?'danger':'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="200">

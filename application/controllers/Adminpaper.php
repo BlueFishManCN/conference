@@ -11,7 +11,17 @@ class Adminpaper extends CI_Controller {
 		$this->load->helper('cookie');
 		$this->load->helper('download');
 		$this->load->helper('url_helper');
+		$this->load->library('email');
 
+		$config['protocol'] = 'smtp';
+		$config['smtp_host'] = 'smtp.163.com';
+		$config['smtp_user'] = 'geg2018@163.com';
+		$config['smtp_pass'] = 'shugeg2018';
+		$config['mailtype'] = 'html';
+		$config['charset'] = 'utf-8';
+		$config['priority'] = 5;
+
+		$this->email->initialize($config);
 	}
 
 	public function index() {
@@ -105,14 +115,30 @@ class Adminpaper extends CI_Controller {
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
 		$paper_id = $postdata['paper_id'];
-		$is_check = $postdata['is_check'];
 		$is_accept = $postdata['is_accept'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$this->Paper->accept($paper_id, $is_accept, $is_accept);
+			$this->Paper->accept($paper_id, $is_accept);
+
+			$emails = $this->Author->getAuthorByPaperid($paper_id);
+			foreach ($emails as $item) {
+				$this->email->from('geg2018@163.com', 'GEG2018');
+				$this->email->to($item->email);
+				$this->email->subject('GEG2018: Submission message');
+				if ($is_accept == 'Yes') {
+					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Congratulations!</p><p>I am glad to inform you that your paper is accepted by 2018 GEG conference.You are invited to give a presentation at the conference.</p><p>Please register for the conference at your earliest convenience before 30th September 2018.</p><p>If you will not be able to attend the conference, you can choose to post your paper at the conference.</p><p>Hope to see you in Shanghai!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				} else if ($is_accept == 'Poster') {
+					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Thank you for submitting your paper to the conference!</p><p>I am glad to inform you that your paper was selected to post at the conference.</p><p>Please register for the poster at your earliest convenience before 30th September 2018.</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				} else {
+
+					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Thank you for submitting your paper to the conference!</p><p>We received a large number of good papers this year and your paper is relatively competitive. However, we only have limited space for the conference and I am sorry that your paper was not accepted by the conference.</p><p>Welcome to submit your paper again next year!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				}
+				$this->email->send();
+			}
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

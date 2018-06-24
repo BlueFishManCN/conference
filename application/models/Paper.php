@@ -147,8 +147,9 @@ class Paper extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('user_id', $user_id);
-		$this->db->where('is_accept', 'Yes');
+		$this->db->where_in('is_accept', array('Yes', 'Poster'));
 		$this->db->where('is_delete', 0);
+
 		$query = $this->db->get()->result_array();
 
 		if (empty($query)) {
@@ -191,9 +192,8 @@ class Paper extends CI_Model {
 		$this->db->update('paper', $data);
 	}
 
-	public function accept($paper_id, $is_check, $is_accept) {
+	public function accept($paper_id, $is_accept) {
 		$data = array(
-			'is_check' => $is_check,
 			'is_accept' => $is_accept,
 		);
 		$this->db->where('id', $paper_id);
