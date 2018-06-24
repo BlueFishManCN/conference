@@ -40,12 +40,14 @@ class Registration extends CI_Controller {
 		$attendeefirstname = $postdata['attendeefirstname'];
 		$lastname = $postdata['lastname'];
 		$email = $postdata['email'];
+		$country = $postdata['country'];
+		$organization = $postdata['organization'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$this->Attendee->insert($user_id, $attendeefirstname, $lastname, $email);
+			$this->Attendee->insert($user_id, $attendeefirstname, $lastname, $email, $country, $organization);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -79,12 +81,14 @@ class Registration extends CI_Controller {
 		$attendeefirstname = $postdata['attendeefirstname'];
 		$lastname = $postdata['lastname'];
 		$email = $postdata['email'];
+		$country = $postdata['country'];
+		$organization = $postdata['organization'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$this->Attendee->update($attendee_id, $attendeefirstname, $lastname, $email);
+			$this->Attendee->update($attendee_id, $attendeefirstname, $lastname, $email, $country, $organization);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -136,11 +140,17 @@ class Registration extends CI_Controller {
 					->set_status_header(400)
 					->set_output($this->upload->display_errors('', ''));
 			} else {
+				if (empty($this->Attendee->getFileById($attendee_id))) {
+					$sum = $this->Attendee->getPercentageByid($attendee_id);
+					$this->Attendee->addPercentageByid($attendee_id, $sum + 50);
+				}
+
 				$filename = $this->upload->data()['file_name'];
 
 				$this->Attendee->upload($attendee_id, $filename);
+				$percentage = $this->Attendee->getPercentageByid($attendee_id);
 				$this->output
-					->set_output(json_encode(array('status' => false)));
+					->set_output(json_encode(array('status' => false, 'percentage' => $percentage)));
 			}
 			return;
 		}

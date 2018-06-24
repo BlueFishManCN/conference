@@ -50,6 +50,16 @@ class User extends CI_Model {
 		return $query;
 	}
 
+	public function getEmailById($id) {
+		$this->db->select('email');
+		$this->db->from('user');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return $query[0]->email;
+	}
+
 	public function resetPassword($email, $password_hash) {
 		$data = array(
 			'password_hash' => $password_hash,

@@ -17,7 +17,6 @@ class Sign extends CI_Controller {
 		$config['smtp_pass'] = 'shugeg2018';
 		$config['mailtype'] = 'html';
 		$config['charset'] = 'utf-8';
-		$config['validate'] = true;
 		$config['priority'] = 5;
 
 		$this->email->initialize($config);
@@ -47,7 +46,7 @@ class Sign extends CI_Controller {
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Registration message');
-		$this->email->message('Verification code:' . $token);
+		$this->email->message('<h3>Verification code:</h3><p>' . $token . '</p>');
 
 		$data['status'] = $this->email->send();
 		echo json_encode($data);
@@ -111,7 +110,7 @@ class Sign extends CI_Controller {
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Registration message');
-		$this->email->message('Congratulations, your registration was successful');
+		$this->email->message('<h3>Congratulations!</h3><p>Your registration is successful!</p>');
 		$this->email->send();
 
 		$data['status'] = true;
@@ -188,7 +187,7 @@ class Sign extends CI_Controller {
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Security message');
-		$this->email->message('Reset verification code:' . $token);
+		$this->email->message('<h3>Reset verification code:</h3><p>' . $token . '</p>');
 
 		$data['status'] = $this->email->send();
 		echo json_encode($data);
@@ -234,7 +233,7 @@ class Sign extends CI_Controller {
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Security message');
-		$this->email->message('You have changed your password');
+		$this->email->message('<h3>Warning!</h3><p>You have changed your password!</p>');
 		$this->email->send();
 
 		$data['status'] = true;

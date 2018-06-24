@@ -107,29 +107,65 @@
                             <el-table :data="attendeeindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
-                                <el-table-column prop="firstname" label="Firstname" width="200">
+                                <el-table-column fixed type="expand" label="CLICK for Detail" width="200">
+                                    <template slot-scope="props">
+                                        <el-form label-position="left" inline class="demo-table-expand">
+                                            <el-form-item label="Firstname">
+                                                <span>{{ props.row.firstname }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Larstname">
+                                                <span>{{ props.row.lastname }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Email">
+                                                <span>{{ props.row.email }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Country">
+                                                <span>{{ props.row.country }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="Organization">
+                                                <span>{{ props.row.organization }}</span>
+                                            </el-form-item>
+                                            <el-form-item label="File">
+                                                <el-button @click="download(props.row.file)" type="text" size="mini">{{ props.row.file }}</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </template>
                                 </el-table-column>
-                                <el-table-column prop="lastname" label="Lirstname" width="100">
+                                <el-table-column prop="firstname" label="Firstname" width="150">
                                 </el-table-column>
-                                <el-table-column prop="email" label="Email" width="200">
-                                </el-table-column>
-                                <el-table-column label="File" width="100">
+                                <el-table-column label="File" width="150">
                                     <template slot-scope="scope">
                                         <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
+                                <el-table-column prop="percentage" label="Progress(%)" width="150">
+                                    <template slot-scope="scope1">
+                                        <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
+                                    </template>
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="250">
+                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
+                                    <template slot-scope="scope2">
+                                        <el-tag :type="scope2.row.is_accept==='Yes'?'success':scope2.row.is_accept === 'No' ? 'danger' : 'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column fixed="right" label="Options" width="200">
                                     <template slot-scope="scope">
                                         <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="editAttendee(scope.row)" type="text" size="mini">Edit Info</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||attendeeDue" size="mini" type="danger" @click="deleteAttendee(scope.row.id)" icon="el-icon-delete" circle></el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
                         </div>
                     </div>
+                    <el-alert title="Important Dates" type="warning" :closable="false">
+                    </el-alert>
+                    <el-table :data="deadtime" stripe style="width: 100%">
+                        <el-table-column prop="name" label="description" width="200">
+                        </el-table-column>
+                        <el-table-column prop="date" label="date" width="200">
+                        </el-table-column>
+                    </el-table>
                 </div>
                 <footer class="android-footer mdl-mega-footer">
                     <div class="mdl-mega-footer--top-section">
@@ -148,6 +184,14 @@
         </div>
         <!-- addattendee -->
         <el-dialog title="Add attendee" :visible.sync="addattendee" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage="0"></el-progress>
+                </div>
+            </div>
             <el-form ref="addattendeeform" :model="addattendeeform" status-icon :rules="addattendeerules" label-width="25%">
                 <el-form-item label="First name" prop="firstname">
                     <el-input v-model="addattendeeform.firstname" auto-complete="off"></el-input>
@@ -158,6 +202,12 @@
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="addattendeeform.email" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="Country" prop="country">
+                    <el-input v-model="addattendeeform.country" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Organization" prop="organization">
+                    <el-input v-model="addattendeeform.organization" auto-complete="off"></el-input>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="addattendee = false">Cancel</el-button>
@@ -166,6 +216,14 @@
         </el-dialog>
         <!-- editattendee -->
         <el-dialog title="Edit attendee" :visible.sync="editattendee" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage"></el-progress>
+                </div>
+            </div>
             <el-form ref="editattendeeform" :model="editattendeeform" status-icon :rules="editattendeerules" label-width="25%">
                 <el-form-item label="First name" prop="firstname">
                     <el-input v-model="editattendeeform.firstname" auto-complete="off"></el-input>
@@ -176,6 +234,12 @@
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="editattendeeform.email" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="Country" prop="country">
+                    <el-input v-model="editattendeeform.country" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Organization" prop="organization">
+                    <el-input v-model="editattendeeform.organization" auto-complete="off"></el-input>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="editattendee = false">Cancel</el-button>
@@ -184,10 +248,19 @@
         </el-dialog>
         <!-- uploadfile -->
         <el-dialog title="Upload file" :visible.sync="uploadfile" width="50%">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                    Progress Status
+                </div>
+                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage"></el-progress>
+                </div>
+            </div>
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('registration/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf file can be uploaded and no more than 2Mb</div>
+                <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size does not exceed 2Mb. Ensure that the uploaded file is a complete paper, not a abstract. If you have more than one file to upload, please compress them into a zip archive to upload." :closable="false">
+                </el-alert>
             </el-upload>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="uploadfile = false">Finish</el-button>
@@ -212,6 +285,31 @@ var app = new Vue({
         id: "<?php echo $id; ?>",
         firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
+
+        percentage: 0,
+
+        deadtime: [{
+                date: '2018-10-25  To  2018-10-26',
+                name: 'Conference Time',
+            }, {
+                date: '2018-6-28  To  2018-7-15',
+                name: 'Abstract Submission Due',
+            }, {
+                date: '2018-6-28  To  2018-8-15',
+                name: 'Paper Submission Due',
+            }, {
+                date: '2018-8-31',
+                name: 'Author Notification',
+            }, {
+                date: '2018-7-1  To  2018-9-15',
+                name: 'Early Registration Date',
+            },
+            {
+                date: '2018-7-1  To  2018-9-30',
+                name: 'Online Registration Date',
+            }
+        ],
+
         attendeeDue: false,
         addattendee: false,
         editattendee: false,
@@ -227,6 +325,8 @@ var app = new Vue({
             firstname: '',
             lastname: '',
             email: '',
+            country: '',
+            organization: ''
         },
 
         editattendeeform: {
@@ -234,6 +334,8 @@ var app = new Vue({
             firstname: '',
             lastname: '',
             email: '',
+            country: '',
+            organization: ''
         },
 
         addattendeerules: {
@@ -246,6 +348,12 @@ var app = new Vue({
             email: [
                 { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
+            ],
+            country: [
+                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
+            ],
+            organization: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
             ],
         },
 
@@ -260,10 +368,16 @@ var app = new Vue({
                 { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
             ],
+            country: [
+                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
+            ],
+            organization: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
+            ],
         },
     },
 
-    mounted: function() {
+    created: function() {
         var deadLine = "2018-09-30 23:59:59";
         if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
             Vue.set(this, "attendeeDue", true);
@@ -337,6 +451,8 @@ var app = new Vue({
                             attendeefirstname: app.addattendeeform.firstname,
                             lastname: app.addattendeeform.lastname,
                             email: app.addattendeeform.email,
+                            country: app.addattendeeform.country,
+                            organization: app.addattendeeform.organization
                         },
                         dataType: "json",
                         success: function(data) {
@@ -373,11 +489,13 @@ var app = new Vue({
         },
 
         editAttendee(row) {
-
             Vue.set(app.editattendeeform, "id", row.id);
             Vue.set(app.editattendeeform, "firstname", row.firstname);
             Vue.set(app.editattendeeform, "lastname", row.lastname);
             Vue.set(app.editattendeeform, "email", row.email);
+            Vue.set(app.editattendeeform, "country", row.country);
+            Vue.set(app.editattendeeform, "organization", row.organization);
+            Vue.set(app, "percentage", row.percentage);
             Vue.set(app, "editattendee", true);
         },
 
@@ -394,6 +512,8 @@ var app = new Vue({
                             attendeefirstname: app.editattendeeform.firstname,
                             lastname: app.editattendeeform.lastname,
                             email: app.editattendeeform.email,
+                            country: app.editattendeeform.country,
+                            organization: app.editattendeeform.organization,
                         },
                         dataType: "json",
                         success: function(data) {
@@ -412,14 +532,16 @@ var app = new Vue({
             });
         },
 
-        uploadFile(attendee_id) {
-            Vue.set(app.uploaddata, 'attendee_id', attendee_id)
+        uploadFile(attendeeid, percentage) {
+            Vue.set(app.uploaddata, 'attendee_id', attendeeid)
+            Vue.set(app, "percentage", percentage);
             Vue.set(app, "uploadfile", true);
         },
         submitUpload() {
             this.$refs.upload.submit();
         },
         handleSuccess(response, file, fileList) {
+            Vue.set(app, "percentage", response['percentage']);
             app.getattendee();
             alert("Upload file successful");
         },

@@ -147,8 +147,14 @@
                                 <el-table-column prop="title" label="Title" width="350">
                                 </el-table-column>
                                 <el-table-column prop="percentage" label="Progress(%)" width="110">
+                                    <template slot-scope="scope1">
+                                        <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
+                                    </template>
                                 </el-table-column>
                                 <el-table-column prop="is_accept" label="Accepted" width="90">
+                                    <template slot-scope="scope2">
+                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'No' ? 'danger' : 'success'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                    </template>
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="250">
                                     <template slot-scope="scope">
@@ -158,8 +164,28 @@
                                     </template>
                                 </el-table-column>
                             </el-table>
+                            <el-alert title="Tips" type="info" :closable="false" description="Make sure the information you submit is complete and accurate.">
+                            </el-alert>
+                            <el-alert type="success" :closable="false" description="1. Click [CLICK for Detail] to view the detailed information of the paper.">
+                            </el-alert>
+                            <el-alert type="success" :closable="false" description="2. In the [Progress] column, you can view the progress of submitted papers.">
+                            </el-alert>
+                            <el-alert type="success" :closable="false" description="3, in the [Accepted] column, you can view the receiving status of the paper. [Yes] represents the paper accepted and [No] represents the paper was not received.">
+                            </el-alert>
+                            <el-alert type="success" :closable="false" description="4, in the [Option] column can modify the paper's information.">
+                            </el-alert>
+                            <el-alert type="warning" :closable="false" description="Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.">
+                            </el-alert>
                         </div>
                     </div>
+                    <el-alert title="Important Dates" type="warning" :closable="false">
+                    </el-alert>
+                    <el-table :data="deadtime" stripe style="width: 100%">
+                        <el-table-column prop="name" label="description" width="200">
+                        </el-table-column>
+                        <el-table-column prop="date" label="date" width="200">
+                        </el-table-column>
+                    </el-table>
                 </div>
                 <footer class="android-footer mdl-mega-footer">
                     <div class="mdl-mega-footer--top-section">
@@ -177,13 +203,18 @@
             </div>
         </div>
         <!-- subpaper -->
-        <el-dialog title="Submit Paper: Step 1, add paper basic information" :visible.sync="subpaper" width="50%">
+        <el-dialog title="Submit Paper" :visible.sync="subpaper" width="50%">
+            <el-steps :active="1">
+                <el-step title="Step 1" description="add paper basic information" icon="el-icon-edit"></el-step>
+                <el-step title="Step 2" icon="el-icon-edit"></el-step>
+                <el-step title="Step 3" icon="el-icon-upload"></el-step>
+            </el-steps>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                     Progress Status
                 </div>
                 <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
-                    <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="0"></el-progress>
+                    <el-progress :text-inside="true" :stroke-width="20" :percentage="0"></el-progress>
                 </div>
             </div>
             <el-form ref="subpaperform" :model="subpaperform" status-icon :rules="subpaperrules" label-width="20%">
@@ -230,7 +261,12 @@
             </span>
         </el-dialog>
         <!-- subauthor -->
-        <el-dialog title="Submit Paper: Step 2, add authors" :visible.sync="subauthor" width="75%">
+        <el-dialog title="Submit Paper" :visible.sync="subauthor" width="75%">
+            <el-steps :active="2">
+                <el-step title="Step 1" icon="el-icon-edit"></el-step>
+                <el-step title="Step 2" description="add authors" icon="el-icon-edit"></el-step>
+                <el-step title="Step 3" icon="el-icon-upload"></el-step>
+            </el-steps>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subaddauthor = true">
@@ -298,7 +334,12 @@
             </span>
         </el-dialog>
         <!-- subuploadfile -->
-        <el-dialog title="Submit Paper: Last Step, upload file" :visible.sync="subuploadfile" width="50%">
+        <el-dialog title="Submit Paper" :visible.sync="subuploadfile" width="50%">
+            <el-steps :active="3">
+                <el-step title="Step 1" icon="el-icon-edit"></el-step>
+                <el-step title="Step 2" icon="el-icon-edit"></el-step>
+                <el-step title="Step 3" description="upload file" icon="el-icon-upload"></el-step>
+            </el-steps>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                     Progress Status
@@ -310,7 +351,8 @@
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf or zip file can be uploaded and no more than 2Mb</div>
+                <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size does not exceed 2Mb. Ensure that the uploaded file is a complete paper, not a abstract. If you have more than one file to upload, please compress them into a zip archive to upload." :closable="false">
+                </el-alert>
             </el-upload>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="subuploadfile = false">Finish</el-button>
@@ -450,8 +492,9 @@
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <div slot="tip" class="el-upload__tip">Only one pdf or zip file can be uploaded and no more than 2Mb</div>
             </el-upload>
+            <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size does not exceed 2Mb. Ensure that the uploaded file is a complete paper, not a abstract. If you have more than one file to upload, please compress them into a zip archive to upload." :closable="false">
+            </el-alert>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>
             </span>
@@ -496,6 +539,28 @@ var app = new Vue({
         id: "<?php echo $id; ?>",
         firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
+
+        deadtime: [{
+                date: '2018-10-25  To  2018-10-26',
+                name: 'Conference Time',
+            }, {
+                date: '2018-6-28  To  2018-7-15',
+                name: 'Abstract Submission Due',
+            }, {
+                date: '2018-6-28  To  2018-8-15',
+                name: 'Paper Submission Due',
+            }, {
+                date: '2018-8-31',
+                name: 'Author Notification',
+            }, {
+                date: '2018-7-1  To  2018-9-15',
+                name: 'Early Registration Date',
+            },
+            {
+                date: '2018-7-1  To  2018-9-30',
+                name: 'Online Registration Date',
+            }
+        ],
 
         subpaper: false,
         subauthor: false,
@@ -595,8 +660,8 @@ var app = new Vue({
         },
     },
 
-    mounted: function() {
-        var deadLine1 = "2018-07-10 23:59:59";
+    created: function() {
+        var deadLine1 = "2018-07-15 23:59:59";
         var deadLine2 = "2018-08-15 23:59:59";
         if (new Date() > new Date(Date.parse(deadLine1.replace(/\-/g, "/")))) {
             Vue.set(this, "abstractDue", true);

@@ -93,14 +93,22 @@
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                             <div class="mdl-card__supporting-text">
-                                International Conference on Global Economics and Governance is initiated by the Institute for Economic Forecasting and co-hosted by the National University of Political Studies and Public Administration. Since 2013, GEG have been hosted by Wuhan University, Romania, Ming Chuan University, Ocean University of China, and Poland. In October 2018, the 6th GEG will be held in Shanghai, organized by Shanghai University.
-                                </br>
-                                </br>The conference aims to provide a platform for the exchange of related studies to discuss the current global economic, trade and financial issues. The theme of the 2018GEG is Digital Economy: A Single World Market. The goal of this conference is to bring researchers, practitioners and officials to the areas of global economics and governances, to share experiences and original research contributions to those topics. Researchers and practitioners are invited to submit their contributions to GEG 2018.
-                                </br>
-                                </br>There will be one track of presentations during two days. The program will be accompanied by a high-quality social program starting with a welcome reception on 25th October, 2018.
+                                International Conference on Global Economy & Governance is initiated and co-hosted by the Romanian Academy Institute for Economic Forecasting and the National University of Political Studies and Public Administration. Since 2013, GEG have been organized by Wuhan University, PRC (2013), National University of Political Studies and Public Administration, Romania (2014), Ming Chuan University, Taiwan (2015), Ocean University of China, PRC (2016), University of Finance and Management Warsaw, Poland (2017).
+                                <br/>
+                                <br/>The conference aims to provide a platform for the exchange of related studies to discuss the current global economic, trade and financial issues. The theme of the 2018GEG is Digital Economy, Sustainable Development and New Global Economic Order. The goal of this conference is to bring researchers, practitioners and officials to the areas of global economics and governances, to share experiences and original research contributions to those topics. Researchers and practitioners are invited to submit their contributions to GEG 2018.
+                                <br/>
+                                <br/>There will be one track of presentations during two days. The program will be accompanied by a high-quality social program starting with a welcome reception on 25th October, 2018.
                             </div>
                         </div>
                     </div>
+                    <el-alert title="Important Dates" type="warning" :closable="false">
+                    </el-alert>
+                    <el-table :data="deadtime" stripe style="width: 100%">
+                        <el-table-column prop="name" label="description" width="200">
+                        </el-table-column>
+                        <el-table-column prop="date" label="date" width="200">
+                        </el-table-column>
+                    </el-table>
                 </div>
                 <footer class="android-footer mdl-mega-footer">
                     <div class="mdl-mega-footer--top-section">
@@ -118,7 +126,12 @@
             </div>
         </div>
         <!-- step1 -->
-        <el-dialog title="Sign Up: Step 1" :visible.sync="step1" width="30%">
+        <el-dialog title="Sign Up" :visible.sync="step1" width="30%">
+            <el-steps :active="1">
+                <el-step title="Step 1" description="registering information"></el-step>
+                <el-step title="Step 2"></el-step>
+                <el-step title="Step 3"></el-step>
+            </el-steps>
             <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
                 <el-form-item label="First name" prop="firstname">
                     <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
@@ -139,12 +152,14 @@
             </span>
         </el-dialog>
         <!-- step2 -->
-        <el-dialog title="Activate account: Step 2" :visible.sync="step2" width="30%">
-            <el-form>
-                <el-form-item>
-                    <span>The verification code has been sent to your mailbox.</span>
-                </el-form-item>
-            </el-form>
+        <el-dialog title="Sign Up" :visible.sync="step2" width="30%">
+            <el-steps :active="2">
+                <el-step title="Step 1"></el-step>
+                <el-step title="Step 2" description="activate account"></el-step>
+                <el-step title="Step 3"></el-step>
+            </el-steps>
+            <el-alert title="Important info" type="warning" description="The verification code has been sent to your mailbox." :closable="false">
+            </el-alert>
             <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="25%">
                 <el-form-item label="Code" prop="code">
                     <el-input v-model="step2form.code" auto-complete="off"></el-input>
@@ -156,7 +171,12 @@
             </span>
         </el-dialog>
         <!-- step3 -->
-        <el-dialog title="Sign Up: Last Step" :visible.sync="step3" width="50%">
+        <el-dialog title="Sign Up" :visible.sync="step3" width="50%">
+            <el-steps :active="3">
+                <el-step title="Step 1"></el-step>
+                <el-step title="Step 2"></el-step>
+                <el-step title="Step 3" description="fill up information"></el-step>
+            </el-steps>
             <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="25%">
                 <el-form-item label="First name">
                     <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
@@ -202,7 +222,12 @@
             </span>
         </el-dialog>
         <!-- forget step1 -->
-        <el-dialog title="Step 1: Enter email" :visible.sync="forgetstep1" width="30%">
+        <el-dialog title="Recover account" :visible.sync="forgetstep1" width="30%">
+            <el-steps :active="1">
+                <el-step title="Step 1" description="enter email"></el-step>
+                <el-step title="Step 2"></el-step>
+                <el-step title="Step 3"></el-step>
+            </el-steps>
             <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="25%">
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
@@ -214,12 +239,14 @@
             </span>
         </el-dialog>
         <!-- forget step2 -->
-        <el-dialog title="Step 2: Verify account" :visible.sync="forgetstep2" width="30%">
-            <el-form>
-                <el-form-item>
-                    <span>Reset verification code has been sent to your mailbox.</span>
-                </el-form-item>
-            </el-form>
+        <el-dialog title="Recover account" :visible.sync="forgetstep2" width="30%">
+            <el-steps :active="2">
+                <el-step title="Step 1"></el-step>
+                <el-step title="Step 2" description="verify account"></el-step>
+                <el-step title="Step 3"></el-step>
+            </el-steps>
+            <el-alert title="Important info" type="warning" description="Reset verification code has been sent to your mailbox." :closable="false">
+            </el-alert>
             <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="25%">
                 <el-form-item label="Code" prop="code">
                     <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
@@ -231,7 +258,12 @@
             </span>
         </el-dialog>
         <!-- forget step3 -->
-        <el-dialog title="Last Step: Reset password" :visible.sync="forgetstep3" width="30%">
+        <el-dialog title="Recover account" :visible.sync="forgetstep3" width="30%">
+            <el-steps :active="3">
+                <el-step title="Step 1"></el-step>
+                <el-step title="Step 2"></el-step>
+                <el-step title="Step 3" description="reset password"></el-step>
+            </el-steps>
             <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="35%">
                 <el-form-item label="Password" prop="password">
                     <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
@@ -285,6 +317,29 @@ var app = new Vue({
         id: "<?php echo $id; ?>",
         firstname: "<?php echo $firstname; ?>",
         is_login: "<?php echo $is_login; ?>",
+
+        deadtime: [{
+                date: '2018-10-25  To  2018-10-26',
+                name: 'Conference Time',
+            }, {
+                date: '2018-6-28  To  2018-7-15',
+                name: 'Abstract Submission Due',
+            }, {
+                date: '2018-6-28  To  2018-8-15',
+                name: 'Paper Submission Due',
+            }, {
+                date: '2018-8-31',
+                name: 'Author Notification',
+            }, {
+                date: '2018-7-1  To  2018-9-15',
+                name: 'Early Registration Date',
+            },
+            {
+                date: '2018-7-1  To  2018-9-30',
+                name: 'Online Registration Date',
+            }
+        ],
+
         step1: false,
         step2: false,
         step3: false,

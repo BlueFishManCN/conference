@@ -257,7 +257,7 @@ var app = new Vue({
         acceptpaperid: '',
     },
 
-    mounted: function() {
+    created: function() {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('adminpaper/paper');?>",

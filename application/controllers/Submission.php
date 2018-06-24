@@ -4,13 +4,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Submission extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('User');
 		$this->load->model('Paper');
 		$this->load->model('Author');
 		$this->load->library('session');
+		$this->load->library('email');
 		$this->load->library('upload');
 		$this->load->helper('cookie');
 		$this->load->helper('download');
 		$this->load->helper('url_helper');
+
+		$config['protocol'] = 'smtp';
+		$config['smtp_host'] = 'smtp.163.com';
+		$config['smtp_user'] = 'geg2018@163.com';
+		$config['smtp_pass'] = 'shugeg2018';
+		$config['mailtype'] = 'html';
+		$config['charset'] = 'utf-8';
+		$config['priority'] = 5;
+
+		$this->email->initialize($config);
 	}
 
 	public function index() {
@@ -77,9 +89,16 @@ class Submission extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
+
+			$email = $this->User->getEmailById($user_id);
+			$this->email->from('geg2018@163.com', 'GEG2018');
+			$this->email->to($email);
+			$this->email->subject('GEG2018: Submission message');
+			$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+
 			$data['paper_id'] = $id;
 			$data['paper_percentage'] = 30;
-			$data['status'] = true;
+			$data['status'] = $this->email->send();
 			echo json_encode($data);
 			return;
 		}
@@ -196,6 +215,14 @@ class Submission extends CI_Controller {
 					$sum = $this->Paper->getPercentageByid($paper_id);
 					$this->Paper->addPercentageByid($paper_id, $sum + 40);
 				}
+
+				$email = $this->User->getEmailById($user_id);
+				$this->email->from('geg2018@163.com', 'GEG2018');
+				$this->email->to($email);
+				$this->email->subject('GEG2018: Submission message');
+				$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				$this->email->send();
+
 				$paper_percentage = $this->Paper->getPercentageByid($paper_id);
 				$this->Paper->upload($paper_id);
 				$this->output

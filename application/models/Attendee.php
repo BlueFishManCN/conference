@@ -7,12 +7,14 @@ class Attendee extends CI_Model {
 		$this->load->database();
 	}
 
-	public function insert($user_id, $attendeefirstname, $lastname, $email) {
+	public function insert($user_id, $attendeefirstname, $lastname, $email, $country, $organization) {
 		$data = array(
 			'user_id' => $user_id,
 			'firstname' => $attendeefirstname,
 			'lastname' => $lastname,
 			'email' => $email,
+			'country' => $country,
+			'organization' => $organization,
 		);
 		$this->db->insert("attendee", $data);
 	}
@@ -26,11 +28,13 @@ class Attendee extends CI_Model {
 		$this->db->update('attendee', $data);
 	}
 
-	public function update($attendee_id, $attendeefirstname, $lastname, $email) {
+	public function update($attendee_id, $attendeefirstname, $lastname, $email, $country, $organization) {
 		$data = array(
 			'firstname' => $attendeefirstname,
 			'lastname' => $lastname,
 			'email' => $email,
+			'country' => $country,
+			'organization' => $organization,
 		);
 		$this->db->where('id', $attendee_id);
 		$this->db->where('is_delete', 0);
@@ -97,6 +101,35 @@ class Attendee extends CI_Model {
 
 		}
 		return $this->db->count_all_results();
+	}
+
+	public function getFileById($id) {
+		$this->db->select('file');
+		$this->db->from('attendee');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return $query[0]->file;
+	}
+
+	public function getPercentageByid($id) {
+		$this->db->select('percentage');
+		$this->db->from('attendee');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return (int) $query[0]->percentage;
+	}
+
+	public function addPercentageByid($paper_id, $sum) {
+		$data = array(
+			'percentage' => $sum,
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('attendee', $data);
 	}
 
 	public function adminsearch($currentPage, $keywords) {
