@@ -41,9 +41,8 @@ class Attendee extends CI_Model {
 		$this->db->update("attendee", $data);
 	}
 
-	public function accept($attendee_id, $is_check, $is_accept) {
+	public function accept($attendee_id, $is_accept) {
 		$data = array(
-			'is_check' => $is_check,
 			'is_accept' => $is_accept,
 		);
 		$this->db->where('id', $attendee_id);
@@ -111,6 +110,16 @@ class Attendee extends CI_Model {
 		$this->db->order_by('updated_at', 'DESC');
 		$query = $this->db->get()->result();
 		return $query[0]->file;
+	}
+
+	public function getEmailById($id) {
+		$this->db->select('email');
+		$this->db->from('attendee');
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		$query = $this->db->get()->result();
+		return $query[0]->email;
 	}
 
 	public function getPercentageByid($id) {

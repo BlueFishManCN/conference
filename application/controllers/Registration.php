@@ -12,6 +12,17 @@ class Registration extends CI_Controller {
 		$this->load->helper('cookie');
 		$this->load->helper('download');
 		$this->load->helper('url_helper');
+		$this->load->library('email');
+
+		$config['protocol'] = 'smtp';
+		$config['smtp_host'] = 'smtp.163.com';
+		$config['smtp_user'] = 'geg2018@163.com';
+		$config['smtp_pass'] = 'shugeg2018';
+		$config['mailtype'] = 'html';
+		$config['charset'] = 'utf-8';
+		$config['priority'] = 5;
+
+		$this->email->initialize($config);
 	}
 
 	public function index() {
@@ -100,14 +111,23 @@ class Registration extends CI_Controller {
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
 		$attendee_id = $postdata['attendee_id'];
-		$is_check = $postdata['is_check'];
 		$is_accept = $postdata['is_accept'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$this->Attendee->accept($attendee_id, $is_accept, $is_accept);
+			$this->Attendee->accept($attendee_id, $is_accept);
+
+			if ($is_accept == 'Yes') {
+				$email = $this->Attendee->getEmailById($attendee_id);
+				$this->email->from('geg2018@163.com', 'GEG2018');
+				$this->email->to($email);
+				$this->email->subject('GEG2018: Registration message');
+				$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your conference registration is successful!</p><p>Thank you for your cooperation!</p><p>Hope to see you in Shanghai!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				$this->email->send();
+			}
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
