@@ -45,7 +45,7 @@ class Sign extends CI_Controller {
 
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
-		$this->email->subject('GEG2018: Registration message');
+		$this->email->subject('GEG2018: Signup message');
 		$this->email->message('<h3>Verification code:</h3><p>' . $token . '</p>');
 
 		$data['status'] = $this->email->send();
@@ -109,8 +109,8 @@ class Sign extends CI_Controller {
 
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
-		$this->email->subject('GEG2018: Registration message');
-		$this->email->message('<h3>Congratulations!</h3><p>Your registration is successful!</p>');
+		$this->email->subject('GEG2018: Signup message');
+		$this->email->message('<h3>Congratulations!</h3><p>Your signup is successful!</p>');
 		$this->email->send();
 
 		$data['status'] = true;
@@ -187,7 +187,7 @@ class Sign extends CI_Controller {
 		$this->email->from('geg2018@163.com', 'GEG2018');
 		$this->email->to($email);
 		$this->email->subject('GEG2018: Security message');
-		$this->email->message('<h3>Reset verification code:</h3><p>' . $token . '</p>');
+		$this->email->message('<h3>Reset password verification code:</h3><p>' . $token . '</p>');
 
 		$data['status'] = $this->email->send();
 		echo json_encode($data);

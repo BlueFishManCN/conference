@@ -128,7 +128,7 @@
         <!-- step1 -->
         <el-dialog title="Sign Up" :visible.sync="step1" width="30%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="registering information"></el-step>
+                <el-step title="Step 1" description="signup information"></el-step>
                 <el-step title="Step 2"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
@@ -222,7 +222,7 @@
             </span>
         </el-dialog>
         <!-- forget step1 -->
-        <el-dialog title="Recover account" :visible.sync="forgetstep1" width="30%">
+        <el-dialog title="Reset password" :visible.sync="forgetstep1" width="30%">
             <el-steps :active="1">
                 <el-step title="Step 1" description="enter email"></el-step>
                 <el-step title="Step 2"></el-step>
@@ -239,7 +239,7 @@
             </span>
         </el-dialog>
         <!-- forget step2 -->
-        <el-dialog title="Recover account" :visible.sync="forgetstep2" width="30%">
+        <el-dialog title="Reset password" :visible.sync="forgetstep2" width="30%">
             <el-steps :active="2">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2" description="verify account"></el-step>
@@ -258,7 +258,7 @@
             </span>
         </el-dialog>
         <!-- forget step3 -->
-        <el-dialog title="Recover account" :visible.sync="forgetstep3" width="30%">
+        <el-dialog title="Reset password" :visible.sync="forgetstep3" width="30%">
             <el-steps :active="3">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2"></el-step>
@@ -274,7 +274,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Next</el-button>
+                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Finish</el-button>
             </span>
         </el-dialog>
     </div>
