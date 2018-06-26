@@ -64,6 +64,10 @@
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
                             </button>
+                            <button v-if="is_login" class="mdl-button mdl-js-button mdl-button--primary">
+                                Welcome!
+                                <?php echo $firstname; ?>
+                            </button>
                             <button v-if="is_login" v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
                                 Logout
                             </button>
@@ -102,7 +106,8 @@
                             </div>
                         </div>
                     </div>
-                    <el-alert title="Important Dates" type="warning" :closable="false">
+                    <el-alert type="warning" :closable="false">
+                        <h5>Important Dates</h5>
                     </el-alert>
                     <el-table :data="deadtime" stripe style="width: 100%">
                         <el-table-column prop="name" label="description" width="200">
@@ -217,9 +222,9 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="signIn('inform')">Login</el-button>
                 <el-button v-on:click="signInDialogVisible = false">Cancel</el-button>
-                <el-button type="warning" v-on:click="forget">Forget password?</el-button>   
+                <el-button type="warning" v-on:click="forget">Forget password?</el-button>  
+                <el-button type="primary" v-on:click="signIn('inform')">Login</el-button> 
             </span>
         </el-dialog>
         <!-- forget step1 -->
@@ -525,7 +530,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                alert('success');
+                                alert('Congratulations!Create account successfully!');
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
                                 alert(data['message']);
@@ -656,7 +661,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                alert('success');
+                                alert('Reset password successfully!');
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
                                 alert(data['message']);

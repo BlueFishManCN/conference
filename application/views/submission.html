@@ -80,6 +80,7 @@
                                 <i class="material-icons">account_circle</i>
                             </button>
                             <button class="mdl-button mdl-js-button mdl-button--primary">
+                                Welcome!
                                 <?php echo $firstname; ?>
                             </button>
                             <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
@@ -666,8 +667,8 @@ var app = new Vue({
     },
 
     created: function() {
-        var deadLine1 = "2018-07-15 23:59:59";
-        var deadLine2 = "2018-08-15 23:59:59";
+        var deadLine1 = "2018-07-25 23:59:59";
+        var deadLine2 = "2018-08-25 23:59:59";
         if (new Date() > new Date(Date.parse(deadLine1.replace(/\-/g, "/")))) {
             Vue.set(this, "abstractDue", true);
         } else {
