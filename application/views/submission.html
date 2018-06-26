@@ -79,12 +79,12 @@
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
                             </button>
-                            <button id="log" class="mdl-button">
+                            <button class="mdl-button mdl-js-button mdl-button--primary">
                                 <?php echo $firstname; ?>
                             </button>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
-                                <li v-on:click="signOut" class="mdl-menu__item">Sign out</li>
-                            </ul>
+                            <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
+                                Logout
+                            </button>
                         </nav>
                     </div>
                     <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
@@ -96,9 +96,9 @@
                     <div class="android-section-title mdl-typography--display-1-color-contrast">Your Submission
                     </div>
                     <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                            <button :disabled.sync="abstractDue" isabled class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subpaper = true">
-                                <i class="material-icons">add</i>
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+                            <button :disabled.sync="abstractDue" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="subpaper = true">
+                                New Submission
                             </button>
                         </div>
                     </div>
@@ -165,21 +165,22 @@
                                     </template>
                                 </el-table-column>
                             </el-table>
-                            <el-alert title="Tips" type="info" :closable="false" description="Make sure the information you submit is complete and accurate.">
+                            <el-alert type="info" :closable="false">
+                                <h5>Tips</h5> Make sure the information you submit is completed and accurate.
                             </el-alert>
-                            <el-alert type="success" :closable="false" description="1. Click [CLICK for Detail] to view the detailed information of the paper.">
+                            <el-alert type="success" :closable="false">
+                                <font color="black">1. Click [CLICK for Detail] to view the detailed information of the paper.
+                                    <br/>2. In the [Progress] column, you can view the progress of submitted papers.
+                                    <br/>3. In the [Option] column can modify the paper's information.</font>
                             </el-alert>
-                            <el-alert type="success" :closable="false" description="2. In the [Progress] column, you can view the progress of submitted papers.">
-                            </el-alert>
-                            <el-alert type="success" :closable="false" description="3, in the [Accepted] column, you can view the receiving status of the paper. [Yes] represents the paper accepted and [No] represents the paper was not received.">
-                            </el-alert>
-                            <el-alert type="success" :closable="false" description="4, in the [Option] column can modify the paper's information.">
-                            </el-alert>
-                            <el-alert type="warning" :closable="false" description="Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.">
+                            <el-alert type="warning" :closable="false">
+                                <font color="black">Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.
+                                </font>
                             </el-alert>
                         </div>
                     </div>
-                    <el-alert title="Important Dates" type="warning" :closable="false">
+                    <el-alert type="warning" :closable="false">
+                        <h5>Important Dates</h5>
                     </el-alert>
                     <el-table :data="deadtime" stripe style="width: 100%">
                         <el-table-column prop="name" label="description" width="200">
@@ -284,17 +285,17 @@
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
                 <el-table-column fixed type="index">
                 </el-table-column>
-                <el-table-column prop="corresponding" label="Corresponding" width="110">
+                <el-table-column prop="corresponding" label="Corresponding" width="140">
                 </el-table-column>
-                <el-table-column prop="firstname" label="First name" width="95">
+                <el-table-column prop="firstname" label="First name" width="100">
                 </el-table-column>
-                <el-table-column prop="lastname" label="Last name" width="95">
+                <el-table-column prop="lastname" label="Last name" width="100">
                 </el-table-column>
-                <el-table-column prop="country" label="Country" width="95">
+                <el-table-column prop="country" label="Country" width="100">
                 </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="350">
+                <el-table-column prop="organization" label="Organization" width="300">
                 </el-table-column>
-                <el-table-column prop="email" label="Email" width="195">
+                <el-table-column prop="email" label="Email" width="200">
                 </el-table-column>
                 <el-table-column fixed="right" width="50">
                     <template slot-scope="scope">
@@ -352,7 +353,7 @@
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
-                <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size does not exceed 2Mb. Ensure that the uploaded file is a complete paper, not a abstract. If you have more than one file to upload, please compress them into a zip archive to upload." :closable="false">
+                <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size can not exceed 2Mb. Please make sure that the uploaded file is a full paper, not a abstract. If you have more than one file to upload, please compress them into a zip file to upload." :closable="false">
                 </el-alert>
             </el-upload>
             <span slot="footer" class="dialog-footer">
@@ -430,17 +431,17 @@
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
                 <el-table-column fixed type="index">
                 </el-table-column>
-                <el-table-column prop="corresponding" label="Corresponding" width="110">
+                <el-table-column prop="corresponding" label="Corresponding" width="140">
                 </el-table-column>
-                <el-table-column prop="firstname" label="First name" width="95">
+                <el-table-column prop="firstname" label="First name" width="100">
                 </el-table-column>
-                <el-table-column prop="lastname" label="Last name" width="95">
+                <el-table-column prop="lastname" label="Last name" width="100">
                 </el-table-column>
-                <el-table-column prop="country" label="Country" width="95">
+                <el-table-column prop="country" label="Country" width="100">
                 </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="350">
+                <el-table-column prop="organization" label="Organization" width="300">
                 </el-table-column>
-                <el-table-column prop="email" label="Email" width="195">
+                <el-table-column prop="email" label="Email" width="200">
                 </el-table-column>
                 <el-table-column fixed="right" width="50">
                     <template slot-scope="scope">
@@ -494,7 +495,7 @@
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
             </el-upload>
-            <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size does not exceed 2Mb. Ensure that the uploaded file is a complete paper, not a abstract. If you have more than one file to upload, please compress them into a zip archive to upload." :closable="false">
+            <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size can not exceed 2Mb. Please make sure that the uploaded file is a full paper, not a abstract. If you have more than one file to upload, please compress them into a zip file to upload." :closable="false">
             </el-alert>
             <span slot="footer" class="dialog-footer">
                 <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>

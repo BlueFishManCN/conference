@@ -12,7 +12,7 @@ class Home extends CI_Controller {
 	public function index() {
 		if (!$this->session->has_userdata('id')) {
 			$data['id'] = 0;
-			$data['firstname'] = "Sign In or Sign Up";
+			$data['firstname'] = "Login or Create account";
 			$data['is_login'] = false;
 			$this->load->view('home.html', $data);
 			return;

@@ -79,12 +79,12 @@
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
                             </button>
-                            <button id="log" class="mdl-button">
+                            <button class="mdl-button mdl-js-button mdl-button--primary">
                                 <?php echo $firstname; ?>
                             </button>
-                            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="log">
-                                <li v-on:click="signOut" class="mdl-menu__item">Sign out</li>
-                            </ul>
+                            <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
+                                Logout
+                            </button>
                         </nav>
                     </div>
                     <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
