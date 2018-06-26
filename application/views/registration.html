@@ -143,9 +143,9 @@
                                         <el-tag :type="scope1.row.percentage==='100'?'success':'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
+                                <el-table-column prop="is_accept" label="Comfirm status" width="100">
                                     <template slot-scope="scope2">
-                                        <el-tag :type="scope2.row.is_accept==='Yes'?'success':scope2.row.is_accept==='No'?'danger':'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                        <el-tag :type="scope2.row.is_accept==='Accept'?'success':scope2.row.is_accept==='Reject'?'danger':'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="200">
@@ -184,7 +184,7 @@
             </div>
         </div>
         <!-- addattendee -->
-        <el-dialog title="Add attendee" :visible.sync="addattendee" width="50%">
+        <el-dialog title="Add participant" :visible.sync="addattendee" width="50%">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                     Progress Status

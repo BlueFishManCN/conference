@@ -105,9 +105,12 @@
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
                             <el-table :data="paperindex" stripe border style="width: 100%">
-                                <el-table-column fixed type="expand" label="CLICK for Detail" width="200">
+                                <el-table-column fixed type="expand" label="CLICK for Detail" width="150">
                                     <template slot-scope="props">
                                         <el-form label-position="left" inline class="demo-table-expand">
+                                            <el-form-item label="Paper ID">
+                                                <span>{{ props.row.id }}</span>
+                                            </el-form-item>
                                             <el-form-item label="Topic">
                                                 <span>{{ props.row.topic }}</span>
                                             </el-form-item>
@@ -144,16 +147,16 @@
                                         </el-form>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="250">
+                                <el-table-column prop="title" label="Title" width="200">
                                 </el-table-column>
-                                <el-table-column prop="percentage" label="Progress(%)" width="110">
+                                <el-table-column prop="percentage" label="Progress(%)" width="150">
                                     <template slot-scope="scope1">
                                         <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Accepted" width="90">
+                                <el-table-column prop="is_accept" label="Accept status" width="150">
                                     <template slot-scope="scope2">
-                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'No' ? 'danger' : 'success'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' :scope2.row.is_accept === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="350">
@@ -161,7 +164,7 @@
                                         <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Edit Info</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!='Yes'" @click="posterPaper(scope.row.id)" type="text" size="mini">Poster paper</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="posterPaper(scope.row.id)" type="text" size="mini">Poster paper</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>

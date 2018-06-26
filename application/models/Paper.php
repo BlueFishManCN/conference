@@ -147,7 +147,7 @@ class Paper extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('user_id', $user_id);
-		$this->db->where_in('is_accept', array('Yes', 'Poster'));
+		$this->db->where_in('is_accept', array('Accept', 'Poster'));
 		$this->db->where('is_delete', 0);
 
 		$query = $this->db->get()->result_array();

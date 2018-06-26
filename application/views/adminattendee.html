@@ -286,8 +286,7 @@ var app = new Vue({
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
                     attendee_id: app.acceptattendeeid,
-                    is_check: 'Yes',
-                    is_accept: 'Yes'
+                    is_accept: 'Accept'
                 },
                 dataType: "json",
                 success: function(data) {
@@ -307,8 +306,7 @@ var app = new Vue({
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
                     attendee_id: app.acceptattendeeid,
-                    is_check: 'Yes',
-                    is_accept: 'No'
+                    is_accept: 'Reject'
                 },
                 dataType: "json",
                 success: function(data) {

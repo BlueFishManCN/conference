@@ -180,11 +180,14 @@
                                 </el-table-column>
                                 <el-table-column prop="created_at" label="Submission time(UTC+8)" width="200">
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Accepted" width="100">
+                                <el-table-column prop="is_accept" label="Accept status" width="100">
+                                    <template slot-scope="scope2">
+                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' :scope2.row.is_accept === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                    </template>
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Option" width="120">
                                     <template slot-scope="scope">
-                                        <el-button v-on:click="acceptDialog(scope.row.id)" type="text" size="mini">Accept Status</el-button>
+                                        <el-button v-on:click="acceptDialog(scope.row.id)" type="text" size="mini">Accept paper or not</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -211,10 +214,10 @@
             </div>
         </div>
         <!-- subauthor -->
-        <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="25%">
+        <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="50%">
             <span slot="footer" class="dialog-footer">
-                <el-button type="danger" v-on:click="notAcceptPaper">Not Accept</el-button>
-                <el-button type="info" v-on:click="posterPaper">Poster</el-button>
+                <el-button type="danger" v-on:click="notAcceptPaper">Reject</el-button>
+                <el-button type="success" v-on:click="posterPaper">Poster</el-button>
                 <el-button type="primary" v-on:click="acceptPaper">Accept</el-button>
             </span>
         </el-dialog>
@@ -390,7 +393,7 @@ var app = new Vue({
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
                     paper_id: app.acceptpaperid,
-                    is_accept: 'Yes'
+                    is_accept: 'Accept'
                 },
                 dataType: "json",
                 success: function(data) {
@@ -430,8 +433,7 @@ var app = new Vue({
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
                     paper_id: app.acceptpaperid,
-                    is_check: 'Yes',
-                    is_accept: 'No'
+                    is_accept: 'Reject'
                 },
                 dataType: "json",
                 success: function(data) {
