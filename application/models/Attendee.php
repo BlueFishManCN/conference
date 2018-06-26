@@ -7,10 +7,12 @@ class Attendee extends CI_Model {
 		$this->load->database();
 	}
 
-	public function insert($user_id, $attendeefirstname, $lastname, $email, $country, $organization) {
+	public function insert($user_id, $paper_id, $author_id, $firstname, $lastname, $email, $country, $organization) {
 		$data = array(
 			'user_id' => $user_id,
-			'firstname' => $attendeefirstname,
+			'paper_id' => $paper_id,
+			'author_id' => $author_id,
+			'firstname' => $firstname,
 			'lastname' => $lastname,
 			'email' => $email,
 			'country' => $country,

@@ -47,18 +47,18 @@ class Registration extends CI_Controller {
 		$postdata = $this->input->post();
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
-
-		$attendeefirstname = $postdata['attendeefirstname'];
-		$lastname = $postdata['lastname'];
-		$email = $postdata['email'];
-		$country = $postdata['country'];
-		$organization = $postdata['organization'];
+		$author_id = $postdata['author_id'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$this->Attendee->insert($user_id, $attendeefirstname, $lastname, $email, $country, $organization);
+
+			foreach ($author_id as $item) {
+				$author = $this->Author->getAuthorById($item)[0];
+				$this->Attendee->insert($user_id, $author->paper_id, $author->id, $author->firstname, $author->lastname, $author->email, $author->country, $author->organization);
+			}
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
@@ -186,6 +186,7 @@ class Registration extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$data['index'] = $this->Attendee->index($user_id);
+			$data['addindex'] = $this->Paper->addindex($user_id);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

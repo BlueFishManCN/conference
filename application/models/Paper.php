@@ -200,4 +200,41 @@ class Paper extends CI_Model {
 		$this->db->where('is_delete', 0);
 		$this->db->update('paper', $data);
 	}
+
+	public function addindex($user_id) {
+		$this->db->select('id');
+		$this->db->from('paper');
+		$this->db->where('user_id', $user_id);
+		$this->db->where_in('is_accept', array('Accept', 'Poster'));
+		$this->db->where('is_delete', 0);
+		$query = $this->db->get()->result_array();
+
+		$paperid = array();
+		foreach ($query as $row) {
+			array_push($paperid, $row['id']);
+		}
+
+		$this->db->select('author_id');
+		$this->db->from('attendee');
+		$this->db->where('user_id', $user_id);
+		$this->db->where_in('paper_id', $paperid);
+		$this->db->where('is_delete', 0);
+		$query = $this->db->get()->result_array();
+
+		$authorid = array();
+		foreach ($query as $row) {
+			array_push($authorid, $row['author_id']);
+		}
+
+		$this->db->select('*');
+		$this->db->from('author');
+		$this->db->where_in('paper_id', $paperid);
+		if (!empty($authorid)) {
+			$this->db->where_not_in('id', $authorid);
+		}
+		$this->db->where('is_delete', 0);
+		$query = $this->db->get()->result_array();
+
+		return $query;
+	}
 }

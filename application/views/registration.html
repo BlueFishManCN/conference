@@ -150,7 +150,6 @@
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Options" width="200">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="editAttendee(scope.row)" type="text" size="mini">Edit Info</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||attendeeDue" size="mini" type="danger" @click="deleteAttendee(scope.row.id)" icon="el-icon-delete" circle></el-button>
                                     </template>
@@ -193,58 +192,19 @@
                     <el-progress :text-inside="true" :stroke-width="20" :percentage="0"></el-progress>
                 </div>
             </div>
-            <el-form ref="addattendeeform" :model="addattendeeform" status-icon :rules="addattendeerules" label-width="25%">
-                <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="addattendeeform.firstname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="addattendeeform.lastname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="addattendeeform.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="addattendeeform.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="addattendeeform.organization" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
+            <el-table ref="multipleTable" :data="addattendeeindex" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
+                <el-table-column type="selection" width="55">
+                </el-table-column>
+                <el-table-column prop="firstname" label="Firstname" width="150">
+                </el-table-column>
+                <el-table-column prop="lastname" label="Larstname" width="150">
+                </el-table-column>
+                <el-table-column prop="email" label="Email" show-overflow-tooltip>
+                </el-table-column>
+            </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="addattendee = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subAddAttendee('addattendeeform')">Add</el-button>
-            </span>
-        </el-dialog>
-        <!-- editattendee -->
-        <el-dialog title="Edit attendee" :visible.sync="editattendee" width="50%">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
-                    Progress Status
-                </div>
-                <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
-                    <el-progress :text-inside="true" :stroke-width="20" :percentage="percentage"></el-progress>
-                </div>
-            </div>
-            <el-form ref="editattendeeform" :model="editattendeeform" status-icon :rules="editattendeerules" label-width="25%">
-                <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="editattendeeform.firstname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="editattendeeform.lastname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="editattendeeform.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="editattendeeform.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="editattendeeform.organization" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="editattendee = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="editAttendeePost('editattendeeform')">Confirm</el-button>
+                <el-button @click="toggleSelection()">Cancel</el-button>
+                <el-button type="primary" v-on:click="subAddAttendee">Add</el-button>
             </span>
         </el-dialog>
         <!-- uploadfile -->
@@ -313,7 +273,6 @@ var app = new Vue({
 
         attendeeDue: false,
         addattendee: false,
-        editattendee: false,
         uploadfile: false,
         uploaddata: {
             id: "<?php echo $id; ?>",
@@ -322,60 +281,8 @@ var app = new Vue({
         },
         attendeeindex: [],
 
-        addattendeeform: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            country: '',
-            organization: ''
-        },
-
-        editattendeeform: {
-            id: '',
-            firstname: '',
-            lastname: '',
-            email: '',
-            country: '',
-            organization: ''
-        },
-
-        addattendeerules: {
-            firstname: [
-                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
-            ],
-            lastname: [
-                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
-            ],
-            email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
-            ],
-            country: [
-                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
-            ],
-            organization: [
-                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
-            ],
-        },
-
-        editattendeerules: {
-            firstname: [
-                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
-            ],
-            lastname: [
-                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
-            ],
-            email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
-            ],
-            country: [
-                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
-            ],
-            organization: [
-                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
-            ],
-        },
+        addattendeeindex: [],
+        multipleSelection: [],
     },
 
     created: function() {
@@ -397,6 +304,7 @@ var app = new Vue({
             success: function(data) {
                 if (data['status'] == true) {
                     Vue.set(app, "attendeeindex", data['index']);
+                    Vue.set(app, "addattendeeindex", data['addindex']);
                 }
             }
         });
@@ -435,40 +343,55 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         Vue.set(app, "attendeeindex", data['index']);
+                        Vue.set(app, "addattendeeindex", data['addindex']);
                     }
                 }
             });
         },
 
-        subAddAttendee(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('registration/addattendee');?>",
-                        data: {
-                            id: "<?php echo $id; ?>",
-                            firstname: "<?php echo $firstname; ?>",
-                            attendeefirstname: app.addattendeeform.firstname,
-                            lastname: app.addattendeeform.lastname,
-                            email: app.addattendeeform.email,
-                            country: app.addattendeeform.country,
-                            organization: app.addattendeeform.organization
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                alert("Add attendee successful");
-                                Vue.set(app, 'addattendee', false);
-                                app.getattendee();
-                            }
+        toggleSelection(rows) {
+            if (rows) {
+                rows.forEach(row => {
+                    app.$refs.multipleTable.toggleRowSelection(row);
+                });
+            } else {
+                app.$refs.multipleTable.clearSelection();
+            }
+            Vue.set(app, 'addattendee', false);
+        },
+
+        handleSelectionChange(val) {
+            app.multipleSelection = val;
+        },
+
+        subAddAttendee() {
+            var authorid = Array();
+            for (var i = app.multipleSelection.length - 1; i >= 0; i--) {
+                authorid.push(app.multipleSelection[i]['id']);
+            }
+            if (authorid.length != 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('registration/addattendee');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        author_id: authorid
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data['status'] == true) {
+                            alert("Add attendee successful");
+                            Vue.set(app, 'addattendee', false);
+                            app.getattendee();
                         }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
+                    }
+                });
+            } else {
+                alert("Add none!");
+                Vue.set(app, 'addattendee', false);
+                app.getattendee();
+            }
         },
 
         deleteAttendee(id) {
@@ -485,50 +408,6 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getattendee();
                     }
-                }
-            });
-        },
-
-        editAttendee(row) {
-            Vue.set(app.editattendeeform, "id", row.id);
-            Vue.set(app.editattendeeform, "firstname", row.firstname);
-            Vue.set(app.editattendeeform, "lastname", row.lastname);
-            Vue.set(app.editattendeeform, "email", row.email);
-            Vue.set(app.editattendeeform, "country", row.country);
-            Vue.set(app.editattendeeform, "organization", row.organization);
-            Vue.set(app, "percentage", row.percentage);
-            Vue.set(app, "editattendee", true);
-        },
-
-        editAttendeePost(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('registration/edit');?>",
-                        data: {
-                            id: "<?php echo $id; ?>",
-                            firstname: "<?php echo $firstname; ?>",
-                            attendee_id: app.editattendeeform.id,
-                            attendeefirstname: app.editattendeeform.firstname,
-                            lastname: app.editattendeeform.lastname,
-                            email: app.editattendeeform.email,
-                            country: app.editattendeeform.country,
-                            organization: app.editattendeeform.organization,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            console.log(data);
-                            if (data['status'] == true) {
-                                Vue.set(app, "editattendee", false);
-                                alert("Edit attendee successful");
-                                app.getattendee();
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
                 }
             });
         },
@@ -588,6 +467,7 @@ var app = new Vue({
                 });
             }
         },
+
     }
 })
 </script>
