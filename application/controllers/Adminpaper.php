@@ -131,7 +131,7 @@ class Adminpaper extends CI_Controller {
 				$this->email->from('geg2018@163.com', 'GEG2018');
 				$this->email->to($item->email);
 				$this->email->subject('GEG2018: Submission message');
-				if ($is_accept == 'Yes') {
+				if ($is_accept == 'Accept') {
 					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Congratulations!</p><p>I am glad to inform you that your paper is accepted by 2018 GEG conference.You are invited to give a presentation at the conference.</p><p>Please register for the conference at your earliest convenience before 30th September 2018.</p><p>If you will not be able to attend the conference, you can choose to post your paper at the conference.</p><p>Hope to see you in Shanghai!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
 				} else if ($is_accept == 'Poster') {
 					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Thank you for submitting your paper to the conference!</p><p>I am glad to inform you that your paper was selected to post at the conference.</p><p>Please register for the poster at your earliest convenience before 30th September 2018.</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');

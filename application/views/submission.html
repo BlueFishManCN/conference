@@ -160,12 +160,12 @@
                                         <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' :scope2.row.is_accept === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="350">
+                                <el-table-column fixed="right" label="Edit Options" width="350">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Edit Info</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Basic Info</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="posterPaper(scope.row.id)" type="text" size="mini">Poster paper</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -173,9 +173,10 @@
                                 <h5>Tips</h5> Make sure the information you submit is completed and accurate.
                             </el-alert>
                             <el-alert type="success" :closable="false">
-                                <font color="black">1. Click [CLICK for Detail] to view the detailed information of the paper.
-                                    <br/>2. In the [Progress] column, you can view the progress of submitted papers.
-                                    <br/>3. In the [Option] column can modify the paper's information.</font>
+                                <font color="black">1. Click [New Submission] to submit the paper.
+                                    <br/>2. Click [CLICK for Detail] to view the detailed information of the paper.
+                                    <br/>3. In the [Progress] column, you can view the progress of submitted papers.
+                                    <br/>4. In the [Edit Options] column can modify the paper's information.</font>
                             </el-alert>
                             <el-alert type="warning" :closable="false">
                                 <font color="black">Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.
@@ -274,9 +275,9 @@
                 <el-step title="Step 3" icon="el-icon-upload"></el-step>
             </el-steps>
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="subaddauthor = true">
-                        <i class="material-icons">add</i>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="subaddauthor = true">
+                        New Author
                     </button>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
@@ -322,6 +323,9 @@
                 </el-form-item>
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="addauthorform.email" placeholder="Please input the email" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Retype Email" prop="retypeemail">
+                    <el-input v-model="addauthorform.retypeemail" placeholder="Please retype the email" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="Country" prop="country">
                     <el-input v-model="addauthorform.country" placeholder="Please input the country" auto-complete="off"></el-input>
@@ -420,9 +424,9 @@
         <!-- editauthor -->
         <el-dialog title="Edit authors" :visible.sync="editauthor" width="75%">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--11-offset">
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" @click="editaddauthor = true">
-                        <i class="material-icons">add</i>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="editaddauthor = true">
+                        New Author
                     </button>
                 </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
@@ -469,6 +473,9 @@
                 <el-form-item label="Email" prop="email">
                     <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="Retype Email" prop="retypeemail">
+                    <el-input v-model="addauthorform.retypeemail" placeholder="Please retype the email" auto-complete="off"></el-input>
+                </el-form-item>
                 <el-form-item label="Country" prop="country">
                     <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
                 </el-form-item>
@@ -505,6 +512,15 @@
                 <el-button type="info" v-on:click="edituploadfile = false">Finish</el-button>
             </span>
         </el-dialog>
+        <!-- editposter -->
+        <el-dialog title="Poster" :visible.sync="editposter" width="50%">
+            <el-alert title="Important info" type="warning" description="If you will not be able to attend the conference, you can choose to post your paper at the conference." :closable="false">
+            </el-alert>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="info" v-on:click="editposter=false">Cancel</el-button>
+                <el-button type="info" v-on:click="posterPaper">Confirm</el-button>
+            </span>
+        </el-dialog>
     </div>
     <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
@@ -518,22 +534,8 @@
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
 var validateEmail = (rule, value, callback) => {
-    if (value !== app.step1form.email) {
+    if (value !== app.addauthorform.email) {
         callback(new Error('The two entered email are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass = (rule, value, callback) => {
-    if (value !== app.step3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass2 = (rule, value, callback) => {
-    if (value !== app.forgetstep3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
     } else {
         callback();
     }
@@ -576,6 +578,7 @@ var app = new Vue({
         editauthor: false,
         editaddauthor: false,
         edituploadfile: false,
+        editposter: false,
 
         paperindex: [],
         authorindex: [],
@@ -598,6 +601,7 @@ var app = new Vue({
             firstname: '',
             lastname: '',
             email: '',
+            retypeemail: '',
             country: '',
             organization: '',
             corresponding: 'NO'
@@ -639,6 +643,11 @@ var app = new Vue({
             email: [
                 { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
+            ],
+            retypeemail: [
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
+                { validator: validateEmail, trigger: ['blur', 'change'] },
             ],
             country: [
                 { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
@@ -752,7 +761,7 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "subpaper", false);
-                                alert("Submit paper basic information successful");
+                                alert("Submit paper basic information successful!");
                                 Vue.set(app.subpaperform, "topic", "");
                                 Vue.set(app.subpaperform, "title", "");
                                 Vue.set(app.subpaperform, "abstract", "");
@@ -818,10 +827,11 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "firstname", "");
                                 Vue.set(app.addauthorform, "lastname", "");
                                 Vue.set(app.addauthorform, "email", "");
+                                Vue.set(app.addauthorform, "retypeemail", "");
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
-                                alert("Add author successful");
+                                alert("Add author successful!");
                             }
                         }
                     });
@@ -870,7 +880,7 @@ var app = new Vue({
             Vue.set(app, "add_paper_percentage", response['paper_percentage']);
             Vue.set(app, "edit_paper_percentage", response['paper_percentage']);
             app.getpaper();
-            alert("Upload file successful");
+            alert("Upload file successful!");
         },
         handleError(response, file, fileList) {
             app.getpaper();
@@ -969,11 +979,12 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "firstname", "");
                                 Vue.set(app.addauthorform, "lastname", "");
                                 Vue.set(app.addauthorform, "email", "");
+                                Vue.set(app.addauthorform, "retypeemail", "");
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
                                 Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
-                                alert("Add author successful");
+                                alert("Add author successful!");
                             }
                         }
                     });
@@ -1040,8 +1051,12 @@ var app = new Vue({
             }
         },
 
-        posterPaper(id) {
+        editPoster(id) {
             Vue.set(app, "edit_paper_id", id);
+            Vue.set(app, "editposter", true);
+        },
+
+        posterPaper() {
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('submission/posterpaper');?>",
@@ -1054,6 +1069,7 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         app.getpaper();
+                        Vue.set(app, "editposter", false);
                     }
                 }
             });
