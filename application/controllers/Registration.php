@@ -145,11 +145,11 @@ class Registration extends CI_Controller {
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$config['upload_path'] = './application/uploads/attendee/';
-			$config['allowed_types'] = 'zip|rar|pdf|jpg|png';
+			$config['allowed_types'] = 'zip|pdf|jpg|png';
 			$config['file_name'] = $attendee_id;
 			$config['file_ext_tolower'] = TRUE;
 			$config['overwrite'] = true;
-			$config['max_size'] = '2048';
+			$config['max_size'] = '10240';
 
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
@@ -164,11 +164,9 @@ class Registration extends CI_Controller {
 					$sum = $this->Attendee->getPercentageByid($attendee_id);
 					$this->Attendee->addPercentageByid($attendee_id, $sum + 50);
 				}
-
-				$filename = $this->upload->data()['file_name'];
-
-				$this->Attendee->upload($attendee_id, $filename);
 				$percentage = $this->Attendee->getPercentageByid($attendee_id);
+				$filename = $this->upload->data()['file_name'];
+				$this->Attendee->upload($attendee_id, $filename);
 				$this->output
 					->set_output(json_encode(array('status' => false, 'percentage' => $percentage)));
 			}

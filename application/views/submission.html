@@ -358,7 +358,7 @@
                     <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="add_paper_percentage"></el-progress>
                 </div>
             </div>
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
                 <el-alert title="Important info" type="warning" description="Only one pdf or zip file can be uploaded and the size can not exceed 2Mb. Please make sure that the uploaded file is a full paper, not a abstract. If you have more than one file to upload, please compress them into a zip file to upload." :closable="false">
@@ -502,7 +502,7 @@
                     <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="edit_paper_percentage"></el-progress>
                 </div>
             </div>
-            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" accept="pdf" list-type="picture" :auto-upload="false" :limit="1">
+            <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
             </el-upload>
@@ -1028,6 +1028,7 @@ var app = new Vue({
                     },
                     success: function(response, status, request) {
                         var disp = request.getResponseHeader('Content-Disposition');
+
                         if (disp && disp.search('attachment') != -1) {
                             var form = $('<form method="POST" action="' + "<?php echo site_url('submission/download');?>" + '">');
                             $.each({
@@ -1038,13 +1039,8 @@ var app = new Vue({
                                 form.append($('<input type="hidden" name="' + k +
                                     '" value="' + v + '">'));
                             });
-                            form.appendTo('body').submit().remove();
-                            return;
-                        }
-                        if (response.status == "ok") {
-                            showResult(response.data);
-                        } else {
-                            showError('Error: ', response.msg);
+                            $('body').append(form);
+                            form.submit();
                         }
                     }
                 });
