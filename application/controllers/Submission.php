@@ -215,6 +215,11 @@ class Submission extends CI_Controller {
 					$sum = $this->Paper->getPercentageByid($paper_id);
 					$this->Paper->addPercentageByid($paper_id, $sum + 40);
 				}
+				$paper_percentage = $this->Paper->getPercentageByid($paper_id);
+				$data = array('upload_data' => $this->upload->data());
+				$this->Paper->upload($paper_id, $data['upload_data']['file_name']);
+				$this->output
+					->set_output(json_encode(array('status' => false, 'paper_percentage' => $paper_percentage)));
 
 				$email = $this->User->getEmailById($user_id);
 				$this->email->from('geg2018@163.com', 'GEG2018');
@@ -231,11 +236,6 @@ class Submission extends CI_Controller {
 					$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
 					$this->email->send();
 				}
-
-				$paper_percentage = $this->Paper->getPercentageByid($paper_id);
-				$this->Paper->upload($paper_id);
-				$this->output
-					->set_output(json_encode(array('status' => false, 'paper_percentage' => $paper_percentage)));
 			}
 			return;
 		}

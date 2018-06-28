@@ -57,10 +57,15 @@ class Paper extends CI_Model {
 		return $query;
 	}
 
-	public function adminsearchtotal($select, $keywords) {
+	public function adminsearchtotal($status, $select, $keywords) {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('is_delete', 0);
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
 		if ($select != "") {
 			$this->db->where('topic', $select);
 		}
@@ -68,16 +73,20 @@ class Paper extends CI_Model {
 			$this->db->like('id', $keywords);
 			$this->db->or_like('title', $keywords);
 			$this->db->or_like('keywords', $keywords);
-
 		}
 		$this->db->order_by('updated_at', 'DESC');
 		return $this->db->count_all_results();
 	}
 
-	public function adminsearch($currentPage, $select, $keywords) {
+	public function adminsearch($currentPage, $status, $select, $keywords) {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('is_delete', 0);
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
 		if ($select != "") {
 			$this->db->where('topic', $select);
 		}
@@ -171,9 +180,9 @@ class Paper extends CI_Model {
 		$this->db->insert("paper", $data);
 	}
 
-	public function upload($paper_id) {
+	public function upload($paper_id, $file) {
 		$data = array(
-			'file' => $paper_id . '.pdf',
+			'file' => $file,
 		);
 		$this->db->where('id', $paper_id);
 		$this->db->where('is_delete', 0);

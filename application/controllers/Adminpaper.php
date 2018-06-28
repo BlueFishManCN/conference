@@ -62,6 +62,7 @@ class Adminpaper extends CI_Controller {
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
 		$currentPage = $postdata['currentPage'];
+		$status = $postdata['status'];
 		$select = $postdata['select'];
 		$keywords = $postdata['keywords'];
 
@@ -69,8 +70,8 @@ class Adminpaper extends CI_Controller {
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$data['total'] = $this->Paper->adminsearchtotal($select, $keywords);
-			$data['index'] = $this->Paper->adminsearch($currentPage, $select, $keywords);
+			$data['total'] = $this->Paper->adminsearchtotal($status, $select, $keywords);
+			$data['index'] = $this->Paper->adminsearch($currentPage, $status, $select, $keywords);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;
