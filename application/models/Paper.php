@@ -20,7 +20,7 @@ class Paper extends CI_Model {
 			$this->db->from('author');
 			$this->db->where('paper_id', $key['id']);
 			$this->db->where('is_delete', 0);
-			$this->db->order_by('updated_at', 'DESC');
+			$this->db->order_by('created_at', 'ASC');
 			$author = $this->db->get()->result_array();
 			$key['author'] = $author;
 		}
