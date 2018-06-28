@@ -162,29 +162,29 @@
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Edit Options" width="350">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Basic Info</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Basic Info</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
-                            <el-alert type="info" :closable="false">
+                            <el-alert title="" type="info" :closable="false">
                                 <h5>Tips</h5> Make sure the information you submit is completed and accurate.
                             </el-alert>
-                            <el-alert type="success" :closable="false">
+                            <el-alert title="" type="success" :closable="false">
                                 <font color="black">1. Click [New Submission] to submit the paper.
                                     <br/>2. Click [CLICK for Detail] to view the detailed information of the paper.
                                     <br/>3. In the [Progress] column, you can view the progress of submitted papers.
                                     <br/>4. In the [Edit Options] column can modify the paper's information.</font>
                             </el-alert>
-                            <el-alert type="warning" :closable="false">
+                            <el-alert title="" type="warning" :closable="false">
                                 <font color="black">Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.
                                 </font>
                             </el-alert>
                         </div>
                     </div>
-                    <el-alert type="warning" :closable="false">
+                    <el-alert title="" type="warning" :closable="false">
                         <h5>Important Dates</h5>
                     </el-alert>
                     <el-table :data="deadtime" stripe style="width: 100%">
@@ -780,7 +780,7 @@ var app = new Vue({
 
         subAuthor(paperid, paperpercentage) {
             Vue.set(app, "add_paper_id", paperid);
-            Vue.set(app, "add_paper_percentage", paperpercentage);
+            Vue.set(app, "add_paper_percentage", parseInt(paperpercentage));
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('submission/author');?>",
@@ -793,7 +793,7 @@ var app = new Vue({
                 success: function(data) {
                     if (data['status'] == true) {
                         Vue.set(app, "authorindex", data['index']);
-                        Vue.set(app, "add_paper_percentage", data['paper_percentage']);
+                        Vue.set(app, "add_paper_percentage", parseInt(data['paper_percentage']));
                         Vue.set(app, "subauthor", true);
                     }
                 }
@@ -820,7 +820,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                Vue.set(app, "add_paper_percentage", data['paper_percentage']);
+                                Vue.set(app, "add_paper_percentage", parseInt(data['paper_percentage']));
                                 app.subAuthor(app.add_paper_id);
                                 app.getpaper();
                                 Vue.set(app, "subaddauthor", false);
@@ -855,7 +855,7 @@ var app = new Vue({
                 dataType: "json",
                 success: function(data) {
                     if (data['status'] == true) {
-                        Vue.set(app, "add_paper_percentage", data['paper_percentage']);
+                        Vue.set(app, "add_paper_percentage", parseInt(data['paper_percentage']));
                         app.subAuthor(app.add_paper_id);
                         app.getpaper();
                     }
@@ -877,8 +877,8 @@ var app = new Vue({
             this.$refs.upload.submit();
         },
         handleSuccess(response, file, fileList) {
-            Vue.set(app, "add_paper_percentage", response['paper_percentage']);
-            Vue.set(app, "edit_paper_percentage", response['paper_percentage']);
+            Vue.set(app, "add_paper_percentage", parseInt(response['paper_percentage']));
+            Vue.set(app, "edit_paper_percentage", parseInt(response['paper_percentage']));
             app.getpaper();
             alert("Upload file successful!");
         },
