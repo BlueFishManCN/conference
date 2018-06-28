@@ -68,13 +68,6 @@
                     <!-- Navigation -->
                     <div class="android-navigation-container">
                         <nav class="android-navigation mdl-navigation">
-                            <!-- Flat button with ripple -->
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminpaper/index');?>">
-                             Papers
-                            </a>
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminattendee/index');?>">
-                             Attendees
-                            </a>
                             <!-- Right aligned menu below button -->
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
@@ -138,7 +131,7 @@
                         </div>
                     </div>
                     <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                             <el-table :data="paperindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
@@ -228,7 +221,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                  <el-button  v-on:click="paperdetail=fasle">Cancel</el-button>
-               <el-button  type="danger" v-on:click="acceptDialog(paperdata.id)">Accept paper or not</el-button>
+               <el-button  type="danger" v-on:click="acceptDialog(paperdata.id)">Accept paper or not?</el-button>
             </span>
         </el-dialog>
         <!-- subauthor -->
@@ -423,6 +416,7 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getpaper();
                         Vue.set(app, 'accept', false);
+                        Vue.set(app, 'paperdetail', false);
                     }
                 }
             });
@@ -443,6 +437,7 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getpaper();
                         Vue.set(app, 'accept', false);
+                        Vue.set(app, 'paperdetail', false);
                     }
                 }
             });
@@ -463,6 +458,7 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getpaper();
                         Vue.set(app, 'accept', false);
+                        Vue.set(app, 'paperdetail', false);
                     }
                 }
             });

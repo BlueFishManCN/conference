@@ -215,14 +215,15 @@ class Registration extends CI_Controller {
 		$user_id = $postdata['id'];
 		$firstname = $postdata['firstname'];
 		$currentPage = $postdata['currentPage'];
+		$status = $postdata['status'];
 		$keywords = $postdata['keywords'];
 
 		$s_id = $this->session->userdata('id');
 		$s_firstname = $this->session->userdata('firstname');
 
 		if ($user_id == $s_id && $firstname == $s_firstname) {
-			$data['total'] = $this->Attendee->adminsearchtotal($keywords);
-			$data['index'] = $this->Attendee->adminsearch($currentPage, $keywords);
+			$data['total'] = $this->Attendee->adminsearchtotal($status, $keywords);
+			$data['index'] = $this->Attendee->adminsearch($currentPage, $status, $keywords);
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

@@ -21,6 +21,10 @@ class Home extends CI_Controller {
 			redirect('/adminpaper/index');
 			return;
 		}
+		if ($this->session->userdata('id') == 2) {
+			redirect('/adminattendee/index');
+			return;
+		}
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;

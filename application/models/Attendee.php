@@ -89,19 +89,55 @@ class Attendee extends CI_Model {
 		return $query;
 	}
 
-	public function adminsearchtotal($keywords) {
+	public function adminsearchtotal($status, $keywords) {
 		$this->db->select('*');
 		$this->db->from('attendee');
 		$this->db->where('is_delete', 0);
+
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
 
 		if ($keywords != "") {
 			$this->db->like('id', $keywords);
 			$this->db->or_like('firstname', $keywords);
 			$this->db->or_like('lastname', $keywords);
 			$this->db->or_like('email', $keywords);
-
+			$this->db->or_like('country', $keywords);
+			$this->db->or_like('organization', $keywords);
 		}
 		return $this->db->count_all_results();
+	}
+
+	public function adminsearch($currentPage, $status, $keywords) {
+		$this->db->select('*');
+		$this->db->from('attendee');
+		$this->db->where('is_delete', 0);
+		$this->db->order_by('updated_at', 'DESC');
+		// var_dump($status);
+		// die();
+
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
+
+		if ($keywords != "") {
+			$this->db->like('id', $keywords);
+			$this->db->or_like('firstname', $keywords);
+			$this->db->or_like('lastname', $keywords);
+			$this->db->or_like('email', $keywords);
+			$this->db->or_like('country', $keywords);
+			$this->db->or_like('organization', $keywords);
+		}
+
+		$this->db->limit(5, ($currentPage - 1) * 5);
+		$query = $this->db->get()->result_array();
+
+		return $query;
 	}
 
 	public function getFileById($id) {
@@ -141,25 +177,5 @@ class Attendee extends CI_Model {
 		$this->db->where('id', $paper_id);
 		$this->db->where('is_delete', 0);
 		$this->db->update('attendee', $data);
-	}
-
-	public function adminsearch($currentPage, $keywords) {
-		$this->db->select('*');
-		$this->db->from('attendee');
-		$this->db->where('is_delete', 0);
-		$this->db->order_by('updated_at', 'DESC');
-
-		if ($keywords != "") {
-			$this->db->like('id', $keywords);
-			$this->db->or_like('firstname', $keywords);
-			$this->db->or_like('lastname', $keywords);
-			$this->db->or_like('email', $keywords);
-
-		}
-
-		$this->db->limit(5, ($currentPage - 1) * 5);
-		$query = $this->db->get()->result_array();
-
-		return $query;
 	}
 }

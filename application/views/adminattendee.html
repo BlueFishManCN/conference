@@ -68,13 +68,6 @@
                     <!-- Navigation -->
                     <div class="android-navigation-container">
                         <nav class="android-navigation mdl-navigation">
-                            <!-- Flat button with ripple -->
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminpaper/index');?>">
-                             Papers
-                            </a>
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminattendee/index');?>">
-                             Attendees
-                            </a>
                             <!-- Right aligned menu below button -->
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
@@ -93,25 +86,37 @@
             <div class="android-content mdl-layout__content">
                 <a name="top"></a>
                 <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Attendees
+                    <div class="android-section-title mdl-typography--display-1-color-contrast">Participants
                     </div>
                     <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                             <div style="margin-top: 15px;">
-                                <el-input placeholder="paper_id/title/keywords" v-model="keywords" class="input-with-select">
+                                <el-select placeholder="All comfirm status" v-model="status" slot="prepend">
+                                    <el-option label="All comfirm status" value=""></el-option>
+                                    <el-option label="Uncheck" value="Uncheck"></el-option>
+                                    <el-option label="Accept" value="Accept"></el-option>
+                                    <el-option label="Reject" value="Reject"></el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                            <div style="margin-top: 15px;">
+                                <el-input placeholder="ID/firstname/lastname/email/country/organization" v-model="keywords" class="input-with-select">
                                     <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                                 </el-input>
                             </div>
                         </div>
                     </div>
                     <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phonemdl-card mdl-shadow--3dp">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                             <el-table :data="attendeeindex" stripe border style="width: 100%">
                                 <el-table-column fixed type="index">
                                 </el-table-column>
-                                <el-table-column prop="firstname" label="Firstname" width="200">
+                                <el-table-column prop="id" label="ID" width="50">
                                 </el-table-column>
-                                <el-table-column prop="lastname" label="Lirstname" width="100">
+                                <el-table-column prop="firstname" label="Firstname" width="150">
+                                </el-table-column>
+                                <el-table-column prop="lastname" label="Lirstname" width="150">
                                 </el-table-column>
                                 <el-table-column prop="email" label="Email" width="200">
                                 </el-table-column>
@@ -120,11 +125,14 @@
                                         <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Comfirmed" width="100">
+                                <el-table-column prop="is_accept" label="Comfirm status" width="150">
+                                    <template slot-scope="scope2">
+                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' : 'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
+                                    </template>
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="250">
+                                <el-table-column fixed="right" label="Options" width="150">
                                     <template slot-scope="scope">
-                                        <el-button v-on:click="acceptDialog(scope.row.id)" type="text" size="mini">Accept Status</el-button>
+                                        <el-button icon="el-icon-search" type="primary" circle v-on:click="view(scope.row)"></el-button>
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -150,10 +158,37 @@
                 </footer>
             </div>
         </div>
-        <!-- subauthor -->
-        <el-dialog title="Comfirm the attendee or not?" :visible.sync="accept" width="25%">
+        <!-- attendee -->
+        <el-dialog title="Participant detail" :visible.sync="attendeedetail" width="75%">
+            <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="ID">
+                    <span>{{ attendeedata.id }}</span>
+                </el-form-item>
+                <el-form-item label="Firstname">
+                    <span>{{ attendeedata.firstname }}</span>
+                </el-form-item>
+                <el-form-item label="Lastname">
+                    <span>{{ attendeedata.lastname }}</span>
+                </el-form-item>
+                <el-form-item label="Email">
+                    <span>{{ attendeedata.email }}</span>
+                </el-form-item>
+                <el-form-item label="Country">
+                    <span>{{ attendeedata.country }}</span>
+                </el-form-item>
+                <el-form-item label="File">
+                    <el-button @click="download(attendeedata.file)" type="text" size="mini">{{ attendeedata.file }}</el-button>
+                </el-form-item>
+            </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button type="danger" v-on:click="notAcceptPaper">Not Accept</el-button>
+                <el-button  v-on:click="attendeedetail=fasle">Cancel</el-button>
+                <el-button v-on:click="acceptDialog(attendeedata.id)" type="danger">Accept paper or not?</el-button>
+            </span>
+        </el-dialog>
+        <!-- subauthor -->
+        <el-dialog title="Comfirm the participant or not?" :visible.sync="accept" width="25%">
+            <span slot="footer" class="dialog-footer">
+                <el-button type="danger" v-on:click="notAcceptPaper">Reject</el-button>
                 <el-button type="primary" v-on:click="acceptPaper">Accept</el-button>
             </span>
         </el-dialog>
@@ -185,7 +220,11 @@ var app = new Vue({
 
         accept: false,
         acceptattendeeid: '',
+        status: '',
         keywords: '',
+
+        attendeedata: [],
+        attendeedetail: false,
     },
 
     created: function() {
@@ -266,6 +305,7 @@ var app = new Vue({
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
                     currentPage: app.currentPage,
+                    status: app.status,
                     keywords: app.keywords
                 },
                 dataType: "json",
@@ -276,6 +316,11 @@ var app = new Vue({
                     }
                 }
             });
+        },
+
+        view(attendee) {
+            Vue.set(app, 'attendeedata', attendee);
+            Vue.set(app, 'attendeedetail', true);
         },
 
         acceptPaper() {
@@ -293,6 +338,7 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getattendee();
                         Vue.set(app, 'accept', false);
+                        Vue.set(app, 'attendeedetail', false);
                     }
                 }
             });
@@ -313,6 +359,7 @@ var app = new Vue({
                     if (data['status'] == true) {
                         app.getattendee();
                         Vue.set(app, 'accept', false);
+                        Vue.set(app, 'attendeedetail', false);
                     }
                 }
             });
