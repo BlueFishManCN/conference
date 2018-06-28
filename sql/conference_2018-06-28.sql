@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.38)
 # Database: conference
-# Generation Time: 2018-06-26 11:38:54 +0000
+# Generation Time: 2018-06-28 04:06:23 +0000
 # ************************************************************
 
 
@@ -35,19 +35,21 @@ CREATE TABLE `attendee` (
   `email` varchar(255) NOT NULL COMMENT '邮箱',
   `country` varchar(255) NOT NULL DEFAULT '' COMMENT '国家',
   `organization` varchar(255) NOT NULL COMMENT '组织',
-  `file` varchar(255) DEFAULT NULL COMMENT '注册凭证',
+  `file` varchar(255) DEFAULT '' COMMENT '注册凭证',
   `percentage` int(7) NOT NULL DEFAULT '50' COMMENT '进度',
   `is_accept` varchar(7) DEFAULT NULL COMMENT '确认状态',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_delete` tinyint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 
 
 # Dump of table author
 # ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `author`;
 
 CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -62,12 +64,14 @@ CREATE TABLE `author` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_delete` tinyint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8465906 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9551380 DEFAULT CHARSET=utf8;
 
 
 
 # Dump of table paper
 # ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `paper`;
 
 CREATE TABLE `paper` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,12 +87,14 @@ CREATE TABLE `paper` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_delete` tinyint(4) DEFAULT '0' COMMENT '删除状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5208245 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7722836 DEFAULT CHARSET=utf8;
 
 
 
 # Dump of table user
 # ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
