@@ -68,13 +68,13 @@
                                 <?php echo $firstname; ?>
                             </button>
                             <button v-if="is_login" v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
-                                Logout
+                                Log out
                             </button>
                             <button v-if="!is_login" @click="step1 = true" class="mdl-button mdl-js-button mdl-button--primary">
                                 Create account
                             </button>
                             <button v-if="!is_login" @click="signInDialogVisible = true" class="mdl-button mdl-js-button mdl-button--primary">
-                                Login
+                                Log in
                             </button>
                         </nav>
                     </div>
