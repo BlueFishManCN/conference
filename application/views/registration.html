@@ -364,7 +364,7 @@ var app = new Vue({
                     dataType: "json",
                     success: function(data) {
                         if (data['status'] == true) {
-                            alert("Add participants successful!");
+                            alert("Add participants successfully!");
                             Vue.set(app, 'addattendee', false);
                             app.getattendee();
                         }
@@ -406,7 +406,7 @@ var app = new Vue({
         handleSuccess(response, file, fileList) {
             Vue.set(app, "percentage", response['percentage']);
             app.getattendee();
-            alert("Upload file successful");
+            alert("Upload file successfully");
         },
         handleError(response, file, fileList) {
             app.getattendee();

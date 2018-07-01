@@ -164,8 +164,8 @@
                                     <template slot-scope="scope">
                                         <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Basic Info</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload Full Paper</el-button>
+                                        <!--   <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button> -->
                                     </template>
                                 </el-table-column>
                             </el-table>
@@ -175,11 +175,11 @@
                             <el-alert title="" type="success" :closable="false">
                                 <font color="black">1. Click [New Submission] to submit the paper.
                                     <br/>2. Click [CLICK for Detail] to view the detailed information of the paper.
-                                    <br/>3. In the [Progress] column, you can view the progress of submitted papers.
-                                    <br/>4. In the [Edit Options] column can modify the paper's information.</font>
+                                    <br/>3. In the [Progress] column, you can view the progress of submitted papers. 60% means you have submitted the abstract of your paper but no full paper.
+                                    <br/>4. In the [Edit Options] column, you can modify the paper's information.</font>
                             </el-alert>
                             <el-alert title="" type="warning" :closable="false">
-                                <font color="black">Note that the dissertation information cannot be modified after the paper is accepted or exceeds the deadline.
+                                <font color="black">Note that the information of paper cannot be modified after the paper is accepted or exceeds the deadline.
                                 </font>
                             </el-alert>
                         </div>
@@ -275,16 +275,16 @@
                 <el-step title="Step 3" icon="el-icon-upload"></el-step>
             </el-steps>
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="subaddauthor = true">
-                        New Author
-                    </button>
-                </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
                     Progress Status
                 </div>
                 <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
                     <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="add_paper_percentage"></el-progress>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="subaddauthor = true">
+                        New Author
+                    </button>
                 </div>
             </div>
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
@@ -309,7 +309,7 @@
                 </el-table-column>
             </el-table>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" v-on:click="subUploadFile(add_paper_id)">Next: Upload File</el-button>
+                <el-button type="primary" v-on:click="subUploadFile(add_paper_id)">Next: Upload full paper</el-button>
             </span>
         </el-dialog>
         <!-- subaddauthor -->
@@ -348,7 +348,7 @@
             <el-steps :active="3">
                 <el-step title="Step 1" icon="el-icon-edit"></el-step>
                 <el-step title="Step 2" icon="el-icon-edit"></el-step>
-                <el-step title="Step 3" description="upload file" icon="el-icon-upload"></el-step>
+                <el-step title="Step 3" description="upload full paper" icon="el-icon-upload"></el-step>
             </el-steps>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
@@ -424,16 +424,16 @@
         <!-- editauthor -->
         <el-dialog title="Edit authors" :visible.sync="editauthor" width="75%">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="editaddauthor = true">
-                        New Author
-                    </button>
-                </div>
                 <div class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
                     Progress Status
                 </div>
                 <div class="mdl-cell mdl-cell--10-col mdl-cell--10-col-tablet mdl-cell--10-col-phone">
                     <el-progress :text-inside="true" :stroke-width="20" :percentage.sync="edit_paper_percentage"></el-progress>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" @click="editaddauthor = true">
+                        New Author
+                    </button>
                 </div>
             </div>
             <el-table :data="authorindex" size="small" stripe border style="width: 100%">
@@ -493,7 +493,7 @@
             </span>
         </el-dialog>
         <!-- edituploadfile -->
-        <el-dialog title="Upload file" :visible.sync="edituploadfile" width="50%">
+        <el-dialog title="Upload full paper" :visible.sync="edituploadfile" width="50%">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                     Progress Status
@@ -761,7 +761,7 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "subpaper", false);
-                                alert("Submit paper basic information successful!");
+                                alert("Submit paper successfully!");
                                 Vue.set(app.subpaperform, "topic", "");
                                 Vue.set(app.subpaperform, "title", "");
                                 Vue.set(app.subpaperform, "abstract", "");
@@ -831,7 +831,7 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
-                                alert("Add author successful!");
+                                alert("Add author successfully!");
                             }
                         }
                     });
@@ -880,7 +880,7 @@ var app = new Vue({
             Vue.set(app, "add_paper_percentage", parseInt(response['paper_percentage']));
             Vue.set(app, "edit_paper_percentage", parseInt(response['paper_percentage']));
             app.getpaper();
-            alert("Upload file successful!");
+            alert("Upload full paper successfully!");
         },
         handleError(response, file, fileList) {
             app.getpaper();
@@ -919,7 +919,7 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "editpaper", false);
-                                alert("Edit paper basic information successful");
+                                alert("Edit paper successfully");
                                 app.getpaper();
                             }
                         }
@@ -984,7 +984,7 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
                                 Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
-                                alert("Add author successful!");
+                                alert("Add author successfully!");
                             }
                         }
                     });
