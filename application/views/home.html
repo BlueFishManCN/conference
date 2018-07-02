@@ -143,7 +143,7 @@
         <!-- step1 -->
         <el-dialog title="Create account" :visible.sync="step1" width="50%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="registering personal information"></el-step>
+                <el-step title="Step 1" description="register personal information"></el-step>
                 <el-step title="Step 2"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
@@ -170,7 +170,7 @@
         <el-dialog title="Create account" :visible.sync="step2" width="50%">
             <el-steps :active="2">
                 <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="activating account"></el-step>
+                <el-step title="Step 2" description="activate account"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
             <el-alert title="Important info" type="warning" description="The verification code has been sent to your mailbox." :closable="false">
@@ -190,7 +190,7 @@
             <el-steps :active="3">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="improving personal information"></el-step>
+                <el-step title="Step 3" description="improve personal information"></el-step>
             </el-steps>
             <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
                 <el-form-item label="First name">
@@ -239,7 +239,7 @@
         <!-- forget step1 -->
         <el-dialog title="Reset password" :visible.sync="forgetstep1" width="50%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="entering email"></el-step>
+                <el-step title="Step 1" description="enter email"></el-step>
                 <el-step title="Step 2"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
@@ -257,7 +257,7 @@
         <el-dialog title="Reset password" :visible.sync="forgetstep2" width="50%">
             <el-steps :active="2">
                 <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="verifying account"></el-step>
+                <el-step title="Step 2" description="verify account"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
             <el-alert title="Important info" type="warning" description="Reset verification code has been sent to your mailbox." :closable="false">
@@ -277,7 +277,7 @@
             <el-steps :active="3">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="reseting password"></el-step>
+                <el-step title="Step 3" description="reset password"></el-step>
             </el-steps>
             <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
                 <el-form-item label="Password" prop="password">

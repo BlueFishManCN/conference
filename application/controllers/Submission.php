@@ -100,15 +100,9 @@ class Submission extends CI_Controller {
 		if ($user_id == $s_id && $firstname == $s_firstname) {
 			$this->Paper->insert($id, $user_id, $topic, $title, $abstract, $keywords);
 
-			$email = $this->User->getEmailById($user_id);
-			$this->email->from('geg2018@163.com', 'GEG2018');
-			$this->email->to($email);
-			$this->email->subject('GEG2018: Submission message');
-			$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
-
 			$data['paper_id'] = $id;
 			$data['paper_percentage'] = 30;
-			$data['status'] = $this->email->send();
+			$data['status'] = true;
 			echo json_encode($data);
 			return;
 		}
@@ -189,6 +183,38 @@ class Submission extends CI_Controller {
 				$this->Paper->addPercentageByid($paper_id, $sum - 30);
 			}
 			$data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function email() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$email = $this->User->getEmailById($user_id);
+			$this->email->from('geg2018@163.com', 'GEG2018');
+			$this->email->to($email);
+			$this->email->subject('GEG2018: Submission message');
+			$this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+			$this->email->send();
+
+			$emails = $this->Author->getAuthorByPaperid($paper_id);
+			foreach ($emails as $item) {
+				$this->email->from('geg2018@163.com', 'GEG2018');
+				$this->email->to($item->email);
+				$this->email->subject('GEG2018: Submission message');
+				$this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
+				$this->email->send();
+			}
+
 			$data['status'] = true;
 			echo json_encode($data);
 			return;

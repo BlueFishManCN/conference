@@ -20,7 +20,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Introducing Lollipop, a sweet new take on Android.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>GEG2018</title>
     <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>" />
@@ -172,7 +171,7 @@
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Edit Options" width="350">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Basic Info</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Abstract</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept!=''?true:false||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload Full Paper</el-button>
                                         <!--   <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button> -->
@@ -236,7 +235,7 @@
         <!-- subpaper -->
         <el-dialog title="Submit Paper" :visible.sync="subpaper" width="50%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="add paper basic information" icon="el-icon-edit"></el-step>
+                <el-step title="Step 1" description="add abstract" icon="el-icon-edit"></el-step>
                 <el-step title="Step 2" icon="el-icon-edit"></el-step>
                 <el-step title="Step 3" icon="el-icon-upload"></el-step>
             </el-steps>
@@ -372,7 +371,7 @@
             <el-steps :active="3">
                 <el-step title="Step 1" icon="el-icon-edit"></el-step>
                 <el-step title="Step 2" icon="el-icon-edit"></el-step>
-                <el-step title="Step 3" description="upload full paper" icon="el-icon-upload"></el-step>
+                <el-step title="Step 3" description="upload the full paper" icon="el-icon-upload"></el-step>
             </el-steps>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
@@ -393,7 +392,7 @@
             </span>
         </el-dialog>
         <!-- editpaper -->
-        <el-dialog title="Edit paper basic information" :visible.sync="editpaper" width="50%">
+        <el-dialog title="Edit abstract" :visible.sync="editpaper" width="50%">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                     Progress Status
@@ -776,7 +775,6 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "subpaper", false);
-                                alert("Submit paper successfully!");
                                 Vue.set(app.subpaperform, "topic", "");
                                 Vue.set(app.subpaperform, "title", "");
                                 Vue.set(app.subpaperform, "abstract", "");
@@ -846,7 +844,6 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
-                                alert("Add author successfully!");
                             }
                         }
                     });
@@ -880,8 +877,26 @@ var app = new Vue({
 
         subUploadFile(paper_id) {
             Vue.set(app.uploaddata, "paper_id", paper_id);
-            Vue.set(app, "subauthor", false);
-            Vue.set(app, "subuploadfile", true);
+            if (app.authorindex.length == 0) {
+                alert("Please add authors!");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('submission/email');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        paper_id: app.add_paper_id,
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data['status'] == true) {
+                            Vue.set(app, "subauthor", false);
+                            Vue.set(app, "subuploadfile", true);
+                        }
+                    }
+                });
+            }
         },
         editUploadFile(paper_id, paperpercentage) {
             Vue.set(app.uploaddata, "paper_id", paper_id);
@@ -895,14 +910,13 @@ var app = new Vue({
             Vue.set(app, "add_paper_percentage", parseInt(response['paper_percentage']));
             Vue.set(app, "edit_paper_percentage", parseInt(response['paper_percentage']));
             app.getpaper();
-            alert("Upload full paper successfully!");
         },
         handleError(response, file, fileList) {
             app.getpaper();
             alert(response);
         },
         handleExceed(files, fileList) {
-            alert("Can only upload one file");
+            alert("Only one pdf or zip file can be uploaded!");
         },
 
         editPaper(row) {
@@ -934,7 +948,6 @@ var app = new Vue({
                         success: function(data) {
                             if (data['status'] == true) {
                                 Vue.set(app, "editpaper", false);
-                                alert("Edit paper successfully");
                                 app.getpaper();
                             }
                         }
@@ -999,7 +1012,6 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
                                 Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
-                                alert("Add author successfully!");
                             }
                         }
                     });
