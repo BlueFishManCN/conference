@@ -321,12 +321,13 @@
                 </el-table-column>
                 <el-table-column prop="country" label="Country" width="100">
                 </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="300">
+                <el-table-column prop="organization" label="Organization" width="250">
                 </el-table-column>
                 <el-table-column prop="email" label="Email" width="200">
                 </el-table-column>
-                <el-table-column fixed="right" width="50">
+                <el-table-column fixed="right" width="100">
                     <template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="editAAuthor(scope.row,'sub')" icon="el-icon-edit" circle></el-button>
                         <el-button size="mini" type="danger" @click="subDeleteAuthor(scope.row.id)" icon="el-icon-delete" circle></el-button>
                     </template>
                 </el-table-column>
@@ -364,6 +365,37 @@
             <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="subaddauthor = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="subAddAuthor('addauthorform')">Add</el-button>
+            </span>
+        </el-dialog>
+        <!-- editaauthor -->
+        <el-dialog title="Edit the author" :visible.sync="editaauthor" width="50%">
+            <el-form ref="editauthorform" :model="editauthorform" status-icon :rules="editauthorrules" label-width="25%">
+                <el-form-item label="First name" prop="firstname">
+                    <el-input v-model="editauthorform.firstname" placeholder="Please input the firstname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Last name" prop="lastname">
+                    <el-input v-model="editauthorform.lastname" placeholder="Please input the lastname" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Email" prop="email">
+                    <el-input v-model="editauthorform.email" placeholder="Please input the email" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Retype Email" prop="retypeemail">
+                    <el-input v-model="editauthorform.retypeemail" placeholder="Please retype the email" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Country" prop="country">
+                    <el-input v-model="editauthorform.country" placeholder="Please input the country" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Organization" prop="organization">
+                    <el-input v-model="editauthorform.organization" placeholder="Please input the organization" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="Corresponding" prop="corresponding">
+                    <el-radio v-model="editauthorform.corresponding" label="NO" border>NO</el-radio>
+                    <el-radio v-model="editauthorform.corresponding" label="YES" border>YES</el-radio>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="editaaddauthor = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="saveEditAuthor('editauthorform')">Save</el-button>
             </span>
         </el-dialog>
         <!-- subuploadfile -->
@@ -470,12 +502,13 @@
                 </el-table-column>
                 <el-table-column prop="country" label="Country" width="100">
                 </el-table-column>
-                <el-table-column prop="organization" label="Organization" width="300">
+                <el-table-column prop="organization" label="Organization" width="250">
                 </el-table-column>
                 <el-table-column prop="email" label="Email" width="200">
                 </el-table-column>
-                <el-table-column fixed="right" width="50">
+                <el-table-column fixed="right" width="100">
                     <template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="editAAuthor(scope.row,'edit')" icon="el-icon-edit" circle></el-button>
                         <el-button size="mini" type="danger" @click="editDeleteAuthor(scope.row.id)" icon="el-icon-delete" circle></el-button>
                     </template>
                 </el-table-column>
@@ -554,6 +587,13 @@ var validateEmail = (rule, value, callback) => {
         callback();
     }
 };
+var validateEmail2 = (rule, value, callback) => {
+    if (value !== app.editauthorform.email) {
+        callback(new Error('The two entered email are inconsistent!'));
+    } else {
+        callback();
+    }
+};
 var app = new Vue({
     el: '#app',
 
@@ -587,6 +627,7 @@ var app = new Vue({
         subpaper: false,
         subauthor: false,
         subaddauthor: false,
+        editaauthor: false,
         subuploadfile: false,
         editpaper: false,
         editauthor: false,
@@ -619,6 +660,17 @@ var app = new Vue({
             country: '',
             organization: '',
             corresponding: 'NO'
+        },
+        editauthorform: {
+            id: '',
+            firstname: '',
+            lastname: '',
+            email: '',
+            retypeemail: '',
+            country: '',
+            organization: '',
+            corresponding: 'NO',
+            type: '',
         },
         uploaddata: {
             id: "<?php echo $id; ?>",
@@ -662,6 +714,32 @@ var app = new Vue({
                 { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
                 { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
                 { validator: validateEmail, trigger: ['blur', 'change'] },
+            ],
+            country: [
+                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
+            ],
+            organization: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
+            ],
+            corresponding: [
+                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
+            ],
+        },
+        editauthorrules: {
+            firstname: [
+                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
+            ],
+            lastname: [
+                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
+            ],
+            email: [
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
+            ],
+            retypeemail: [
+                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
+                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
+                { validator: validateEmail2, trigger: ['blur', 'change'] },
             ],
             country: [
                 { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
@@ -844,6 +922,56 @@ var app = new Vue({
                                 Vue.set(app.addauthorform, "country", "");
                                 Vue.set(app.addauthorform, "organization", "");
                                 Vue.set(app.addauthorform, "corresponding", "NO");
+                            }
+                        }
+                    });
+                } else {
+                    console.log('error submit!');
+                    return false;
+                }
+            });
+        },
+
+        editAAuthor(author, type) {
+            Vue.set(app.editauthorform, "id", author['id']);
+            Vue.set(app.editauthorform, "firstname", author['firstname']);
+            Vue.set(app.editauthorform, "lastname", author['lastname']);
+            Vue.set(app.editauthorform, "email", author['email']);
+            Vue.set(app.editauthorform, "retypeemail", author['email']);
+            Vue.set(app.editauthorform, "country", author['country']);
+            Vue.set(app.editauthorform, "organization", author['organization']);
+            Vue.set(app.editauthorform, "corresponding", author['corresponding']);
+            Vue.set(app.editauthorform, "type", type);
+            Vue.set(app, "editaauthor", true);
+        },
+
+        saveEditAuthor(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('submission/saveeditauthor');?>",
+                        data: {
+                            id: "<?php echo $id; ?>",
+                            firstname: "<?php echo $firstname; ?>",
+                            author_id: app.editauthorform.id,
+                            authorfirstname: app.editauthorform.firstname,
+                            authorlastname: app.editauthorform.lastname,
+                            email: app.editauthorform.email,
+                            country: app.editauthorform.country,
+                            organization: app.editauthorform.organization,
+                            corresponding: app.editauthorform.corresponding
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data['status'] == true) {
+                                if (app.editauthorform.type === 'sub') {
+                                    app.subAuthor(app.add_paper_id);
+                                } else if (app.editauthorform.type === 'edit') {
+                                    app.editAuthor(app.edit_paper_id);
+                                }
+                                app.getpaper();
+                                Vue.set(app, "editaauthor", false);
                             }
                         }
                     });

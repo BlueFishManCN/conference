@@ -51,6 +51,20 @@ class Author extends CI_Model {
 		$this->db->insert("author", $data);
 	}
 
+	public function updateauthor($id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding) {
+		$data = array(
+			'firstname' => $authorfirstname,
+			'lastname' => $authorlastname,
+			'email' => $email,
+			'country' => $country,
+			'organization' => $organization,
+			'corresponding' => $corresponding,
+		);
+		$this->db->where('id', $id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('author', $data);
+	}
+
 	public function deleteauthor($author_id) {
 		$data = array(
 			'is_delete' => 1,

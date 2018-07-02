@@ -166,6 +166,31 @@ class Submission extends CI_Controller {
 		}
 	}
 
+	public function saveeditauthor() {
+		$postdata = $this->input->post();
+
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$author_id = $postdata['author_id'];
+		$authorfirstname = $postdata['authorfirstname'];
+		$authorlastname = $postdata['authorlastname'];
+		$email = $postdata['email'];
+		$country = $postdata['country'];
+		$organization = $postdata['organization'];
+		$corresponding = $postdata['corresponding'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$this->Author->updateauthor($author_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
+
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
 	public function deleteauthor() {
 		$postdata = $this->input->post();
 		$user_id = $postdata['id'];
