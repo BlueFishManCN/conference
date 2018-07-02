@@ -29,6 +29,15 @@
     <link href="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.css" rel="stylesheet">
     <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
+    <script>
+    ELEMENT.locale(ELEMENT.lang.en)
+    </script>
     <style>
     #view-source {
         position: fixed;
@@ -174,13 +183,27 @@
                                 <h5>Tips</h5> Make sure the information you submit is completed and accurate.
                             </el-alert>
                             <el-alert title="" type="success" :closable="false">
-                                <font color="black">1. Click [New Submission] to submit the paper.
-                                    <br/>2. Click [CLICK for Detail] to view the detailed information of the paper.
-                                    <br/>3. In the [Progress] column, you can view the progress of submitted papers. 60% means you have submitted the abstract of your paper but no full paper.
-                                    <br/>4. In the [Edit Options] column, you can modify the paper's information.</font>
+                                <font color="black">1. Click [New Submission] button to submit the paper.
+                                    <br/>
+                                    <br/>2. Click [CLICK for Detail] button to view the details of the paper.
+                                    <br/>
+                                    <br/>3. In the [Progress] column, you can check the progress of the submission.
+                                    <br/>[30%] means you have submitted the abstract of your paper without authors' information and the full paper.
+                                    <br/>[60%] means you have submitted the abstract of your paper and authors' information without the full paper.
+                                    <br/>[70%] means you have submitted the abstract of your paper and the full paper without authors' information.
+                                    <br/>[100%] means you have submitted the abstract of your paper, authors' information and the full paper.
+                                    <br/>
+                                    <br/>4. In the [Accept status] column, you can check the status of the submission.
+                                    <br/>[Accept] means the paper is accepted by 2018 GEG conference.
+                                    <br/>[Poster] means the paper was selected to post at the conference.
+                                    <br/>[Reject] means the paper was not accepted by the conference.
+                                    <br/>
+                                    <br/>5. In the [Edit Options] column, you can modify the paper's information.
+                                    <br/>
+                                </font>
                             </el-alert>
                             <el-alert title="" type="warning" :closable="false">
-                                <font color="black">Note that the information of paper cannot be modified after the paper is accepted or exceeds the deadline.
+                                <font color="black">Note that the information of the paper cannot be modified after the paper's [accept status] is changed or exceeds the deadline.
                                 </font>
                             </el-alert>
                         </div>
@@ -523,15 +546,6 @@
             </span>
         </el-dialog>
     </div>
-    <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
-    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
-    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
-    <script>
-    ELEMENT.locale(ELEMENT.lang.en)
-    </script>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
 var validateEmail = (rule, value, callback) => {
