@@ -20,14 +20,21 @@ class Adminattendee extends CI_Controller {
 		if (!$this->session->has_userdata('id')) {
 			redirect('/home/index');
 			return;
-		} elseif ($this->session->userdata('id') != 2) {
-			redirect('/home/index');
-			return;
 		}
+
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;
-		$this->load->view('adminattendee.html', $data);
-		return;
+
+		if ($this->session->userdata('id') == 1) {
+			redirect('/adminpaper/index');
+			return;
+		} elseif ($this->session->userdata('id') == 2) {
+			$this->load->view('adminattendee.html', $data);
+			return;
+		} else {
+			redirect('/home/index');
+			return;
+		}
 	}
 }

@@ -28,15 +28,22 @@ class Adminpaper extends CI_Controller {
 		if (!$this->session->has_userdata('id')) {
 			redirect('/home/index');
 			return;
-		} elseif ($this->session->userdata('id') != 1) {
-			redirect('/home/index');
-			return;
 		}
+
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;
-		$this->load->view('adminpaper.html', $data);
-		return;
+
+		if ($this->session->userdata('id') == 1) {
+			$this->load->view('adminpaper.html', $data);
+			return;
+		} elseif ($this->session->userdata('id') == 2) {
+			redirect('/adminattendee/index');
+			return;
+		} else {
+			redirect('/home/index');
+			return;
+		}
 	}
 
 	public function paper() {

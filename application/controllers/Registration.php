@@ -30,16 +30,25 @@ class Registration extends CI_Controller {
 			redirect('/home/index');
 			return;
 		}
+
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;
 
-		if ($this->Paper->checkaccept($data['id'])) {
-			$this->load->view('registration.html', $data);
+		if ($this->session->userdata('id') == 1) {
+			redirect('/adminpaper/index');
+			return;
+		} elseif ($this->session->userdata('id') == 2) {
+			redirect('/adminattendee/index');
 			return;
 		} else {
-			redirect('/submission/index');
-			return;
+			if ($this->Paper->checkaccept($data['id'])) {
+				$this->load->view('registration.html', $data);
+				return;
+			} else {
+				redirect('/submission/index');
+				return;
+			}
 		}
 	}
 

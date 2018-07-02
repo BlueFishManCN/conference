@@ -30,11 +30,21 @@ class Submission extends CI_Controller {
 			redirect('/home/index');
 			return;
 		}
+
 		$data['id'] = $this->session->userdata('id');
 		$data['firstname'] = $this->session->userdata('firstname');
 		$data['is_login'] = true;
-		$this->load->view('submission.html', $data);
-		return;
+
+		if ($this->session->userdata('id') == 1) {
+			redirect('/adminpaper/index');
+			return;
+		} elseif ($this->session->userdata('id') == 2) {
+			redirect('/adminattendee/index');
+			return;
+		} else {
+			$this->load->view('submission.html', $data);
+			return;
+		}
 	}
 
 	public function paper() {
