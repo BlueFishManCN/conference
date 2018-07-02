@@ -28,6 +28,15 @@
     <link href="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.css" rel="stylesheet">
     <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/element-ui/2.4.0/theme-chalk/index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
+    <script>
+    ELEMENT.locale(ELEMENT.lang.en)
+    </script>
     <style>
     #view-source {
         position: fixed;
@@ -134,7 +143,7 @@
         <!-- step1 -->
         <el-dialog title="Create account" :visible.sync="step1" width="50%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="signup information"></el-step>
+                <el-step title="Step 1" description="registering personal information"></el-step>
                 <el-step title="Step 2"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
@@ -161,13 +170,13 @@
         <el-dialog title="Create account" :visible.sync="step2" width="50%">
             <el-steps :active="2">
                 <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="activate account"></el-step>
+                <el-step title="Step 2" description="activating account"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
             <el-alert title="Important info" type="warning" description="The verification code has been sent to your mailbox." :closable="false">
             </el-alert>
             <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="25%">
-                <el-form-item label="Code" prop="code">
+                <el-form-item label="Verification code" prop="code">
                     <el-input v-model="step2form.code" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
@@ -181,9 +190,9 @@
             <el-steps :active="3">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="fill up information"></el-step>
+                <el-step title="Step 3" description="improving personal information"></el-step>
             </el-steps>
-            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="25%">
+            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
                 <el-form-item label="First name">
                     <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
                 </el-form-item>
@@ -230,7 +239,7 @@
         <!-- forget step1 -->
         <el-dialog title="Reset password" :visible.sync="forgetstep1" width="50%">
             <el-steps :active="1">
-                <el-step title="Step 1" description="enter email"></el-step>
+                <el-step title="Step 1" description="entering email"></el-step>
                 <el-step title="Step 2"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
@@ -248,13 +257,13 @@
         <el-dialog title="Reset password" :visible.sync="forgetstep2" width="50%">
             <el-steps :active="2">
                 <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="verify account"></el-step>
+                <el-step title="Step 2" description="verifying account"></el-step>
                 <el-step title="Step 3"></el-step>
             </el-steps>
             <el-alert title="Important info" type="warning" description="Reset verification code has been sent to your mailbox." :closable="false">
             </el-alert>
-            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="25%">
-                <el-form-item label="Code" prop="code">
+            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
+                <el-form-item label="Verification code" prop="code">
                     <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
@@ -268,9 +277,9 @@
             <el-steps :active="3">
                 <el-step title="Step 1"></el-step>
                 <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="reset password"></el-step>
+                <el-step title="Step 3" description="reseting password"></el-step>
             </el-steps>
-            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="35%">
+            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
                 <el-form-item label="Password" prop="password">
                     <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
                 </el-form-item>
@@ -284,15 +293,6 @@
             </span>
         </el-dialog>
     </div>
-    <script src="https://cdn.bootcss.com/material-design-lite/1.3.0/material.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
-    <script src="https://cdn.bootcss.com/element-ui/2.4.0/index.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
-    <script src="https://cdn.bootcss.com/element-ui/2.4.0/locale/en.js"></script>
-    <script>
-    ELEMENT.locale(ELEMENT.lang.en)
-    </script>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
 var validateEmail = (rule, value, callback) => {
@@ -530,7 +530,6 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                alert('Congratulations!Create account successfullyly!');
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
                                 alert(data['message']);
@@ -661,7 +660,7 @@ var app = new Vue({
                         dataType: "json",
                         success: function(data) {
                             if (data['status'] == true) {
-                                alert('Reset password successfullyly!');
+                                alert('Reset password successfully!');
                                 window.location.href = "<?php echo site_url('home/index');?>";
                             } else {
                                 alert(data['message']);
