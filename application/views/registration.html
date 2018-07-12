@@ -163,6 +163,29 @@
                                     </template>
                                 </el-table-column>
                             </el-table>
+                            <el-alert title="" type="info" :closable="false">
+                                <h5>Tips</h5> Make sure the information you submit is completed and accurate.
+                            </el-alert>
+                            <el-alert title="" type="success" :closable="false">
+                                <h5>Registration process</h5>
+                                <font color="black">
+                                    <br/>Step1: Click [New Submission] button to add participant.
+                                    <br/>
+                                    <br/>Step2: Pay the registration fee. There are two ways to pay the registration fee. If you have a Chinese bank card, Alipay or WeChat, please choose method 1; otherwise, please choose method 2.
+                                    <br/>
+                                    <br/>Method 1: Log in <a href="http://pay.shu.edu.cn/SPPMain/Login/Home?returnurl=http%3A%2F%2Fpay.shu.edu.cn%2FSPPMain%2FHome%2FPortalIndex">the online payment platform of Shanghai University</a> and pay the registration fee.
+                                    <br/>
+                                    <br/>Method 2: Transfer money to the Shanghai University Foreign Exchange Bank account, and upload the transfer voucher on the registration page.Account information is as follows
+                                    <br/>
+                                    <img style="width: 100%" src="<?php echo base_url('resource/images/bank.jpg');?>">
+                                </font>
+                            </el-alert>
+                            <el-alert title="" type="warning" :closable="false">
+                                <font color="black">In the [Comfirm status] column, you can check the status of the registration.
+                                    <br/>[Accept] means the registration is accepted.
+                                    <br/>[Reject] means the registration was not accepted.
+                                </font>
+                            </el-alert>
                         </div>
                     </div>
                     <el-alert title="" type="warning" :closable="false">
