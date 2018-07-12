@@ -57,14 +57,14 @@ class Paper extends CI_Model {
 		return $query;
 	}
 
-	public function adminsearchtotal($status, $select, $keywords) {
+	public function expertsearchtotal($status, $select, $keywords) {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('is_delete', 0);
 		if ($status == "Uncheck") {
-			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+			$this->db->where_not_in('reviewers_comments', array('Accept', 'Poster', 'Reject'));
 		} elseif ($status != "") {
-			$this->db->where('is_accept', $status);
+			$this->db->where('reviewers_comments', $status);
 		}
 		if ($select != "") {
 			$this->db->where('topic', $select);
@@ -78,14 +78,14 @@ class Paper extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function adminsearch($currentPage, $status, $select, $keywords) {
+	public function expertsearch($currentPage, $status, $select, $keywords) {
 		$this->db->select('*');
 		$this->db->from('paper');
 		$this->db->where('is_delete', 0);
 		if ($status == "Uncheck") {
-			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+			$this->db->where_not_in('reviewers_comments', array('Accept', 'Poster', 'Reject'));
 		} elseif ($status != "") {
-			$this->db->where('is_accept', $status);
+			$this->db->where('reviewers_comments', $status);
 		}
 		if ($select != "") {
 			$this->db->where('topic', $select);

@@ -85,6 +85,27 @@ class Adminpaper extends CI_Controller {
 		}
 	}
 
+	public function expertsearchpaper() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$currentPage = $postdata['currentPage'];
+		$status = $postdata['status'];
+		$select = $postdata['select'];
+		$keywords = $postdata['keywords'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$data['total'] = $this->Paper->expertsearchtotal($status, $select, $keywords);
+			$data['index'] = $this->Paper->expertsearch($currentPage, $status, $select, $keywords);
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
 	public function author() {
 		$postdata = $this->input->post();
 		$user_id = $postdata['id'];
