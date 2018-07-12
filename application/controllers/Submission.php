@@ -36,10 +36,10 @@ class Submission extends CI_Controller {
 		$data['is_login'] = true;
 
 		if ($this->session->userdata('id') == 1) {
-			redirect('/adminpaper/index');
+			redirect('/expertpaper/index');
 			return;
 		} elseif ($this->session->userdata('id') == 2) {
-			redirect('/adminattendee/index');
+			redirect('/adminpaper/index');
 			return;
 		} else {
 			$this->load->view('submission.html', $data);

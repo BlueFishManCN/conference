@@ -35,10 +35,10 @@ class Adminpaper extends CI_Controller {
 		$data['is_login'] = true;
 
 		if ($this->session->userdata('id') == 1) {
-			$this->load->view('adminpaper.html', $data);
+			redirect('/expertpaper/index');
 			return;
 		} elseif ($this->session->userdata('id') == 2) {
-			redirect('/adminattendee/index');
+			$this->load->view('adminpaper.html', $data);
 			return;
 		} else {
 			redirect('/home/index');
@@ -149,6 +149,25 @@ class Adminpaper extends CI_Controller {
 				}
 				$this->email->send();
 			}
+
+			$data['status'] = true;
+			echo json_encode($data);
+			return;
+		}
+	}
+
+	public function expertaccept() {
+		$postdata = $this->input->post();
+		$user_id = $postdata['id'];
+		$firstname = $postdata['firstname'];
+		$paper_id = $postdata['paper_id'];
+		$reviewers_comments = $postdata['reviewers_comments'];
+
+		$s_id = $this->session->userdata('id');
+		$s_firstname = $this->session->userdata('firstname');
+
+		if ($user_id == $s_id && $firstname == $s_firstname) {
+			$this->Paper->expertaccept($paper_id, $reviewers_comments);
 
 			$data['status'] = true;
 			echo json_encode($data);

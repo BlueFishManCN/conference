@@ -210,6 +210,15 @@ class Paper extends CI_Model {
 		$this->db->update('paper', $data);
 	}
 
+	public function expertaccept($paper_id, $reviewers_comments) {
+		$data = array(
+			'reviewers_comments' => $reviewers_comments,
+		);
+		$this->db->where('id', $paper_id);
+		$this->db->where('is_delete', 0);
+		$this->db->update('paper', $data);
+	}
+
 	public function addindex($user_id) {
 		$this->db->select('id');
 		$this->db->from('paper');
