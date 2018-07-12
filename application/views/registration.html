@@ -151,14 +151,14 @@
                                         <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
                                     </template>
                                 </el-table-column>
-                                <el-table-column prop="is_accept" label="Comfirm status" width="200">
+                                <el-table-column prop="is_accept" label="Comfirm status" width="150">
                                     <template slot-scope="scope2">
                                         <el-tag :type="scope2.row.is_accept==='Accept'?'success':scope2.row.is_accept==='Reject'?'danger':'info'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
                                 </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="200">
+                                <el-table-column fixed="right" label="Options" width="250">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload File</el-button>
+                                        <el-button :disabled.sync="scope.row.is_accept||attendeeDue" @click="uploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload Transfer Voucher</el-button>
                                         <el-button :disabled.sync="scope.row.is_accept||attendeeDue" size="mini" type="danger" @click="deleteAttendee(scope.row.id)" icon="el-icon-delete" circle></el-button>
                                     </template>
                                 </el-table-column>
