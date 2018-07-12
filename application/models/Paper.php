@@ -57,6 +57,62 @@ class Paper extends CI_Model {
 		return $query;
 	}
 
+	public function adminsearchtotal($status, $select, $keywords) {
+		$this->db->select('*');
+		$this->db->from('paper');
+		$this->db->where('is_delete', 0);
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
+		if ($select != "") {
+			$this->db->where('topic', $select);
+		}
+		if ($keywords != "") {
+			$this->db->like('id', $keywords);
+			$this->db->or_like('title', $keywords);
+			$this->db->or_like('keywords', $keywords);
+		}
+		$this->db->order_by('updated_at', 'DESC');
+		return $this->db->count_all_results();
+	}
+
+	public function adminsearch($currentPage, $status, $select, $keywords) {
+		$this->db->select('*');
+		$this->db->from('paper');
+		$this->db->where('is_delete', 0);
+		if ($status == "Uncheck") {
+			$this->db->where_not_in('is_accept', array('Accept', 'Poster', 'Reject'));
+		} elseif ($status != "") {
+			$this->db->where('is_accept', $status);
+		}
+		if ($select != "") {
+			$this->db->where('topic', $select);
+		}
+		if ($keywords != "") {
+			$this->db->like('id', $keywords);
+			$this->db->or_like('title', $keywords);
+			$this->db->or_like('keywords', $keywords);
+
+		}
+		$this->db->order_by('updated_at', 'DESC');
+		$this->db->limit(5, ($currentPage - 1) * 5);
+		$query = $this->db->get()->result_array();
+
+		foreach ($query as &$key) {
+			$this->db->select('*');
+			$this->db->from('author');
+			$this->db->where('paper_id', $key['id']);
+			$this->db->where('is_delete', 0);
+			$this->db->order_by('updated_at', 'DESC');
+			$author = $this->db->get()->result_array();
+			$key['author'] = $author;
+		}
+
+		return $query;
+	}
+
 	public function expertsearchtotal($status, $select, $keywords) {
 		$this->db->select('*');
 		$this->db->from('paper');

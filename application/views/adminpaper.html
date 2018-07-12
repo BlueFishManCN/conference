@@ -86,6 +86,13 @@
                     <!-- Navigation -->
                     <div class="android-navigation-container">
                         <nav class="android-navigation mdl-navigation">
+                            <!-- Flat button with ripple -->
+                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminpaper/index');?>">
+                            Paper
+                            </a>
+                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminattendee/index');?>">
+                            Participants
+                            </a>
                             <!-- Right aligned menu below button -->
                             <button class="mdl-button mdl-js-button mdl-button--icon">
                                 <i class="material-icons">account_circle</i>
@@ -155,19 +162,22 @@
                                 </el-table-column>
                                 <el-table-column prop="id" label="Paper ID" width="100">
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="200">
+                                <el-table-column prop="title" label="Title" width="250">
                                 </el-table-column>
                                 <el-table-column prop="percentage" label="Propress" width="100">
                                     <template slot-scope="scope1">
                                         <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
                                     </template>
                                 </el-table-column>
+                                <el-table-column prop="reviewers_comments" label="Reviewer's comments" width="200">
+                                    <template slot-scope="scope2">
+                                        <el-tag :type="scope2.row.reviewers_comments===''?'info':scope2.row.reviewers_comments === 'Reject' ? 'danger' :scope2.row.reviewers_comments === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.reviewers_comments}}</el-tag>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="is_accept" label="Accept status" width="150">
                                     <template slot-scope="scope2">
                                         <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' :scope2.row.is_accept === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
                                     </template>
-                                </el-table-column>
-                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="250">
                                 </el-table-column>
                                 <el-table-column fixed="right" label="CLICK for Detail" width="150">
                                     <template slot-scope="scope">
@@ -244,6 +254,7 @@
         </el-dialog>
         <!-- subauthor -->
         <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="50%">
+            <el-alert title="Reviewer's comments" v-bind:type="paperdata.reviewers_comments===''?'info':paperdata.reviewers_comments === 'Reject' ? 'error' :'success'" v-bind:description="paperdata.reviewers_comments" :closable="false"> </el-alert>
             <span slot="footer" class="dialog-footer">
                 <el-button type="danger" v-on:click="notAcceptPaper">Reject</el-button>
                 <el-button type="success" v-on:click="posterPaper">Poster</el-button>

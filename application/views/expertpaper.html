@@ -155,7 +155,7 @@
                                 </el-table-column>
                                 <el-table-column prop="id" label="Paper ID" width="100">
                                 </el-table-column>
-                                <el-table-column prop="title" label="Title" width="200">
+                                <el-table-column prop="title" label="Title" width="350">
                                 </el-table-column>
                                 <el-table-column prop="percentage" label="Propress" width="100">
                                     <template slot-scope="scope1">
@@ -166,8 +166,6 @@
                                     <template slot-scope="scope2">
                                         <el-tag :type="scope2.row.reviewers_comments===''?'info':scope2.row.reviewers_comments === 'Reject' ? 'danger' :scope2.row.reviewers_comments === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.reviewers_comments}}</el-tag>
                                     </template>
-                                </el-table-column>
-                                <el-table-column prop="created_at" label="Submission time(UTC+8)" width="250">
                                 </el-table-column>
                                 <el-table-column fixed="right" label="CLICK for Detail" width="150">
                                     <template slot-scope="scope">

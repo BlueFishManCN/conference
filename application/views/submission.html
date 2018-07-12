@@ -171,9 +171,9 @@
                                 </el-table-column>
                                 <el-table-column fixed="right" label="Edit Options" width="350">
                                     <template slot-scope="scope">
-                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Abstract</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
-                                        <el-button :disabled.sync="scope.row.is_accept!=''?true:false||paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload Full Paper</el-button>
+                                        <el-button :disabled.sync="scope.row.reviewers_comments!=''?true:false||abstractDue" @click="editPaper(scope.row)" type="text" size="mini">Abstract</el-button>
+                                        <el-button :disabled.sync="scope.row.reviewers_comments!=''?true:false||abstractDue" @click="editAuthor(scope.row.id,scope.row.percentage)" type="text" size="mini">Authors</el-button>
+                                        <el-button :disabled.sync="paperDue" @click="editUploadFile(scope.row.id,scope.row.percentage)" type="text" size="mini">Upload Full Paper</el-button>
                                         <!--   <el-button :disabled.sync="scope.row.is_accept!='Accept'" @click="editPoster(scope.row.id)" type="text" size="mini">Poster paper</el-button> -->
                                     </template>
                                 </el-table-column>
