@@ -173,7 +173,7 @@
                                     <br/>
                                     <br/>Step2: Pay the registration fee. There are two ways to pay the registration fee. If you have a Chinese bank card, Alipay or WeChat, please choose method 1; otherwise, please choose method 2.
                                     <br/>
-                                    <br/>Method 1: Log in <a href="http://pay.shu.edu.cn/SPPMain/Login/Home?returnurl=http%3A%2F%2Fpay.shu.edu.cn%2FSPPMain%2FHome%2FPortalIndex">the online payment platform of Shanghai University</a> and pay the registration fee.
+                                    <br/>Method 1: Log in <a href="http://pay.shu.edu.cn/SPPMain/Login/Home">the online payment platform of Shanghai University</a> and pay the registration fee.
                                     <br/>
                                     <br/>Method 2: Transfer money to the Shanghai University Foreign Exchange Bank account, and upload the transfer voucher on the registration page.Account information is as follows
                                     <br/>
@@ -231,7 +231,7 @@
             </span>
         </el-dialog>
         <!-- uploadfile -->
-        <el-dialog title="Upload file" :visible.sync="uploadfile" width="50%">
+        <el-dialog title="Upload transfer voucher" :visible.sync="uploadfile" width="50%">
             <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('registration/uploadfile');?>" :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed" list-type="picture" :auto-upload="false" :limit="1">
                 <el-button slot="trigger" size="small" type="primary">Select file</el-button>
                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">Upload to server</el-button>
