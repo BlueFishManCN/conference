@@ -606,13 +606,13 @@ var app = new Vue({
                 date: '2018-10-25  To  2018-10-26',
                 name: 'Conference Time',
             }, {
-                date: '2018-6-28  To  2018-7-15',
+                date: '2018-6-28  To  2018-8-31',
                 name: 'Abstract Submission Due',
             }, {
-                date: '2018-6-28  To  2018-8-15',
+                date: '2018-6-28  To  2018-9-15',
                 name: 'Paper Submission Due',
             }, {
-                date: '2018-8-31',
+                date: '2018-8-31  To  2018-9-15',
                 name: 'Author Notification',
             }, {
                 date: '2018-9-1  To  2018-9-15',
@@ -768,8 +768,8 @@ var app = new Vue({
     },
 
     created: function() {
-        var deadLine1 = "2018-07-25 23:59:59";
-        var deadLine2 = "2018-08-25 23:59:59";
+        var deadLine1 = "2018-08-31 23:59:59";
+        var deadLine2 = "2018-09-15 23:59:59";
         if (new Date() > new Date(Date.parse(deadLine1.replace(/\-/g, "/")))) {
             Vue.set(this, "abstractDue", true);
         } else {
