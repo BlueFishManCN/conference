@@ -769,7 +769,7 @@ var app = new Vue({
     },
 
     created: function() {
-        var deadLine1 = "2018-08-31 23:59:59";
+        var deadLine1 = "2018-09-15 23:59:59";
         var deadLine2 = "2018-09-15 23:59:59";
         if (new Date() > new Date(Date.parse(deadLine1.replace(/\-/g, "/")))) {
             Vue.set(this, "abstractDue", true);
