@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa9841c2-ee28-4dfb-967c-5a21928a51e6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/adminattendee.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/adminattendee.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/adminpaper.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/adminpaper.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/expertpaper.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/expertpaper.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/views/submission.html" beforeDir="false" afterPath="$PROJECT_DIR$/application/views/submission.html" afterDir="false" />
-    </list>
+    <list default="true" id="aa9841c2-ee28-4dfb-967c-5a21928a51e6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +12,7 @@
     <session id="-1136391500">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
@@ -195,12 +186,12 @@
       <workItem from="1536808016509" duration="104000" />
       <workItem from="1539316176970" duration="44000" />
       <workItem from="1539316279571" duration="293000" />
-      <workItem from="1539332269395" duration="1091000" />
+      <workItem from="1539332269395" duration="1288000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1556000" />
+    <option name="totallyTimeSpent" value="1753000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
