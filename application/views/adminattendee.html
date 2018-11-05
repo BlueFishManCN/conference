@@ -22,11 +22,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>GEG2018</title>
-    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>" />
+    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>"/>
     <!-- Page styles -->
     <link href="<?php echo base_url('resource/material-icons.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('resource/material.min.css');?>" rel="stylesheet">
-    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
+    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet"/>
     <link href="<?php echo base_url('resource/index.css');?>" rel="stylesheet">
     <script src="<?php echo base_url('resource/material.min.js');?>"></script>
     <script src="<?php echo base_url('resource/vue.js');?>"></script>
@@ -35,264 +35,238 @@
     <script src="<?php echo base_url('resource/md5.js');?>"></script>
     <script src="<?php echo base_url('resource/en.js');?>"></script>
     <script>
-    ELEMENT.locale(ELEMENT.lang.en)
+        ELEMENT.locale(ELEMENT.lang.en)
     </script>
     <style>
-    #view-source {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
-    }
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
 
-    .demo-table-expand {
-        font-size: 0;
-    }
+        .demo-table-expand {
+            font-size: 0;
+        }
 
-    .demo-table-expand label {
-        width: 90px;
-        color: #99a9bf;
-    }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
 
-    .demo-table-expand .el-form-item {
-        margin-right: 0;
-        margin-bottom: 0;
-        width: 100%;
-    }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app" v-cloak>
-        <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-                <div class="mdl-layout__header-row">
-                    <span class="android-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>">
+<div id="app" v-cloak>
+    <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                    <span class="android-title mdl-layout-title"><img class="android-logo-image"
+                                                                      src="<?php echo base_url('resource/images/android-logo.png');?>">
                     </span>
-                    <!-- Add spacer, to align navigation to the left in desktop -->
-                    <div class="android-header-spacer mdl-layout-spacer"></div>
-                    <!-- Navigation -->
-                    <div class="android-navigation-container">
-                        <nav class="android-navigation mdl-navigation">
-                            <!-- Flat button with ripple -->
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminpaper/index');?>">
+                <!-- Add spacer, to align navigation to the left in desktop -->
+                <div class="android-header-spacer mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
+                        <!-- Flat button with ripple -->
+                        <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                           href="<?php echo site_url('adminpaper/index');?>">
                             Paper
-                            </a>
-                            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('adminattendee/index');?>">
+                        </a>
+                        <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                           href="<?php echo site_url('adminattendee/index');?>">
                             Participants
-                            </a>
-                            <!-- Right aligned menu below button -->
-                            <button class="mdl-button mdl-js-button mdl-button--icon">
-                                <i class="material-icons">account_circle</i>
-                            </button>
-                            <button class="mdl-button mdl-js-button mdl-button--primary">
-                                <?php echo $firstname; ?>
-                            </button>
-                            <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
-                                Log out
-                            </button>
-                        </nav>
-                    </div>
-                    <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
+                        </a>
+                        <!-- Right aligned menu below button -->
+                        <button class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">account_circle</i>
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--primary">
+                            <?php echo $firstname; ?>
+                        </button>
+                        <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
+                            Log out
+                        </button>
+                    </nav>
                 </div>
-            </div>
-            <div class="android-content mdl-layout__content">
-                <a name="top"></a>
-                <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Participants
-                    </div>
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
-                            <div style="margin-top: 15px;">
-                                <el-select placeholder="All comfirm status" v-model="status" slot="prepend">
-                                    <el-option label="All comfirm status" value=""></el-option>
-                                    <el-option label="Uncheck" value="Uncheck"></el-option>
-                                    <el-option label="Accept" value="Accept"></el-option>
-                                    <el-option label="Reject" value="Reject"></el-option>
-                                </el-select>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
-                            <div style="margin-top: 15px;">
-                                <el-input placeholder="ID/firstname/lastname/email/country/organization" v-model="keywords" class="input-with-select">
-                                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
-                                </el-input>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
-                            <el-table :data="attendeeindex" stripe border style="width: 100%">
-                                <el-table-column fixed type="index">
-                                </el-table-column>
-                                <el-table-column prop="id" label="ID" width="50">
-                                </el-table-column>
-                                <el-table-column prop="firstname" label="Firstname" width="150">
-                                </el-table-column>
-                                <el-table-column prop="lastname" label="Lirstname" width="150">
-                                </el-table-column>
-                                <el-table-column prop="email" label="Email" width="200">
-                                </el-table-column>
-                                <el-table-column label="File" width="100">
-                                    <template slot-scope="scope">
-                                        <el-button @click="download(scope.row.file)" type="text" size="mini">{{scope.row.file}}</el-button>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="is_accept" label="Comfirm status" width="150">
-                                    <template slot-scope="scope2">
-                                        <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' : 'primary'" disable-transitions>{{scope2.row.is_accept}}</el-tag>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column fixed="right" label="Options" width="150">
-                                    <template slot-scope="scope">
-                                        <el-button icon="el-icon-search" type="primary" circle v-on:click="view(scope.row)"></el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="5" layout="total, prev, pager, next" :total.sync="total">
-                        </el-pagination>
-                    </div>
-                </div>
-                <footer class="android-footer mdl-mega-footer">
-                    <div class="mdl-mega-footer--top-section">
-                        <div class="mdl-mega-footer--right-section">
-                            <a class="mdl-typography--font-light" href="#top ">Back to Top<i class="material-icons">expand_less</i></a>
-                        </div>
-                    </div>
-                    <a name="screens"></a>
-                    <div class="mdl-mega-footer--middle-section">
-                        <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
-                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Vue and CI.</p>
-                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com).</p>
-                    </div>
-                </footer>
+                <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image"
+                                                                         src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
             </div>
         </div>
-        <!-- attendee -->
-        <el-dialog title="Participant detail" :visible.sync="attendeedetail" width="75%">
-            <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="ID">
-                    <span>{{ attendeedata.id }}</span>
-                </el-form-item>
-                <el-form-item label="Firstname">
-                    <span>{{ attendeedata.firstname }}</span>
-                </el-form-item>
-                <el-form-item label="Lastname">
-                    <span>{{ attendeedata.lastname }}</span>
-                </el-form-item>
-                <el-form-item label="Email">
-                    <span>{{ attendeedata.email }}</span>
-                </el-form-item>
-                <el-form-item label="Country">
-                    <span>{{ attendeedata.country }}</span>
-                </el-form-item>
-                <el-form-item label="File">
-                    <el-button @click="download(attendeedata.file)" type="text" size="mini">{{ attendeedata.file }}</el-button>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button  v-on:click="attendeedetail=fasle">Cancel</el-button>
+        <div class="android-content mdl-layout__content">
+            <a name="top"></a>
+            <div class="android-more-section">
+                <div class="android-section-title mdl-typography--display-1-color-contrast">Participants
+                </div>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--3-col-phone">
+                        <div style="margin-top: 15px;">
+                            <el-select placeholder="All comfirm status" v-model="status" slot="prepend">
+                                <el-option label="All comfirm status" value=""></el-option>
+                                <el-option label="Uncheck" value="Uncheck"></el-option>
+                                <el-option label="Accept" value="Accept"></el-option>
+                                <el-option label="Reject" value="Reject"></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--9-col mdl-cell--9-col-tablet mdl-cell--9-col-phone">
+                        <div style="margin-top: 15px;">
+                            <el-input placeholder="ID/firstname/lastname/email/country/organization" v-model="keywords"
+                                      class="input-with-select">
+                                <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                            </el-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="android-card-container mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+                        <el-table :data="attendeeindex" stripe border style="width: 100%">
+                            <el-table-column fixed type="index">
+                            </el-table-column>
+                            <el-table-column prop="id" label="ID" width="50">
+                            </el-table-column>
+                            <el-table-column prop="firstname" label="Firstname" width="150">
+                            </el-table-column>
+                            <el-table-column prop="lastname" label="Lirstname" width="150">
+                            </el-table-column>
+                            <el-table-column prop="email" label="Email" width="200">
+                            </el-table-column>
+                            <el-table-column label="File" width="100">
+                                <template slot-scope="scope">
+                                    <el-button @click="download(scope.row.file)" type="text" size="mini">
+                                        {{scope.row.file}}
+                                    </el-button>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="is_accept" label="Comfirm status" width="150">
+                                <template slot-scope="scope2">
+                                    <el-tag :type="scope2.row.is_accept===''?'info':scope2.row.is_accept === 'Reject' ? 'danger' : 'primary'"
+                                            disable-transitions>{{scope2.row.is_accept}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column fixed="right" label="Options" width="150">
+                                <template slot-scope="scope">
+                                    <el-button icon="el-icon-search" type="primary" circle
+                                               v-on:click="view(scope.row)"></el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+                <div class="block">
+                    <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="5"
+                                   layout="total, prev, pager, next" :total.sync="total">
+                    </el-pagination>
+                </div>
+            </div>
+            <footer class="android-footer mdl-mega-footer">
+                <div class="mdl-mega-footer--top-section">
+                    <div class="mdl-mega-footer--right-section">
+                        <a class="mdl-typography--font-light" href="#top ">Back to Top<i class="material-icons">expand_less</i></a>
+                    </div>
+                </div>
+                <a name="screens"></a>
+                <div class="mdl-mega-footer--middle-section">
+                    <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
+                    <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science,
+                        Shanghai University, with Material Design Lite, Vue and CI.</p>
+                    <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by
+                        jackiezhou(http://www.fengniao.com).</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- attendee -->
+    <el-dialog title="Participant detail" :visible.sync="attendeedetail" width="75%">
+        <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="ID">
+                <span>{{ attendeedata.id }}</span>
+            </el-form-item>
+            <el-form-item label="Firstname">
+                <span>{{ attendeedata.firstname }}</span>
+            </el-form-item>
+            <el-form-item label="Lastname">
+                <span>{{ attendeedata.lastname }}</span>
+            </el-form-item>
+            <el-form-item label="Email">
+                <span>{{ attendeedata.email }}</span>
+            </el-form-item>
+            <el-form-item label="Country">
+                <span>{{ attendeedata.country }}</span>
+            </el-form-item>
+            <el-form-item label="File">
+                <el-button @click="download(attendeedata.file)" type="text" size="mini">{{ attendeedata.file }}
+                </el-button>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                <el-button v-on:click="attendeedetail=fasle">Cancel</el-button>
                 <el-button v-on:click="acceptDialog(attendeedata.id)" type="danger">Accept paper or not?</el-button>
             </span>
-        </el-dialog>
-        <!-- subauthor -->
-        <el-dialog title="Comfirm the participant or not?" :visible.sync="accept" width="25%">
+    </el-dialog>
+    <!-- subauthor -->
+    <el-dialog title="Comfirm the participant or not?" :visible.sync="accept" width="25%">
             <span slot="footer" class="dialog-footer">
                 <el-button type="danger" v-on:click="notAcceptPaper">Reject</el-button>
                 <el-button type="primary" v-on:click="acceptPaper">Accept</el-button>
             </span>
-        </el-dialog>
-    </div>
+    </el-dialog>
+</div>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
-var app = new Vue({
-    el: '#app',
+    var app = new Vue({
+        el: '#app',
 
-    data: {
-        id: "<?php echo $id; ?>",
-        firstname: "<?php echo $firstname; ?>",
-        is_login: "<?php echo $is_login; ?>",
-        attendeeDue: false,
+        data: {
+            id: "<?php echo $id; ?>",
+            firstname: "<?php echo $firstname; ?>",
+            is_login: "<?php echo $is_login; ?>",
+            attendeeDue: false,
 
-        attendeeindex: [],
+            attendeeindex: [],
 
-        total: 0,
-        currentPage: 1,
+            total: 0,
+            currentPage: 1,
 
-        accept: false,
-        acceptattendeeid: '',
-        status: '',
-        keywords: '',
+            accept: false,
+            acceptattendeeid: '',
+            status: '',
+            keywords: '',
 
-        attendeedata: [],
-        attendeedetail: false,
-    },
-
-    created: function() {
-        var deadLine = "2018-09-30 23:59:59";
-        if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
-            Vue.set(this, "attendeeDue", true);
-        } else {
-            Vue.set(this, "attendeeDue", false);
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('registration/adminattendee');?>",
-            data: {
-                id: "<?php echo $id; ?>",
-                firstname: "<?php echo $firstname; ?>",
-                currentPage: this.currentPage,
-            },
-            dataType: "json",
-            success: function(data) {
-                if (data['status'] == true) {
-                    Vue.set(app, "total", data['total']);
-                    Vue.set(app, "attendeeindex", data['index']);
-                }
-            }
-        });
-    },
-
-    methods: {
-        signOut(formName) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('sign/signout');?>",
-                data: {
-                    id: app.id,
-                    firstname: app.firstname,
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        window.location.href = "<?php echo site_url('home/index');?>";
-                    } else {
-                        alert(data['message']);
-                        window.location.href = "<?php echo site_url('home/index');?>";
-                    }
-                }
-            });
+            attendeedata: [],
+            attendeedetail: false,
         },
 
-        getattendee() {
+        created: function () {
+            var deadLine = "2018-09-30 23:59:59";
+            if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
+                Vue.set(this, "attendeeDue", true);
+            } else {
+                Vue.set(this, "attendeeDue", false);
+            }
+
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('registration/adminattendee');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
-                    currentPage: app.currentPage,
+                    currentPage: this.currentPage,
                 },
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     if (data['status'] == true) {
                         Vue.set(app, "total", data['total']);
                         Vue.set(app, "attendeeindex", data['index']);
@@ -301,119 +275,159 @@ var app = new Vue({
             });
         },
 
-        handleCurrentChange(val) {
-            app.getattendee();
-        },
-
-        search(val) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('registration/searchattendee');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    currentPage: app.currentPage,
-                    status: app.status,
-                    keywords: app.keywords
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        Vue.set(app, "total", data['total']);
-                        Vue.set(app, "attendeeindex", data['index']);
-                    }
-                }
-            });
-        },
-
-        view(attendee) {
-            Vue.set(app, 'attendeedata', attendee);
-            Vue.set(app, 'attendeedetail', true);
-        },
-
-        acceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('registration/accept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    attendee_id: app.acceptattendeeid,
-                    is_accept: 'Accept'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getattendee();
-                        Vue.set(app, 'accept', false);
-                        Vue.set(app, 'attendeedetail', false);
-                    }
-                }
-            });
-        },
-
-        notAcceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('registration/accept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    attendee_id: app.acceptattendeeid,
-                    is_accept: 'Reject'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getattendee();
-                        Vue.set(app, 'accept', false);
-                        Vue.set(app, 'attendeedetail', false);
-                    }
-                }
-            });
-        },
-
-        download(file) {
-            if (file != "") {
+        methods: {
+            signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('registration/download');?>",
+                    url: "<?php echo site_url('sign/signout');?>",
                     data: {
-                        id: "<?php echo $id; ?>",
-                        firstname: "<?php echo $firstname; ?>",
-                        file: file
+                        id: app.id,
+                        firstname: app.firstname,
                     },
-                    success: function(response, status, request) {
-                        var disp = request.getResponseHeader('Content-Disposition');
-                        if (disp && disp.search('attachment') != -1) {
-                            var form = $('<form method="POST" action="' + "<?php echo site_url('registration/download');?>" + '">');
-                            $.each({
-                                id: "<?php echo $id; ?>",
-                                firstname: "<?php echo $firstname; ?>",
-                                file: file
-                            }, function(k, v) {
-                                form.append($('<input type="hidden" name="' + k +
-                                    '" value="' + v + '">'));
-                            });
-                            form.appendTo('body').submit().remove();
-                            return;
-                        }
-                        if (response.status == "ok") {
-                            showResult(response.data);
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            window.location.href = "<?php echo site_url('home/index');?>";
                         } else {
-                            showError('Error: ', response.msg);
+                            alert(data['message']);
+                            window.location.href = "<?php echo site_url('home/index');?>";
                         }
                     }
                 });
-            }
-        },
+            },
 
-        acceptDialog(id) {
-            Vue.set(app, 'accept', true);
-            Vue.set(app, 'acceptattendeeid', id);
-        },
-    }
-})
+            getattendee() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('registration/adminattendee');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        currentPage: app.currentPage,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            Vue.set(app, "total", data['total']);
+                            Vue.set(app, "attendeeindex", data['index']);
+                        }
+                    }
+                });
+            },
+
+            handleCurrentChange(val) {
+                app.getattendee();
+            },
+
+            search(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('registration/searchattendee');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        currentPage: app.currentPage,
+                        status: app.status,
+                        keywords: app.keywords
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            Vue.set(app, "total", data['total']);
+                            Vue.set(app, "attendeeindex", data['index']);
+                        }
+                    }
+                });
+            },
+
+            view(attendee) {
+                Vue.set(app, 'attendeedata', attendee);
+                Vue.set(app, 'attendeedetail', true);
+            },
+
+            acceptPaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('registration/accept');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        attendee_id: app.acceptattendeeid,
+                        is_accept: 'Accept'
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            app.getattendee();
+                            Vue.set(app, 'accept', false);
+                            Vue.set(app, 'attendeedetail', false);
+                        }
+                    }
+                });
+            },
+
+            notAcceptPaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('registration/accept');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        attendee_id: app.acceptattendeeid,
+                        is_accept: 'Reject'
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            app.getattendee();
+                            Vue.set(app, 'accept', false);
+                            Vue.set(app, 'attendeedetail', false);
+                        }
+                    }
+                });
+            },
+
+            download(file) {
+                if (file != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('registration/download');?>",
+                        data: {
+                            id: "<?php echo $id; ?>",
+                            firstname: "<?php echo $firstname; ?>",
+                            file: file
+                        },
+                        success: function (response, status, request) {
+                            var disp = request.getResponseHeader('Content-Disposition');
+                            if (disp && disp.search('attachment') != -1) {
+                                var form = $('<form method="POST" action="' + "<?php echo site_url('registration/download');?>" + '">');
+                                $.each({
+                                    id: "<?php echo $id; ?>",
+                                    firstname: "<?php echo $firstname; ?>",
+                                    file: file
+                                }, function (k, v) {
+                                    form.append($('<input type="hidden" name="' + k +
+                                        '" value="' + v + '">'));
+                                });
+                                form.appendTo('body').submit().remove();
+                                return;
+                            }
+                            if (response.status == "ok") {
+                                showResult(response.data);
+                            } else {
+                                showError('Error: ', response.msg);
+                            }
+                        }
+                    });
+                }
+            },
+
+            acceptDialog(id) {
+                Vue.set(app, 'accept', true);
+                Vue.set(app, 'acceptattendeeid', id);
+            },
+        }
+    })
 </script>
 
 </html>

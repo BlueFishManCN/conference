@@ -22,11 +22,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>GEG2018</title>
-    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>" />
+    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>"/>
     <!-- Page styles -->
     <link href="<?php echo base_url('resource/material-icons.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('resource/material.min.css');?>" rel="stylesheet">
-    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
+    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet"/>
     <link href="<?php echo base_url('resource/index.css');?>" rel="stylesheet">
     <script src="<?php echo base_url('resource/material.min.js');?>"></script>
     <script src="<?php echo base_url('resource/vue.js');?>"></script>
@@ -35,296 +35,283 @@
     <script src="<?php echo base_url('resource/md5.js');?>"></script>
     <script src="<?php echo base_url('resource/en.js');?>"></script>
     <script>
-    ELEMENT.locale(ELEMENT.lang.en)
+        ELEMENT.locale(ELEMENT.lang.en)
     </script>
     <style>
-    .el-select .el-input {
-        width: 400px;
-    }
+        .el-select .el-input {
+            width: 400px;
+        }
 
-    .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-    }
+        .input-with-select .el-input-group__prepend {
+            background-color: #fff;
+        }
     </style>
     <style>
-    #view-source {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
-    }
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
 
-    .demo-table-expand {
-        font-size: 0;
-    }
+        .demo-table-expand {
+            font-size: 0;
+        }
 
-    .demo-table-expand label {
-        width: 90px;
-        color: #99a9bf;
-    }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
 
-    .demo-table-expand .el-form-item {
-        margin-right: 0;
-        margin-bottom: 0;
-        width: 100%;
-    }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app" v-cloak>
-        <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-                <div class="mdl-layout__header-row">
-                    <span class="android-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>">
+<div id="app" v-cloak>
+    <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                    <span class="android-title mdl-layout-title"><img class="android-logo-image"
+                                                                      src="<?php echo base_url('resource/images/android-logo.png');?>">
                     </span>
-                    <!-- Add spacer, to align navigation to the left in desktop -->
-                    <div class="android-header-spacer mdl-layout-spacer"></div>
-                    <!-- Navigation -->
-                    <div class="android-navigation-container">
-                        <nav class="android-navigation mdl-navigation">
-                            <!-- Right aligned menu below button -->
-                            <button class="mdl-button mdl-js-button mdl-button--icon">
-                                <i class="material-icons">account_circle</i>
-                            </button>
-                            <button class="mdl-button mdl-js-button mdl-button--primary">
-                                <?php echo $firstname; ?>
-                            </button>
-                            <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
-                                Log out
-                            </button>
-                        </nav>
-                    </div>
-                    <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
+                <!-- Add spacer, to align navigation to the left in desktop -->
+                <div class="android-header-spacer mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
+                        <!-- Right aligned menu below button -->
+                        <button class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">account_circle</i>
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--primary">
+                            <?php echo $firstname; ?>
+                        </button>
+                        <button v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
+                            Log out
+                        </button>
+                    </nav>
                 </div>
-            </div>
-            <div class="android-content mdl-layout__content">
-                <a name="top"></a>
-                <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Papers
-                    </div>
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
-                            <div style="margin-top: 15px;">
-                                <el-input placeholder="paper ID/title/keywords" v-model="keywords" class="input-with-select">
-                                    <el-select v-model="status" slot="prepend" placeholder="All accept status">
-                                        <el-option label="All accept status" value=""></el-option>
-                                        <el-option label="Uncheck" value="Uncheck"></el-option>
-                                        <el-option label="Accept" value="Accept"></el-option>
-                                        <el-option label="Poster" value="Poster"></el-option>
-                                        <el-option label="Reject" value="Reject"></el-option>
-                                    </el-select>
-                                    <el-select v-model="select" slot="prepend" placeholder="All Topics">
-                                        <el-option label="All Topics" value=""></el-option>
-                                        <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
-                                        <el-option label="Banking" value="Banking"></el-option>
-                                        <el-option label="Behavioral Finance" value="Behavioral Finance"></el-option>
-                                        <el-option label="Big Data,Artificial intelligence, and Blockchain in Economics and Finance" value="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"></el-option>
-                                        <el-option label="Corporate Finance and Corporate Sustainability" value="Corporate Finance and Corporate Sustainability"></el-option>
-                                        <el-option label="Economic Modeling and Forecasting" value="Economic Modeling and Forecasting"></el-option>
-                                        <el-option label="Economics of Innovation" value="Economics of Innovation"></el-option>
-                                        <el-option label="Empirical Economics" value="Empirical Economics"></el-option>
-                                        <el-option label="Environment and Social Responsibility" value="Environment and Social Responsibility"></el-option>
-                                        <el-option label="Financial Accounting and Reporting" value="Financial Accounting and Reporting"></el-option>
-                                        <el-option label="Finance, Investment& Real Estate Development" value="Finance, Investment& Real Estate Development"></el-option>
-                                        <el-option label="Governance of Private and Public Sectors" value="Governance of Private and Public Sectors"></el-option>
-                                        <el-option label="Inclusive Finance" value="Inclusive Finance"></el-option>
-                                        <el-option label="Information Technology & e-Governance" value="Information Technology & e-Governance"></el-option>
-                                        <el-option label="Insurance and Risk Management" value="Insurance and Risk Management"></el-option>
-                                        <el-option label="International Finance" value="International Finance"></el-option>
-                                        <el-option label="Management and Marketing Issues" value="Management and Marketing Issues"></el-option>
-                                        <el-option label="Market Microstructure" value="Market Microstructure"></el-option>
-                                        <el-option label="New Sustainable Development Paradigms" value="New Sustainable Development Paradigms"></el-option>
-                                        <el-option label="Public Administration Performance and Management" value="Public Administration Performance and Management"></el-option>
-                                        <el-option label="Security and Defence Issues" value="Security and Defence Issues"></el-option>
-                                        <el-option label="Socio-Economic Innovation and Local Development" value="Socio-Economic Innovation and Local Development"></el-option>
-                                        <el-option label="Others" value="Others"></el-option>
-                                    </el-select>
-                                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
-                                </el-input>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
-                            <el-table :data="paperindex" stripe border style="width: 100%">
-                                <el-table-column fixed type="index">
-                                </el-table-column>
-                                <el-table-column prop="id" label="Paper ID" width="100">
-                                </el-table-column>
-                                <el-table-column prop="title" label="Title" width="450">
-                                </el-table-column>
-                                <el-table-column prop="percentage" label="Propress" width="100">
-                                    <template slot-scope="scope1">
-                                        <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'" disable-transitions>{{scope1.row.percentage}}</el-tag>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="reviewers_comments" label="Accept status" width="150">
-                                    <template slot-scope="scope2">
-                                        <el-tag :type="scope2.row.reviewers_comments===''?'info':scope2.row.reviewers_comments === 'Reject' ? 'danger' :scope2.row.reviewers_comments === 'Poster'?'success':'primary'" disable-transitions>{{scope2.row.reviewers_comments}}</el-tag>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column fixed="right" label="CLICK for Detail" width="150">
-                                    <template slot-scope="scope">
-                                        <el-button icon="el-icon-search" type="primary" circle v-on:click="view(scope.row)"></el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="5" layout="total, prev, pager, next" :total.sync="total">
-                        </el-pagination>
-                    </div>
-                </div>
-                <footer class="android-footer mdl-mega-footer">
-                    <div class="mdl-mega-footer--top-section">
-                        <div class="mdl-mega-footer--right-section">
-                            <a class="mdl-typography--font-light" href="#top">Back to Top<i class="material-icons">expand_less</i></a>
-                        </div>
-                    </div>
-                    <a name="screens"></a>
-                    <div class="mdl-mega-footer--middle-section">
-                        <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
-                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Vue and CI.</p>
-                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com).</p>
-                    </div>
-                </footer>
+                <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image"
+                                                                         src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
             </div>
         </div>
-        <!-- paper -->
-        <el-dialog title="Paper detail" :visible.sync="paperdetail" width="75%">
-            <el-form label-position="left" inline class="demo-table-expand">
-                <el-form-item label="Paper ID">
-                    <span>{{ paperdata.id }}</span>
-                </el-form-item>
-                <el-form-item label="Topic">
-                    <span>{{ paperdata.topic }}</span>
-                </el-form-item>
-                <el-form-item label="Title">
-                    <span>{{ paperdata.title }}</span>
-                </el-form-item>
-                <el-form-item label="Authors">
-                    <el-table size="mini" :data="paperdata.author" stripe border style="width: 100%">
-                        <el-table-column fixed type="index">
-                        </el-table-column>
-                        <el-table-column prop="corresponding" label="Corresponding" width="110">
-                        </el-table-column>
-                        <el-table-column prop="firstname" label="Firstname" width="80">
-                        </el-table-column>
-                        <el-table-column prop="lastname" label="Lastname" width="80">
-                        </el-table-column>
-                        <el-table-column prop="country" label="Country" width="80">
-                        </el-table-column>
-                        <el-table-column prop="organization" label="Organization" width="250">
-                        </el-table-column>
-                        <el-table-column prop="email" label="Email" width="150">
-                        </el-table-column>
-                    </el-table>
-                </el-form-item>
-                <el-form-item label="Abstract">
-                    <span>{{ paperdata.abstract }}</span>
-                </el-form-item>
-                <el-form-item label="Keywords">
-                    <span>{{ paperdata.keywords }}</span>
-                </el-form-item>
-                <el-form-item label="File">
-                    <el-button @click="download(paperdata.file)" type="text" size="mini">{{ paperdata.file }}</el-button>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                 <el-button  v-on:click="paperdetail=fasle">Cancel</el-button>
-               <el-button  type="danger" v-on:click="acceptDialog(paperdata.id)">Accept paper or not?</el-button>
+        <div class="android-content mdl-layout__content">
+            <a name="top"></a>
+            <div class="android-more-section">
+                <div class="android-section-title mdl-typography--display-1-color-contrast">Papers
+                </div>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                        <div style="margin-top: 15px;">
+                            <el-input placeholder="paper ID/title/keywords" v-model="keywords"
+                                      class="input-with-select">
+                                <el-select v-model="status" slot="prepend" placeholder="All accept status">
+                                    <el-option label="All accept status" value=""></el-option>
+                                    <el-option label="Uncheck" value="Uncheck"></el-option>
+                                    <el-option label="Accept" value="Accept"></el-option>
+                                    <el-option label="Poster" value="Poster"></el-option>
+                                    <el-option label="Reject" value="Reject"></el-option>
+                                </el-select>
+                                <el-select v-model="select" slot="prepend" placeholder="All Topics">
+                                    <el-option label="All Topics" value=""></el-option>
+                                    <el-option label="Asset Pricing" value="Asset Pricing"></el-option>
+                                    <el-option label="Banking" value="Banking"></el-option>
+                                    <el-option label="Behavioral Finance" value="Behavioral Finance"></el-option>
+                                    <el-option
+                                            label="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"
+                                            value="Big Data,Artificial intelligence, and Blockchain in Economics and Finance"></el-option>
+                                    <el-option label="Corporate Finance and Corporate Sustainability"
+                                               value="Corporate Finance and Corporate Sustainability"></el-option>
+                                    <el-option label="Economic Modeling and Forecasting"
+                                               value="Economic Modeling and Forecasting"></el-option>
+                                    <el-option label="Economics of Innovation"
+                                               value="Economics of Innovation"></el-option>
+                                    <el-option label="Empirical Economics" value="Empirical Economics"></el-option>
+                                    <el-option label="Environment and Social Responsibility"
+                                               value="Environment and Social Responsibility"></el-option>
+                                    <el-option label="Financial Accounting and Reporting"
+                                               value="Financial Accounting and Reporting"></el-option>
+                                    <el-option label="Finance, Investment& Real Estate Development"
+                                               value="Finance, Investment& Real Estate Development"></el-option>
+                                    <el-option label="Governance of Private and Public Sectors"
+                                               value="Governance of Private and Public Sectors"></el-option>
+                                    <el-option label="Inclusive Finance" value="Inclusive Finance"></el-option>
+                                    <el-option label="Information Technology & e-Governance"
+                                               value="Information Technology & e-Governance"></el-option>
+                                    <el-option label="Insurance and Risk Management"
+                                               value="Insurance and Risk Management"></el-option>
+                                    <el-option label="International Finance" value="International Finance"></el-option>
+                                    <el-option label="Management and Marketing Issues"
+                                               value="Management and Marketing Issues"></el-option>
+                                    <el-option label="Market Microstructure" value="Market Microstructure"></el-option>
+                                    <el-option label="New Sustainable Development Paradigms"
+                                               value="New Sustainable Development Paradigms"></el-option>
+                                    <el-option label="Public Administration Performance and Management"
+                                               value="Public Administration Performance and Management"></el-option>
+                                    <el-option label="Security and Defence Issues"
+                                               value="Security and Defence Issues"></el-option>
+                                    <el-option label="Socio-Economic Innovation and Local Development"
+                                               value="Socio-Economic Innovation and Local Development"></el-option>
+                                    <el-option label="Others" value="Others"></el-option>
+                                </el-select>
+                                <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+                            </el-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="android-card-container mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+                        <el-table :data="paperindex" stripe border style="width: 100%">
+                            <el-table-column fixed type="index">
+                            </el-table-column>
+                            <el-table-column prop="id" label="Paper ID" width="100">
+                            </el-table-column>
+                            <el-table-column prop="title" label="Title" width="450">
+                            </el-table-column>
+                            <el-table-column prop="percentage" label="Propress" width="100">
+                                <template slot-scope="scope1">
+                                    <el-tag :type="scope1.row.percentage === '100' ? 'success' : 'danger'"
+                                            disable-transitions>{{scope1.row.percentage}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="reviewers_comments" label="Accept status" width="150">
+                                <template slot-scope="scope2">
+                                    <el-tag :type="scope2.row.reviewers_comments===''?'info':scope2.row.reviewers_comments === 'Reject' ? 'danger' :scope2.row.reviewers_comments === 'Poster'?'success':'primary'"
+                                            disable-transitions>{{scope2.row.reviewers_comments}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column fixed="right" label="CLICK for Detail" width="150">
+                                <template slot-scope="scope">
+                                    <el-button icon="el-icon-search" type="primary" circle
+                                               v-on:click="view(scope.row)"></el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+                <div class="block">
+                    <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="5"
+                                   layout="total, prev, pager, next" :total.sync="total">
+                    </el-pagination>
+                </div>
+            </div>
+            <footer class="android-footer mdl-mega-footer">
+                <div class="mdl-mega-footer--top-section">
+                    <div class="mdl-mega-footer--right-section">
+                        <a class="mdl-typography--font-light" href="#top">Back to Top<i class="material-icons">expand_less</i></a>
+                    </div>
+                </div>
+                <a name="screens"></a>
+                <div class="mdl-mega-footer--middle-section">
+                    <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
+                    <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science,
+                        Shanghai University, with Material Design Lite, Vue and CI.</p>
+                    <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by
+                        jackiezhou(http://www.fengniao.com).</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- paper -->
+    <el-dialog title="Paper detail" :visible.sync="paperdetail" width="75%">
+        <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="Paper ID">
+                <span>{{ paperdata.id }}</span>
+            </el-form-item>
+            <el-form-item label="Topic">
+                <span>{{ paperdata.topic }}</span>
+            </el-form-item>
+            <el-form-item label="Title">
+                <span>{{ paperdata.title }}</span>
+            </el-form-item>
+            <el-form-item label="Authors">
+                <el-table size="mini" :data="paperdata.author" stripe border style="width: 100%">
+                    <el-table-column fixed type="index">
+                    </el-table-column>
+                    <el-table-column prop="corresponding" label="Corresponding" width="110">
+                    </el-table-column>
+                    <el-table-column prop="firstname" label="Firstname" width="80">
+                    </el-table-column>
+                    <el-table-column prop="lastname" label="Lastname" width="80">
+                    </el-table-column>
+                    <el-table-column prop="country" label="Country" width="80">
+                    </el-table-column>
+                    <el-table-column prop="organization" label="Organization" width="250">
+                    </el-table-column>
+                    <el-table-column prop="email" label="Email" width="150">
+                    </el-table-column>
+                </el-table>
+            </el-form-item>
+            <el-form-item label="Abstract">
+                <span>{{ paperdata.abstract }}</span>
+            </el-form-item>
+            <el-form-item label="Keywords">
+                <span>{{ paperdata.keywords }}</span>
+            </el-form-item>
+            <el-form-item label="File">
+                <el-button @click="download(paperdata.file)" type="text" size="mini">{{ paperdata.file }}</el-button>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+                 <el-button v-on:click="paperdetail=fasle">Cancel</el-button>
+               <el-button type="danger" v-on:click="acceptDialog(paperdata.id)">Accept paper or not?</el-button>
             </span>
-        </el-dialog>
-        <!-- subauthor -->
-        <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="50%">
+    </el-dialog>
+    <!-- subauthor -->
+    <el-dialog title="Accept the paper or not?" :visible.sync="accept" width="50%">
             <span slot="footer" class="dialog-footer">
                 <el-button type="danger" v-on:click="notAcceptPaper">Reject</el-button>
                 <el-button type="success" v-on:click="posterPaper">Poster</el-button>
                 <el-button type="primary" v-on:click="acceptPaper">Accept</el-button>
             </span>
-        </el-dialog>
-    </div>
+    </el-dialog>
+</div>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
-var app = new Vue({
-    el: '#app',
+    var app = new Vue({
+        el: '#app',
 
-    data: {
-        id: "<?php echo $id; ?>",
-        firstname: "<?php echo $firstname; ?>",
-        is_login: "<?php echo $is_login; ?>",
+        data: {
+            id: "<?php echo $id; ?>",
+            firstname: "<?php echo $firstname; ?>",
+            is_login: "<?php echo $is_login; ?>",
 
-        paperindex: [],
-        authorindex: [],
-        total: 0,
-        currentPage: 1,
-        status: '',
-        select: '',
-        keywords: '',
+            paperindex: [],
+            authorindex: [],
+            total: 0,
+            currentPage: 1,
+            status: '',
+            select: '',
+            keywords: '',
 
-        paperdata: [],
-        paperdetail: false,
-        accept: false,
-        acceptpaperid: '',
-    },
-
-    created: function() {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('adminpaper/paper');?>",
-            data: {
-                id: "<?php echo $id; ?>",
-                firstname: "<?php echo $firstname; ?>",
-                currentPage: this.currentPage,
-            },
-            dataType: "json",
-            success: function(data) {
-                if (data['status'] == true) {
-                    Vue.set(app, "total", data['total']);
-                    Vue.set(app, "paperindex", data['index']);
-                }
-            }
-        });
-    },
-
-    methods: {
-        signOut(formName) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('sign/signout');?>",
-                data: {
-                    id: app.id,
-                    firstname: app.firstname
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        window.location.href = "<?php echo site_url('home/index');?>";
-                    } else {
-                        alert(data['message']);
-                        window.location.href = "<?php echo site_url('home/index');?>";
-                    }
-                }
-            });
+            paperdata: [],
+            paperdetail: false,
+            accept: false,
+            acceptpaperid: '',
         },
 
-        getpaper() {
+        created: function () {
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('adminpaper/paper');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
-                    currentPage: app.currentPage,
+                    currentPage: this.currentPage,
                 },
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     if (data['status'] == true) {
                         Vue.set(app, "total", data['total']);
                         Vue.set(app, "paperindex", data['index']);
@@ -333,138 +320,178 @@ var app = new Vue({
             });
         },
 
-        download(file) {
-            if (file != "") {
+        methods: {
+            signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('adminpaper/download');?>",
+                    url: "<?php echo site_url('sign/signout');?>",
+                    data: {
+                        id: app.id,
+                        firstname: app.firstname
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            window.location.href = "<?php echo site_url('home/index');?>";
+                        } else {
+                            alert(data['message']);
+                            window.location.href = "<?php echo site_url('home/index');?>";
+                        }
+                    }
+                });
+            },
+
+            getpaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/paper');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
-                        file: file
+                        currentPage: app.currentPage,
                     },
-                    success: function(response, status, request) {
-                        var disp = request.getResponseHeader('Content-Disposition');
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            Vue.set(app, "total", data['total']);
+                            Vue.set(app, "paperindex", data['index']);
+                        }
+                    }
+                });
+            },
 
-                        if (disp && disp.search('attachment') != -1) {
-                            var form = $('<form method="POST" action="' + "<?php echo site_url('adminpaper/download');?>" + '">');
-                            $.each({
-                                id: "<?php echo $id; ?>",
-                                firstname: "<?php echo $firstname; ?>",
-                                file: file
-                            }, function(k, v) {
-                                form.append($('<input type="hidden" name="' + k +
-                                    '" value="' + v + '">'));
-                            });
-                            $('body').append(form);
-                            form.submit();
+            download(file) {
+                if (file != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('adminpaper/download');?>",
+                        data: {
+                            id: "<?php echo $id; ?>",
+                            firstname: "<?php echo $firstname; ?>",
+                            file: file
+                        },
+                        success: function (response, status, request) {
+                            var disp = request.getResponseHeader('Content-Disposition');
+
+                            if (disp && disp.search('attachment') != -1) {
+                                var form = $('<form method="POST" action="' + "<?php echo site_url('adminpaper/download');?>" + '">');
+                                $.each({
+                                    id: "<?php echo $id; ?>",
+                                    firstname: "<?php echo $firstname; ?>",
+                                    file: file
+                                }, function (k, v) {
+                                    form.append($('<input type="hidden" name="' + k +
+                                        '" value="' + v + '">'));
+                                });
+                                $('body').append(form);
+                                form.submit();
+                            }
+                        }
+                    });
+                }
+            },
+
+            handleCurrentChange(val) {
+                app.getpaper();
+            },
+
+            search(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/expertsearchpaper');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        currentPage: app.currentPage,
+                        status: app.status,
+                        select: app.select,
+                        keywords: app.keywords
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            Vue.set(app, "total", data['total']);
+                            Vue.set(app, "paperindex", data['index']);
+                        }
+                    }
+                });
+            },
+
+            view(paper) {
+                Vue.set(app, 'paperdata', paper);
+                Vue.set(app, 'paperdetail', true);
+            },
+
+            acceptDialog(id) {
+                Vue.set(app, 'accept', true);
+                Vue.set(app, 'acceptpaperid', id);
+            },
+
+            acceptPaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/expertaccept');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        paper_id: app.acceptpaperid,
+                        reviewers_comments: 'Accept'
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            app.getpaper();
+                            Vue.set(app, 'accept', false);
+                            Vue.set(app, 'paperdetail', false);
+                        }
+                    }
+                });
+            },
+
+            posterPaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/expertaccept');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        paper_id: app.acceptpaperid,
+                        reviewers_comments: 'Poster'
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            app.getpaper();
+                            Vue.set(app, 'accept', false);
+                            Vue.set(app, 'paperdetail', false);
+                        }
+                    }
+                });
+            },
+
+            notAcceptPaper() {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('adminpaper/expertaccept');?>",
+                    data: {
+                        id: "<?php echo $id; ?>",
+                        firstname: "<?php echo $firstname; ?>",
+                        paper_id: app.acceptpaperid,
+                        reviewers_comments: 'Reject'
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            app.getpaper();
+                            Vue.set(app, 'accept', false);
+                            Vue.set(app, 'paperdetail', false);
                         }
                     }
                 });
             }
-        },
 
-        handleCurrentChange(val) {
-            app.getpaper();
-        },
-
-        search(val) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/expertsearchpaper');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    currentPage: app.currentPage,
-                    status: app.status,
-                    select: app.select,
-                    keywords: app.keywords
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        Vue.set(app, "total", data['total']);
-                        Vue.set(app, "paperindex", data['index']);
-                    }
-                }
-            });
-        },
-
-        view(paper) {
-            Vue.set(app, 'paperdata', paper);
-            Vue.set(app, 'paperdetail', true);
-        },
-
-        acceptDialog(id) {
-            Vue.set(app, 'accept', true);
-            Vue.set(app, 'acceptpaperid', id);
-        },
-
-        acceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/expertaccept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.acceptpaperid,
-                    reviewers_comments: 'Accept'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getpaper();
-                        Vue.set(app, 'accept', false);
-                        Vue.set(app, 'paperdetail', false);
-                    }
-                }
-            });
-        },
-
-        posterPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/expertaccept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.acceptpaperid,
-                    reviewers_comments: 'Poster'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getpaper();
-                        Vue.set(app, 'accept', false);
-                        Vue.set(app, 'paperdetail', false);
-                    }
-                }
-            });
-        },
-
-        notAcceptPaper() {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('adminpaper/expertaccept');?>",
-                data: {
-                    id: "<?php echo $id; ?>",
-                    firstname: "<?php echo $firstname; ?>",
-                    paper_id: app.acceptpaperid,
-                    reviewers_comments: 'Reject'
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        app.getpaper();
-                        Vue.set(app, 'accept', false);
-                        Vue.set(app, 'paperdetail', false);
-                    }
-                }
-            });
         }
-
-    }
-})
+    })
 </script>
 
 </html>

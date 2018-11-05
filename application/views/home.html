@@ -22,11 +22,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>GEG2018</title>
-    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>" />
+    <link rel="icon" href="<?php echo base_url('resource/images/android-logo.png');?>"/>
     <!-- Page styles -->
     <link href="<?php echo base_url('resource/material-icons.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('resource/material.min.css');?>" rel="stylesheet">
-    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet" />
+    <link href="<?php echo base_url('resource/styles.css');?>" rel="stylesheet"/>
     <link href="<?php echo base_url('resource/index.css');?>" rel="stylesheet">
     <script src="<?php echo base_url('resource/material.min.js');?>"></script>
     <script src="<?php echo base_url('resource/vue.js');?>"></script>
@@ -35,297 +35,321 @@
     <script src="<?php echo base_url('resource/md5.js');?>"></script>
     <script src="<?php echo base_url('resource/en.js');?>"></script>
     <script>
-    ELEMENT.locale(ELEMENT.lang.en)
+        ELEMENT.locale(ELEMENT.lang.en)
     </script>
     <style>
-    #view-source {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
-    }
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
     </style>
 </head>
 
 <body>
-    <div id="app" v-cloak>
-        <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-                <div class="mdl-layout__header-row">
-                    <span class="android-title mdl-layout-title"><a href="<?php echo site_url('home/index');?>"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></a>
+<div id="app" v-cloak>
+    <img width="100%" src="<?php echo base_url('resource/images/warning.png');?>">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__header-row">
+                    <span class="android-title mdl-layout-title"><a href="<?php echo site_url('home/index');?>"><img
+                            class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></a>
                 </span>
-                    <!-- Add spacer, to align navigation to the left in desktop -->
-                    <div class="android-header-spacer mdl-layout-spacer"></div>
-                    <!-- Navigation -->
-                    <div class="android-navigation-container">
-                        <nav class="android-navigation mdl-navigation">
-                            <!-- Flat button with ripple -->
-                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('submission/index');?>">
-                             Submit
-                            </a>
-                            <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect" href="<?php echo site_url('registration/index');?>">
-                             Register
-                            </a>
-                            <!-- Right aligned menu below button -->
-                            <button class="mdl-button mdl-js-button mdl-button--icon">
-                                <i class="material-icons">account_circle</i>
-                            </button>
-                            <button v-if="is_login" class="mdl-button mdl-js-button mdl-button--primary">
-                                Welcome!
-                                <?php echo $firstname; ?>
-                            </button>
-                            <button v-if="is_login" v-on:click="signOut" class="mdl-button mdl-js-button mdl-button--accent">
-                                Log out
-                            </button>
-                            <button v-if="!is_login" @click="step1 = true" class="mdl-button mdl-js-button mdl-button--primary">
-                                Create account
-                            </button>
-                            <button v-if="!is_login" @click="signInDialogVisible = true" class="mdl-button mdl-js-button mdl-button--primary">
-                                Log in
-                            </button>
-                        </nav>
-                    </div>
-                    <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image" src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
-                </div>
-            </div>
-            <div class="android-content mdl-layout__content">
-                <a name="top"></a>
-                <div class="android-be-together-section mdl-typography--text-center">
-                    <div class="logo-font android-slogan">GEG 2018</div>
-                    <div class="logo-font android-sub-slogan">Shanghai, China</div>
-                    <div class="logo-font android-sub-slogan">October 25-26, 2018</div>
-                    <a href="#screens">
-                        <button class="android-fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">expand_more</i>
+                <!-- Add spacer, to align navigation to the left in desktop -->
+                <div class="android-header-spacer mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <div class="android-navigation-container">
+                    <nav class="android-navigation mdl-navigation">
+                        <!-- Flat button with ripple -->
+                        <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                           href="<?php echo site_url('submission/index');?>">
+                            Submit
+                        </a>
+                        <a v-if="is_login" class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                           href="<?php echo site_url('registration/index');?>">
+                            Register
+                        </a>
+                        <!-- Right aligned menu below button -->
+                        <button class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">account_circle</i>
                         </button>
-                    </a>
+                        <button v-if="is_login" class="mdl-button mdl-js-button mdl-button--primary">
+                            Welcome!
+                            <?php echo $firstname; ?>
+                        </button>
+                        <button v-if="is_login" v-on:click="signOut"
+                                class="mdl-button mdl-js-button mdl-button--accent">
+                            Log out
+                        </button>
+                        <button v-if="!is_login" @click="step1 = true"
+                                class="mdl-button mdl-js-button mdl-button--primary">
+                            Create account
+                        </button>
+                        <button v-if="!is_login" @click="signInDialogVisible = true"
+                                class="mdl-button mdl-js-button mdl-button--primary">
+                            Log in
+                        </button>
+                    </nav>
                 </div>
-                <div class="android-more-section">
-                    <div class="android-section-title mdl-typography--display-1-color-contrast">Scope and Welcome</div>
-                    <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
-                            <div class="mdl-card__supporting-text">
-                                International Conference on Global Economy & Governance is initiated and co-hosted by the Romanian Academy Institute for Economic Forecasting and the National University of Political Studies and Public Administration. Since 2013, GEG have been organized by Wuhan University, PRC (2013), National University of Political Studies and Public Administration, Romania (2014), Ming Chuan University, Taiwan (2015), Ocean University of China, PRC (2016), University of Finance and Management Warsaw, Poland (2017).
-                                <br/>
-                                <br/>The conference aims to provide a platform for the exchange of related studies to discuss the current global economic, trade and financial issues. The theme of the 2018GEG is Digital Economy, Sustainable Development and New Global Economic Order. The goal of this conference is to bring researchers, practitioners and officials to the areas of global economics and governances, to share experiences and original research contributions to those topics. Researchers and practitioners are invited to submit their contributions to GEG 2018.
-                                <br/>
-                                <br/>There will be one track of presentations during two days. The program will be accompanied by a high-quality social program starting with a welcome reception on 25th October, 2018.
-                            </div>
-                        </div>
-                    </div>
-                    <el-alert title="" type="warning" :closable="false">
-                        <h5>Important Dates</h5>
-                    </el-alert>
-                    <el-table :data="deadtime" stripe style="width: 100%">
-                        <el-table-column prop="name" label="description" width="200">
-                        </el-table-column>
-                        <el-table-column prop="date" label="date" width="200">
-                        </el-table-column>
-                    </el-table>
-                </div>
-                <footer class="android-footer mdl-mega-footer">
-                    <div class="mdl-mega-footer--top-section">
-                        <div class="mdl-mega-footer--right-section">
-                            <a class="mdl-typography--font-light" href="#top ">Back to Top<i class="material-icons">expand_less</i></a>
-                        </div>
-                    </div>
-                    <a name="screens"></a>
-                    <div class="mdl-mega-footer--middle-section">
-                        <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
-                        <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science, Shanghai University, with Material Design Lite, Vue and CI.</p>
-                        <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by jackiezhou(http://www.fengniao.com).</p>
-                    </div>
-                </footer>
+                <span class="android-mobile-title mdl-layout-title"><img class="android-logo-image"
+                                                                         src="<?php echo base_url('resource/images/android-logo.png');?>"></span>
             </div>
         </div>
-        <!-- step1 -->
-        <el-dialog title="Create account" :visible.sync="step1" width="50%">
-            <el-steps :active="1">
-                <el-step title="Step 1" description="register personal information"></el-step>
-                <el-step title="Step 2"></el-step>
-                <el-step title="Step 3"></el-step>
-            </el-steps>
-            <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
-                <el-form-item label="First name" prop="firstname">
-                    <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Last name" prop="lastname">
-                    <el-input v-model="step1form.lastname" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="step1form.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Retype Email" prop="retypeemail">
-                    <el-input v-model="step1form.retypeemail" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+        <div class="android-content mdl-layout__content">
+            <a name="top"></a>
+            <div class="android-be-together-section mdl-typography--text-center">
+                <div class="logo-font android-slogan">GEG 2018</div>
+                <div class="logo-font android-sub-slogan">Shanghai, China</div>
+                <div class="logo-font android-sub-slogan">October 25-26, 2018</div>
+                <a href="#screens">
+                    <button class="android-fab mdl-button mdl-button--colored mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                        <i class="material-icons">expand_more</i>
+                    </button>
+                </a>
+            </div>
+            <div class="android-more-section">
+                <div class="android-section-title mdl-typography--display-1-color-contrast">Scope and Welcome</div>
+                <div class="android-card-container mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
+                        <div class="mdl-card__supporting-text">
+                            International Conference on Global Economy & Governance is initiated and co-hosted by the
+                            Romanian Academy Institute for Economic Forecasting and the National University of Political
+                            Studies and Public Administration. Since 2013, GEG have been organized by Wuhan University,
+                            PRC (2013), National University of Political Studies and Public Administration, Romania
+                            (2014), Ming Chuan University, Taiwan (2015), Ocean University of China, PRC (2016),
+                            University of Finance and Management Warsaw, Poland (2017).
+                            <br/>
+                            <br/>The conference aims to provide a platform for the exchange of related studies to
+                            discuss the current global economic, trade and financial issues. The theme of the 2018GEG is
+                            Digital Economy, Sustainable Development and New Global Economic Order. The goal of this
+                            conference is to bring researchers, practitioners and officials to the areas of global
+                            economics and governances, to share experiences and original research contributions to those
+                            topics. Researchers and practitioners are invited to submit their contributions to GEG 2018.
+                            <br/>
+                            <br/>There will be one track of presentations during two days. The program will be
+                            accompanied by a high-quality social program starting with a welcome reception on 25th
+                            October, 2018.
+                        </div>
+                    </div>
+                </div>
+                <el-alert title="" type="warning" :closable="false">
+                    <h5>Important Dates</h5>
+                </el-alert>
+                <el-table :data="deadtime" stripe style="width: 100%">
+                    <el-table-column prop="name" label="description" width="200">
+                    </el-table-column>
+                    <el-table-column prop="date" label="date" width="200">
+                    </el-table-column>
+                </el-table>
+            </div>
+            <footer class="android-footer mdl-mega-footer">
+                <div class="mdl-mega-footer--top-section">
+                    <div class="mdl-mega-footer--right-section">
+                        <a class="mdl-typography--font-light" href="#top ">Back to Top<i class="material-icons">expand_less</i></a>
+                    </div>
+                </div>
+                <a name="screens"></a>
+                <div class="mdl-mega-footer--middle-section">
+                    <p class="mdl-typography--font-light">© Copyright 2018 Shanghai University (All rights reserved)</p>
+                    <p class="mdl-typography--font-light">Powered by School of Computer Engineering and Science,
+                        Shanghai University, with Material Design Lite, Vue and CI.</p>
+                    <p class="mdl-typography--font-light">The photo of Shanghai landscap is taken by
+                        jackiezhou(http://www.fengniao.com).</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- step1 -->
+    <el-dialog title="Create account" :visible.sync="step1" width="50%">
+        <el-steps :active="1">
+            <el-step title="Step 1" description="register personal information"></el-step>
+            <el-step title="Step 2"></el-step>
+            <el-step title="Step 3"></el-step>
+        </el-steps>
+        <el-form ref="step1form" :model="step1form" status-icon :rules="step1rules" label-width="30%">
+            <el-form-item label="First name" prop="firstname">
+                <el-input v-model="step1form.firstname" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Last name" prop="lastname">
+                <el-input v-model="step1form.lastname" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Email" prop="email">
+                <el-input v-model="step1form.email" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Retype Email" prop="retypeemail">
+                <el-input v-model="step1form.retypeemail" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="step1 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="step1SignUP('step1form')">Next</el-button>
             </span>
-        </el-dialog>
-        <!-- step2 -->
-        <el-dialog title="Create account" :visible.sync="step2" width="50%">
-            <el-steps :active="2">
-                <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="activate account"></el-step>
-                <el-step title="Step 3"></el-step>
-            </el-steps>
-            <el-alert title="Important info" type="warning" description="The verification code has been sent to your mailbox." :closable="false">
-            </el-alert>
-            <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="25%">
-                <el-form-item label="Verification code" prop="code">
-                    <el-input v-model="step2form.code" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- step2 -->
+    <el-dialog title="Create account" :visible.sync="step2" width="50%">
+        <el-steps :active="2">
+            <el-step title="Step 1"></el-step>
+            <el-step title="Step 2" description="activate account"></el-step>
+            <el-step title="Step 3"></el-step>
+        </el-steps>
+        <el-alert title="Important info" type="warning"
+                  description="The verification code has been sent to your mailbox." :closable="false">
+        </el-alert>
+        <el-form ref="step2form" :model="step2form" status-icon :rules="step2rules" label-width="25%">
+            <el-form-item label="Verification code" prop="code">
+                <el-input v-model="step2form.code" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="step2 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="step2SignUP('step2form')">Next</el-button>
             </span>
-        </el-dialog>
-        <!-- step3 -->
-        <el-dialog title="Create account" :visible.sync="step3" width="50%">
-            <el-steps :active="3">
-                <el-step title="Step 1"></el-step>
-                <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="improve personal information"></el-step>
-            </el-steps>
-            <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
-                <el-form-item label="First name">
-                    <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Last name">
-                    <el-input v-model="step1form.lastname" disabled auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Email">
-                    <el-input v-model="step1form.email" disabled auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Country" prop="country">
-                    <el-input v-model="step3form.country" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Organization" prop="organization">
-                    <el-input v-model="step3form.organization" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="step3form.password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Retype Password" prop="retype_password">
-                    <el-input type="password" v-model="step3form.retype_password" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- step3 -->
+    <el-dialog title="Create account" :visible.sync="step3" width="50%">
+        <el-steps :active="3">
+            <el-step title="Step 1"></el-step>
+            <el-step title="Step 2"></el-step>
+            <el-step title="Step 3" description="improve personal information"></el-step>
+        </el-steps>
+        <el-form ref="step3form" :model="step3form" status-icon :rules="step3rules" label-width="30%">
+            <el-form-item label="First name">
+                <el-input v-model="step1form.firstname" disabled auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Last name">
+                <el-input v-model="step1form.lastname" disabled auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Email">
+                <el-input v-model="step1form.email" disabled auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Country" prop="country">
+                <el-input v-model="step3form.country" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Organization" prop="organization">
+                <el-input v-model="step3form.organization" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Password" prop="password">
+                <el-input type="password" v-model="step3form.password" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Retype Password" prop="retype_password">
+                <el-input type="password" v-model="step3form.retype_password" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="step3 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="step3SignUp('step3form')">Finish</el-button> 
             </span>
-        </el-dialog>
-        <!-- sign -->
-        <el-dialog title="Login" :visible.sync="signInDialogVisible" width="50%">
-            <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="25%">
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="inform.email" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="inform.password" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- sign -->
+    <el-dialog title="Login" :visible.sync="signInDialogVisible" width="50%">
+        <el-form ref="inform" :model="inform" status-icon :rules="signInRules" label-width="25%">
+            <el-form-item label="Email" prop="email">
+                <el-input v-model="inform.email" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Password" prop="password">
+                <el-input type="password" v-model="inform.password" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="signInDialogVisible = false">Cancel</el-button>
                 <el-button type="warning" v-on:click="forget">Forget password?</el-button>  
                 <el-button type="primary" v-on:click="signIn('inform')">Login</el-button> 
             </span>
-        </el-dialog>
-        <!-- forget step1 -->
-        <el-dialog title="Reset password" :visible.sync="forgetstep1" width="50%">
-            <el-steps :active="1">
-                <el-step title="Step 1" description="enter email"></el-step>
-                <el-step title="Step 2"></el-step>
-                <el-step title="Step 3"></el-step>
-            </el-steps>
-            <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="25%">
-                <el-form-item label="Email" prop="email">
-                    <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- forget step1 -->
+    <el-dialog title="Reset password" :visible.sync="forgetstep1" width="50%">
+        <el-steps :active="1">
+            <el-step title="Step 1" description="enter email"></el-step>
+            <el-step title="Step 2"></el-step>
+            <el-step title="Step 3"></el-step>
+        </el-steps>
+        <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="25%">
+            <el-form-item label="Email" prop="email">
+                <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="forgetstep1 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="forgetStep1('forgetstep1form')">Next</el-button>
             </span>
-        </el-dialog>
-        <!-- forget step2 -->
-        <el-dialog title="Reset password" :visible.sync="forgetstep2" width="50%">
-            <el-steps :active="2">
-                <el-step title="Step 1"></el-step>
-                <el-step title="Step 2" description="verify account"></el-step>
-                <el-step title="Step 3"></el-step>
-            </el-steps>
-            <el-alert title="Important info" type="warning" description="Reset verification code has been sent to your mailbox." :closable="false">
-            </el-alert>
-            <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
-                <el-form-item label="Verification code" prop="code">
-                    <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- forget step2 -->
+    <el-dialog title="Reset password" :visible.sync="forgetstep2" width="50%">
+        <el-steps :active="2">
+            <el-step title="Step 1"></el-step>
+            <el-step title="Step 2" description="verify account"></el-step>
+            <el-step title="Step 3"></el-step>
+        </el-steps>
+        <el-alert title="Important info" type="warning"
+                  description="Reset verification code has been sent to your mailbox." :closable="false">
+        </el-alert>
+        <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
+            <el-form-item label="Verification code" prop="code">
+                <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="forgetstep2 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="forgetStep2('forgetstep2form')">Next</el-button>
             </span>
-        </el-dialog>
-        <!-- forget step3 -->
-        <el-dialog title="Reset password" :visible.sync="forgetstep3" width="50%">
-            <el-steps :active="3">
-                <el-step title="Step 1"></el-step>
-                <el-step title="Step 2"></el-step>
-                <el-step title="Step 3" description="reset password"></el-step>
-            </el-steps>
-            <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
-                <el-form-item label="Password" prop="password">
-                    <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="Retype Password" prop="retype_password">
-                    <el-input type="password" v-model="forgetstep3form.retype_password" auto-complete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+    </el-dialog>
+    <!-- forget step3 -->
+    <el-dialog title="Reset password" :visible.sync="forgetstep3" width="50%">
+        <el-steps :active="3">
+            <el-step title="Step 1"></el-step>
+            <el-step title="Step 2"></el-step>
+            <el-step title="Step 3" description="reset password"></el-step>
+        </el-steps>
+        <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
+            <el-form-item label="Password" prop="password">
+                <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Retype Password" prop="retype_password">
+                <el-input type="password" v-model="forgetstep3form.retype_password" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
                 <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Finish</el-button>
             </span>
-        </el-dialog>
-    </div>
+    </el-dialog>
+</div>
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
-var validateEmail = (rule, value, callback) => {
-    if (value !== app.step1form.email) {
-        callback(new Error('The two entered email are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass = (rule, value, callback) => {
-    if (value !== app.step3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var validatePass2 = (rule, value, callback) => {
-    if (value !== app.forgetstep3form.password) {
-        callback(new Error('The two entered passwords are inconsistent!'));
-    } else {
-        callback();
-    }
-};
-var app = new Vue({
-    el: '#app',
+    var validateEmail = (rule, value, callback) => {
+        if (value !== app.step1form.email) {
+            callback(new Error('The two entered email are inconsistent!'));
+        } else {
+            callback();
+        }
+    };
+    var validatePass = (rule, value, callback) => {
+        if (value !== app.step3form.password) {
+            callback(new Error('The two entered passwords are inconsistent!'));
+        } else {
+            callback();
+        }
+    };
+    var validatePass2 = (rule, value, callback) => {
+        if (value !== app.forgetstep3form.password) {
+            callback(new Error('The two entered passwords are inconsistent!'));
+        } else {
+            callback();
+        }
+    };
+    var app = new Vue({
+        el: '#app',
 
-    data: {
-        id: "<?php echo $id; ?>",
-        firstname: "<?php echo $firstname; ?>",
-        is_login: "<?php echo $is_login; ?>",
+        data: {
+            id: "<?php echo $id; ?>",
+            firstname: "<?php echo $firstname; ?>",
+            is_login: "<?php echo $is_login; ?>",
 
-        deadtime: [{
+            deadtime: [{
                 date: '2018-10-25  To  2018-10-26',
                 name: 'Conference Time',
             }, {
@@ -341,341 +365,341 @@ var app = new Vue({
                 date: '2018-9-1  To  2018-9-15',
                 name: 'Early Registration Date',
             },
-            {
-                date: '2018-9-1  To  2018-9-30',
-                name: 'Online Registration Date',
-            }
-        ],
-
-        step1: false,
-        step2: false,
-        step3: false,
-
-        signInDialogVisible: false,
-
-        forgetstep1: false,
-        forgetstep2: false,
-        forgetstep3: false,
-
-        step1form: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            retypeemail: ''
-        },
-        step2form: {
-            code: '',
-        },
-        step3form: {
-            country: '',
-            organization: '',
-            password: '',
-            retype_password: ''
-        },
-        inform: {
-            email: '',
-            password: '',
-        },
-        forgetstep1form: {
-            email: '',
-        },
-        forgetstep2form: {
-            code: '',
-        },
-        forgetstep3form: {
-            password: '',
-            retype_password: ''
-        },
-
-        step1rules: {
-            firstname: [
-                { required: true, message: 'Please input the firstname', trigger: ['blur', 'change'] },
-            ],
-            lastname: [
-                { required: true, message: 'Please input the lastname', trigger: ['blur', 'change'] },
-            ],
-            email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
-            ],
-            retypeemail: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] },
-                { validator: validateEmail, trigger: ['blur', 'change'] },
-            ],
-        },
-        step2rules: {
-            code: [
-                { required: true, message: 'Please input the code', trigger: ['blur', 'change'] },
-            ],
-        },
-        step3rules: {
-            country: [
-                { required: true, message: 'Please input the country', trigger: ['blur', 'change'] },
-            ],
-            organization: [
-                { required: true, message: 'Please input the organization', trigger: ['blur', 'change'] },
-            ],
-            password: [
-                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] },
-                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change'] }
-            ],
-            retype_password: [
-                { required: true, message: 'Please input the password again', trigger: ['blur', 'change'] },
-                { validator: validatePass, trigger: ['blur', 'change'] },
-                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change'] }
-            ],
-        },
-
-        signInRules: {
-            email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
-            ],
-            password: [
-                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] }
-            ]
-        },
-
-        forgetstep1rules: {
-            email: [
-                { required: true, message: 'Please input the email', trigger: ['blur', 'change'] },
-                { type: 'email', message: 'Please input the right email', trigger: ['blur', 'change'] }
-            ],
-        },
-        forgetstep2rules: {
-            code: [
-                { required: true, message: 'Please input the code', trigger: ['blur', 'change'] },
-            ],
-        },
-        forgetstep3rules: {
-            password: [
-                { required: true, message: 'Please input the password', trigger: ['blur', 'change'] },
-                { min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change'] }
-            ],
-            retype_password: [
-                { required: true, message: 'Please input the password again', trigger: ['blur', 'change'] },
-                { validator: validatePass2, trigger: ['blur', 'change'] },
-                { min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change'] }
-            ],
-        },
-    },
-
-    methods: {
-        step1SignUP(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/step1');?>",
-                        data: {
-                            firstname: app.step1form.firstname,
-                            lastname: app.step1form.lastname,
-                            email: app.step1form.email,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                Vue.set(app, "step1", false);
-                                Vue.set(app, "step2", true);
-                            } else {
-                                alert(data['message']);
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
+                {
+                    date: '2018-9-1  To  2018-9-30',
+                    name: 'Online Registration Date',
                 }
-            });
-        },
-        step2SignUP(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/step2');?>",
-                        data: {
-                            code: app.step2form.code,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                Vue.set(app, "step2", false);
-                                Vue.set(app, "step3", true);
-                            } else {
-                                window.location.href = "<?php echo site_url('home/index');?>";
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-        step3SignUp(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/signup');?>",
-                        data: {
-                            firstname: app.step1form.firstname,
-                            lastname: app.step1form.lastname,
-                            email: app.step1form.email,
-                            country: app.step3form.country,
-                            organization: app.step3form.organization,
-                            password: md5(app.step3form.password)
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                window.location.href = "<?php echo site_url('home/index');?>";
-                            } else {
-                                alert(data['message']);
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
+            ],
+
+            step1: false,
+            step2: false,
+            step3: false,
+
+            signInDialogVisible: false,
+
+            forgetstep1: false,
+            forgetstep2: false,
+            forgetstep3: false,
+
+            step1form: {
+                firstname: '',
+                lastname: '',
+                email: '',
+                retypeemail: ''
+            },
+            step2form: {
+                code: '',
+            },
+            step3form: {
+                country: '',
+                organization: '',
+                password: '',
+                retype_password: ''
+            },
+            inform: {
+                email: '',
+                password: '',
+            },
+            forgetstep1form: {
+                email: '',
+            },
+            forgetstep2form: {
+                code: '',
+            },
+            forgetstep3form: {
+                password: '',
+                retype_password: ''
+            },
+
+            step1rules: {
+                firstname: [
+                    {required: true, message: 'Please input the firstname', trigger: ['blur', 'change']},
+                ],
+                lastname: [
+                    {required: true, message: 'Please input the lastname', trigger: ['blur', 'change']},
+                ],
+                email: [
+                    {required: true, message: 'Please input the email', trigger: ['blur', 'change']},
+                    {type: 'email', message: 'Please input the right email', trigger: ['blur', 'change']}
+                ],
+                retypeemail: [
+                    {required: true, message: 'Please input the email', trigger: ['blur', 'change']},
+                    {type: 'email', message: 'Please input the right email', trigger: ['blur', 'change']},
+                    {validator: validateEmail, trigger: ['blur', 'change']},
+                ],
+            },
+            step2rules: {
+                code: [
+                    {required: true, message: 'Please input the code', trigger: ['blur', 'change']},
+                ],
+            },
+            step3rules: {
+                country: [
+                    {required: true, message: 'Please input the country', trigger: ['blur', 'change']},
+                ],
+                organization: [
+                    {required: true, message: 'Please input the organization', trigger: ['blur', 'change']},
+                ],
+                password: [
+                    {required: true, message: 'Please input the password', trigger: ['blur', 'change']},
+                    {min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change']}
+                ],
+                retype_password: [
+                    {required: true, message: 'Please input the password again', trigger: ['blur', 'change']},
+                    {validator: validatePass, trigger: ['blur', 'change']},
+                    {min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change']}
+                ],
+            },
+
+            signInRules: {
+                email: [
+                    {required: true, message: 'Please input the email', trigger: ['blur', 'change']},
+                    {type: 'email', message: 'Please input the right email', trigger: ['blur', 'change']}
+                ],
+                password: [
+                    {required: true, message: 'Please input the password', trigger: ['blur', 'change']}
+                ]
+            },
+
+            forgetstep1rules: {
+                email: [
+                    {required: true, message: 'Please input the email', trigger: ['blur', 'change']},
+                    {type: 'email', message: 'Please input the right email', trigger: ['blur', 'change']}
+                ],
+            },
+            forgetstep2rules: {
+                code: [
+                    {required: true, message: 'Please input the code', trigger: ['blur', 'change']},
+                ],
+            },
+            forgetstep3rules: {
+                password: [
+                    {required: true, message: 'Please input the password', trigger: ['blur', 'change']},
+                    {min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change']}
+                ],
+                retype_password: [
+                    {required: true, message: 'Please input the password again', trigger: ['blur', 'change']},
+                    {validator: validatePass2, trigger: ['blur', 'change']},
+                    {min: 6, max: 20, message: 'Length is between 6 and 20 characters', trigger: ['blur', 'change']}
+                ],
+            },
         },
 
-        signIn(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/signin');?>",
-                        data: {
-                            email: app.inform.email,
-                            password: md5(app.inform.password)
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                window.location.href = "<?php echo site_url('home/index');?>";
-                            } else {
-                                Vue.set(app.inform, "email", "");
-                                Vue.set(app.inform, "password", "");
-                                alert(data['message']);
+        methods: {
+            step1SignUP(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/step1');?>",
+                            data: {
+                                firstname: app.step1form.firstname,
+                                lastname: app.step1form.lastname,
+                                email: app.step1form.email,
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    Vue.set(app, "step1", false);
+                                    Vue.set(app, "step2", true);
+                                } else {
+                                    alert(data['message']);
+                                }
                             }
-                        }
-                    });
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-        },
-
-        signOut(formName) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('sign/signout');?>",
-                data: {
-                    id: app.id,
-                    firstname: app.firstname
-                },
-                dataType: "json",
-                success: function(data) {
-                    if (data['status'] == true) {
-                        window.location.href = "<?php echo site_url('home/index');?>";
+                        });
                     } else {
-                        alert(data['message']);
-                        window.location.href = "<?php echo site_url('home/index');?>";
+                        console.log('error submit!');
+                        return false;
                     }
-                }
-            });
-
-        },
-
-        forget() {
-            app.signInDialogVisible = false;
-            app.forgetstep1 = true;
-        },
-
-        forgetStep1(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/forgetstep1');?>",
-                        data: {
-                            email: app.forgetstep1form.email,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                Vue.set(app, 'forgetstep1', false);
-                                Vue.set(app, 'forgetstep2', true);
-                            } else {
-                                alert(data['message']);
+                });
+            },
+            step2SignUP(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/step2');?>",
+                            data: {
+                                code: app.step2form.code,
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    Vue.set(app, "step2", false);
+                                    Vue.set(app, "step3", true);
+                                } else {
+                                    window.location.href = "<?php echo site_url('home/index');?>";
+                                }
                             }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-        forgetStep2(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/forgetstep2');?>",
-                        data: {
-                            code: app.forgetstep2form.code,
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                Vue.set(app, 'forgetstep2', false);
-                                Vue.set(app, 'forgetstep3', true);
-                            } else {
-                                window.location.href = "<?php echo site_url('home/index');?>";
+                        });
+                    } else {
+                        console.log('error submit!');
+                        return false;
+                    }
+                });
+            },
+            step3SignUp(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/signup');?>",
+                            data: {
+                                firstname: app.step1form.firstname,
+                                lastname: app.step1form.lastname,
+                                email: app.step1form.email,
+                                country: app.step3form.country,
+                                organization: app.step3form.organization,
+                                password: md5(app.step3form.password)
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    window.location.href = "<?php echo site_url('home/index');?>";
+                                } else {
+                                    alert(data['message']);
+                                }
                             }
-                        }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-        forgetStep3(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('sign/forgetstep3');?>",
-                        data: {
-                            email: app.forgetstep1form.email,
-                            password: md5(app.forgetstep3form.password)
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data['status'] == true) {
-                                alert('Reset password successfully!');
-                                window.location.href = "<?php echo site_url('home/index');?>";
-                            } else {
-                                alert(data['message']);
+                        });
+                    } else {
+                        console.log('error submit!');
+                        return false;
+                    }
+                });
+            },
+
+            signIn(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/signin');?>",
+                            data: {
+                                email: app.inform.email,
+                                password: md5(app.inform.password)
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    window.location.href = "<?php echo site_url('home/index');?>";
+                                } else {
+                                    Vue.set(app.inform, "email", "");
+                                    Vue.set(app.inform, "password", "");
+                                    alert(data['message']);
+                                }
                             }
+                        });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+
+            signOut(formName) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('sign/signout');?>",
+                    data: {
+                        id: app.id,
+                        firstname: app.firstname
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data['status'] == true) {
+                            window.location.href = "<?php echo site_url('home/index');?>";
+                        } else {
+                            alert(data['message']);
+                            window.location.href = "<?php echo site_url('home/index');?>";
                         }
-                    });
-                } else {
-                    console.log('error submit!');
-                    return false;
-                }
-            });
-        },
-    }
-})
+                    }
+                });
+
+            },
+
+            forget() {
+                app.signInDialogVisible = false;
+                app.forgetstep1 = true;
+            },
+
+            forgetStep1(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/forgetstep1');?>",
+                            data: {
+                                email: app.forgetstep1form.email,
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    Vue.set(app, 'forgetstep1', false);
+                                    Vue.set(app, 'forgetstep2', true);
+                                } else {
+                                    alert(data['message']);
+                                }
+                            }
+                        });
+                    } else {
+                        console.log('error submit!');
+                        return false;
+                    }
+                });
+            },
+            forgetStep2(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/forgetstep2');?>",
+                            data: {
+                                code: app.forgetstep2form.code,
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    Vue.set(app, 'forgetstep2', false);
+                                    Vue.set(app, 'forgetstep3', true);
+                                } else {
+                                    window.location.href = "<?php echo site_url('home/index');?>";
+                                }
+                            }
+                        });
+                    } else {
+                        console.log('error submit!');
+                        return false;
+                    }
+                });
+            },
+            forgetStep3(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo site_url('sign/forgetstep3');?>",
+                            data: {
+                                email: app.forgetstep1form.email,
+                                password: md5(app.forgetstep3form.password)
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data['status'] == true) {
+                                    alert('Reset password successfully!');
+                                    window.location.href = "<?php echo site_url('home/index');?>";
+                                } else {
+                                    alert(data['message']);
+                                }
+                            }
+                        });
+                    } else {
+                        console.log('error submit!');
+                        return false;
+                    }
+                });
+            },
+        }
+    })
 </script>
 
 </html>
