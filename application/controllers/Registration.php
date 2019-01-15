@@ -19,7 +19,7 @@ class Registration extends CI_Controller
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.163.com';
         $config['smtp_user'] = 'jerrychangcn@163.com';
-        $config['smtp_pass'] = 'wyzjy897833204';
+        $config['smtp_pass'] = 'Wyzjy897833204';
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['priority'] = 5;
