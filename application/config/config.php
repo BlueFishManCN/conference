@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://47.102.119.45/conference/';
+$config['base_url'] = 'https://www.zhangjiyuan.cn/conference/';
 
 /*
 |--------------------------------------------------------------------------
