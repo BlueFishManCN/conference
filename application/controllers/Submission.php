@@ -18,8 +18,8 @@ class Submission extends CI_Controller
 
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.163.com';
-        $config['smtp_user'] = 'geg2018@163.com';
-        $config['smtp_pass'] = 'shugeg2018';
+        $config['smtp_user'] = 'jerrychangcn@163.com';
+        $config['smtp_pass'] = 'Wyzjy897833204';
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['priority'] = 5;
@@ -236,7 +236,7 @@ class Submission extends CI_Controller
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
             $email = $this->User->getEmailById($user_id);
-            $this->email->from('geg2018@163.com', 'GEG2018');
+            $this->email->from('jerrychangcn@163.com', 'GEG2018');
             $this->email->to($email);
             $this->email->subject('GEG2018: Submission message');
             $this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
@@ -244,7 +244,7 @@ class Submission extends CI_Controller
 
             $emails = $this->Author->getAuthorByPaperid($paper_id);
             foreach ($emails as $item) {
-                $this->email->from('geg2018@163.com', 'GEG2018');
+                $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($item->email);
                 $this->email->subject('GEG2018: Submission message');
                 $this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
@@ -295,7 +295,7 @@ class Submission extends CI_Controller
                     ->set_output(json_encode(array('status' => false, 'paper_percentage' => $paper_percentage)));
 
                 $email = $this->User->getEmailById($user_id);
-                $this->email->from('geg2018@163.com', 'GEG2018');
+                $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($email);
                 $this->email->subject('GEG2018: Submission message');
                 $this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
@@ -303,7 +303,7 @@ class Submission extends CI_Controller
 
                 $emails = $this->Author->getAuthorByPaperid($paper_id);
                 foreach ($emails as $item) {
-                    $this->email->from('geg2018@163.com', 'GEG2018');
+                    $this->email->from('jerrychangcn@163.com', 'GEG2018');
                     $this->email->to($item->email);
                     $this->email->subject('GEG2018: Submission message');
                     $this->email->message('<h3>Dear ' . $item->firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');

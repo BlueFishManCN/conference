@@ -17,8 +17,8 @@ class Adminpaper extends CI_Controller
 
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.163.com';
-        $config['smtp_user'] = 'geg2018@163.com';
-        $config['smtp_pass'] = 'shugeg2018';
+        $config['smtp_user'] = 'jerrychangcn@163.com';
+        $config['smtp_pass'] = 'Wyzjy897833204';
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['priority'] = 5;
@@ -166,7 +166,7 @@ class Adminpaper extends CI_Controller
 
             $emails = $this->Author->getAuthorByPaperid($paper_id);
             foreach ($emails as $item) {
-                $this->email->from('geg2018@163.com', 'GEG2018');
+                $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($item->email);
                 $this->email->subject('GEG2018: Submission message');
                 if ($is_accept == 'Accept') {

@@ -15,8 +15,8 @@ class Sign extends CI_Controller
 
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'smtp.163.com';
-        $config['smtp_user'] = 'geg2018@163.com';
-        $config['smtp_pass'] = 'shugeg2018';
+        $config['smtp_user'] = 'jerrychangcn@163.com';
+        $config['smtp_pass'] = 'Wyzjy897833204';
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['priority'] = 5;
@@ -46,7 +46,7 @@ class Sign extends CI_Controller
         );
         $this->session->set_userdata($sessiondata);
 
-        $this->email->from('geg2018@163.com', 'GEG2018');
+        $this->email->from('jerrychangcn@163.com', 'GEG2018');
         $this->email->to($email);
         $this->email->subject('GEG2018: Create account message');
         $this->email->message('<h3>Verification code:</h3><p>' . $token . '</p>');
@@ -112,7 +112,7 @@ class Sign extends CI_Controller
         );
         $this->session->set_userdata($sessiondata);
 
-        $this->email->from('geg2018@163.com', 'GEG2018');
+        $this->email->from('jerrychangcn@163.com', 'GEG2018');
         $this->email->to($email);
         $this->email->subject('GEG2018: Create account message');
         $this->email->message('<h3>Congratulations!</h3><p>Your account is successfully created!</p>');
@@ -192,7 +192,7 @@ class Sign extends CI_Controller
         );
         $this->session->set_userdata($sessiondata);
 
-        $this->email->from('geg2018@163.com', 'GEG2018');
+        $this->email->from('jerrychangcn@163.com', 'GEG2018');
         $this->email->to($email);
         $this->email->subject('GEG2018: Security message');
         $this->email->message('<h3>Reset password verification code:</h3><p>' . $token . '</p>');
@@ -240,7 +240,7 @@ class Sign extends CI_Controller
 
         $this->User->resetPassword($email, $password_hash);
 
-        $this->email->from('geg2018@163.com', 'GEG2018');
+        $this->email->from('jerrychangcn@163.com', 'GEG2018');
         $this->email->to($email);
         $this->email->subject('GEG2018: Security message');
         $this->email->message('<h3>Warning!</h3><p>You have changed your password!</p>');
