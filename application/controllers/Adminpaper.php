@@ -16,7 +16,7 @@ class Adminpaper extends CI_Controller
         $this->load->library('email');
 
         $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'smtp.163.com';
+        $config['smtp_host'] = 'ssl://smtp.163.com';
         $config['smtp_user'] = 'jerrychangcn@163.com';
         $config['smtp_pass'] = 'Wyzjy897833204';
         $config['smtp_port'] = '465';
