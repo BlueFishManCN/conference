@@ -249,7 +249,7 @@
         },
 
         created: function () {
-            var deadLine = "2018-09-30 23:59:59";
+            var deadLine = "2020-09-30 23:59:59";
             if (new Date() > new Date(Date.parse(deadLine.replace(/\-/g, "/")))) {
                 Vue.set(this, "attendeeDue", true);
             } else {
