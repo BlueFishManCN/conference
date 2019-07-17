@@ -72,3 +72,4 @@ fabric.properties
 *.rar
 .idea
 .DS_Store
+._*
