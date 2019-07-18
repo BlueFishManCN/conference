@@ -1,3 +1,30 @@
+Setups
+###################
+
+/application/config/config.php(base url config)
+$config['base_url'] = 'http://127.0.0.1:8080/conference';
+
+/application/config/database.php(database config)
+$db['default'] = array(
+    'dsn' => '',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '***',
+    'database' => 'conference',
+    ...)
+
+/application/sql/conference.sql(database executable file)
+database name: conference
+
+/application/config/email.php(email config)
+$config['protocol'] = 'smtp';
+$config['smtp_host'] = 'ssl://smtp.163.com';
+$config['smtp_user'] = '***@163.com';
+$config['smtp_pass'] = '***';
+$config['smtp_port'] = '465';
+$config['mailtype'] = 'html';
+$config['charset'] = 'utf-8';
+
 ###################
 What is CodeIgniter
 ###################
