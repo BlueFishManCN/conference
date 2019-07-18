@@ -14,8 +14,6 @@ class Adminattendee extends CI_Controller
         $this->load->helper('cookie');
         $this->load->helper('download');
         $this->load->helper('url_helper');
-        $this->load->library('session');
-        $this->load->helper('url_helper');
     }
 
     public function index()

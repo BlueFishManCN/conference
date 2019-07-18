@@ -6,25 +6,15 @@ class Adminpaper extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->load->model('Paper');
         $this->load->model('Author');
+        $this->load->library('email');
         $this->load->library('session');
         $this->load->library('upload');
         $this->load->helper('cookie');
         $this->load->helper('download');
         $this->load->helper('url_helper');
-        $this->load->library('email');
-
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.163.com';
-        $config['smtp_user'] = 'jerrychangcn@163.com';
-        $config['smtp_pass'] = 'Wyzjy897833204';
-        $config['smtp_port'] = '465';
-        $config['mailtype'] = 'html';
-        $config['charset'] = 'utf-8';
-        $config['priority'] = 5;
-
-        $this->email->initialize($config);
     }
 
     public function index()
