@@ -27,7 +27,7 @@ $config['protocol'] = 'smtp';
 
 $config['smtp_host'] = '***';
 
-$config['smtp_user'] = '****@**.com';
+$config['smtp_user'] = '******@******.com';
 
 $config['smtp_pass'] = '***';
 
