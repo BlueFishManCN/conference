@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Submission
+ */
 class Submission extends CI_Controller
 {
+    /**
+     * Submission constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -18,6 +24,9 @@ class Submission extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {
@@ -41,6 +50,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function paper()
     {
         $postdata = $this->input->post();
@@ -58,6 +70,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function author()
     {
         $postdata = $this->input->post();
@@ -77,6 +92,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function submit()
     {
         $postdata = $this->input->post();
@@ -105,6 +123,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function edit()
     {
         $postdata = $this->input->post();
@@ -129,7 +150,10 @@ class Submission extends CI_Controller
         }
     }
 
-    public function addauthor()
+    /**
+     *
+     */
+    public function addAuthor()
     {
         $postdata = $this->input->post();
 
@@ -165,7 +189,10 @@ class Submission extends CI_Controller
         }
     }
 
-    public function saveeditauthor()
+    /**
+     *
+     */
+    public function saveEditAuthor()
     {
         $postdata = $this->input->post();
 
@@ -191,6 +218,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function deleteAuthor()
     {
         $postdata = $this->input->post();
@@ -215,6 +245,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function email()
     {
         $postdata = $this->input->post();
@@ -248,7 +281,10 @@ class Submission extends CI_Controller
         }
     }
 
-    public function uploadfile()
+    /**
+     *
+     */
+    public function uploadFile()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -305,6 +341,9 @@ class Submission extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function download()
     {
         $postdata = $this->input->post();
@@ -325,7 +364,10 @@ class Submission extends CI_Controller
         }
     }
 
-    public function posterpaper()
+    /**
+     *
+     */
+    public function posterPaper()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];

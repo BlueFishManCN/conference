@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Home
+ */
 class Home extends CI_Controller
 {
+    /**
+     * Home constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -12,6 +18,9 @@ class Home extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {

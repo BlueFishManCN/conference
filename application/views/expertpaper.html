@@ -323,7 +323,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname
@@ -397,7 +397,7 @@
             search(val) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('adminpaper/expertSearchpaper');?>",
+                    url: "<?php echo site_url('adminpaper/expertSearchPaper');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",

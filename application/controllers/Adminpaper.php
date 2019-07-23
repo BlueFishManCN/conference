@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Adminpaper
+ */
 class Adminpaper extends CI_Controller
 {
+    /**
+     * Adminpaper constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +23,9 @@ class Adminpaper extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {
@@ -40,6 +49,9 @@ class Adminpaper extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function paper()
     {
         $postdata = $this->input->post();
@@ -59,7 +71,10 @@ class Adminpaper extends CI_Controller
         }
     }
 
-    public function searchpaper()
+    /**
+     *
+     */
+    public function searchPaper()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -81,7 +96,10 @@ class Adminpaper extends CI_Controller
         }
     }
 
-    public function expertSearchpaper()
+    /**
+     *
+     */
+    public function expertSearchPaper()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -103,6 +121,9 @@ class Adminpaper extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function author()
     {
         $postdata = $this->input->post();
@@ -121,6 +142,9 @@ class Adminpaper extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function download()
     {
         $postdata = $this->input->post();
@@ -141,6 +165,9 @@ class Adminpaper extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function accept()
     {
         $postdata = $this->input->post();
@@ -177,6 +204,9 @@ class Adminpaper extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function expertAccept()
     {
         $postdata = $this->input->post();

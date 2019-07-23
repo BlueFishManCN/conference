@@ -260,24 +260,24 @@
             </span>
     </el-dialog>
     <!-- forget step1 -->
-    <el-dialog title="Reset password" :visible.sync="forgetstep1" width="50%">
+    <el-dialog title="Reset password" :visible.sync="forgetStep1" width="50%">
         <el-steps :active="1">
             <el-step title="Step 1" description="enter email"></el-step>
             <el-step title="Step 2"></el-step>
             <el-step title="Step 3"></el-step>
         </el-steps>
-        <el-form ref="forgetstep1form" :model="forgetstep1form" status-icon :rules="forgetstep1rules" label-width="25%">
+        <el-form ref="forgetStep1form" :model="forgetStep1form" status-icon :rules="forgetStep1rules" label-width="25%">
             <el-form-item label="Email" prop="email">
-                <el-input v-model="forgetstep1form.email" auto-complete="off"></el-input>
+                <el-input v-model="forgetStep1form.email" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="forgetstep1 = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="forgetStep1('forgetstep1form')">Next</el-button>
+                <el-button v-on:click="forgetStep1 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep1('forgetStep1form')">Next</el-button>
             </span>
     </el-dialog>
     <!-- forget step2 -->
-    <el-dialog title="Reset password" :visible.sync="forgetstep2" width="50%">
+    <el-dialog title="Reset password" :visible.sync="forgetStep2" width="50%">
         <el-steps :active="2">
             <el-step title="Step 1"></el-step>
             <el-step title="Step 2" description="verify account"></el-step>
@@ -286,34 +286,34 @@
         <el-alert title="Important info" type="warning"
                   description="Reset verification code has been sent to your mailbox." :closable="false">
         </el-alert>
-        <el-form ref="forgetstep2form" :model="forgetstep2form" status-icon :rules="forgetstep2rules" label-width="30%">
+        <el-form ref="forgetStep2form" :model="forgetStep2form" status-icon :rules="forgetStep2rules" label-width="30%">
             <el-form-item label="Verification code" prop="code">
-                <el-input v-model="forgetstep2form.code" auto-complete="off"></el-input>
+                <el-input v-model="forgetStep2form.code" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="forgetstep2 = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="forgetStep2('forgetstep2form')">Next</el-button>
+                <el-button v-on:click="forgetStep2 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep2('forgetStep2form')">Next</el-button>
             </span>
     </el-dialog>
     <!-- forget step3 -->
-    <el-dialog title="Reset password" :visible.sync="forgetstep3" width="50%">
+    <el-dialog title="Reset password" :visible.sync="forgetStep3" width="50%">
         <el-steps :active="3">
             <el-step title="Step 1"></el-step>
             <el-step title="Step 2"></el-step>
             <el-step title="Step 3" description="reset password"></el-step>
         </el-steps>
-        <el-form ref="forgetstep3form" :model="forgetstep3form" status-icon :rules="forgetstep3rules" label-width="30%">
+        <el-form ref="forgetStep3form" :model="forgetStep3form" status-icon :rules="forgetStep3rules" label-width="30%">
             <el-form-item label="Password" prop="password">
-                <el-input type="password" v-model="forgetstep3form.password" auto-complete="off"></el-input>
+                <el-input type="password" v-model="forgetStep3form.password" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Retype Password" prop="retype_password">
-                <el-input type="password" v-model="forgetstep3form.retype_password" auto-complete="off"></el-input>
+                <el-input type="password" v-model="forgetStep3form.retype_password" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="forgetstep3 = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="forgetStep3('forgetstep3form')">Finish</el-button>
+                <el-button v-on:click="forgetStep3 = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="forgetStep3('forgetStep3form')">Finish</el-button>
             </span>
     </el-dialog>
 </div>
@@ -334,7 +334,7 @@
         }
     };
     var validatePass2 = (rule, value, callback) => {
-        if (value !== app.forgetstep3form.password) {
+        if (value !== app.forgetStep3form.password) {
             callback(new Error('The two entered passwords are inconsistent!'));
         } else {
             callback();
@@ -376,9 +376,9 @@
 
             signInDialogVisible: false,
 
-            forgetstep1: false,
-            forgetstep2: false,
-            forgetstep3: false,
+            forgetStep1: false,
+            forgetStep2: false,
+            forgetStep3: false,
 
             step1form: {
                 firstname: '',
@@ -399,13 +399,13 @@
                 email: '',
                 password: '',
             },
-            forgetstep1form: {
+            forgetStep1form: {
                 email: '',
             },
-            forgetstep2form: {
+            forgetStep2form: {
                 code: '',
             },
-            forgetstep3form: {
+            forgetStep3form: {
                 password: '',
                 retype_password: ''
             },
@@ -460,18 +460,18 @@
                 ]
             },
 
-            forgetstep1rules: {
+            forgetStep1rules: {
                 email: [
                     {required: true, message: 'Please input the email', trigger: ['blur', 'change']},
                     {type: 'email', message: 'Please input the right email', trigger: ['blur', 'change']}
                 ],
             },
-            forgetstep2rules: {
+            forgetStep2rules: {
                 code: [
                     {required: true, message: 'Please input the code', trigger: ['blur', 'change']},
                 ],
             },
-            forgetstep3rules: {
+            forgetStep3rules: {
                 password: [
                     {required: true, message: 'Please input the password', trigger: ['blur', 'change']},
                     {min: 6, max: 255, message: 'Length is between 6 and 255 characters', trigger: ['blur', 'change']}
@@ -542,7 +542,7 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('sign/signup');?>",
+                            url: "<?php echo site_url('sign/signUp');?>",
                             data: {
                                 firstname: app.step1form.firstname,
                                 lastname: app.step1form.lastname,
@@ -572,7 +572,7 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('sign/signin');?>",
+                            url: "<?php echo site_url('sign/signIn');?>",
                             data: {
                                 email: app.inform.email,
                                 password: md5(app.inform.password)
@@ -598,7 +598,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname
@@ -618,7 +618,7 @@
 
             forget() {
                 app.signInDialogVisible = false;
-                app.forgetstep1 = true;
+                app.forgetStep1 = true;
             },
 
             forgetStep1(formName) {
@@ -626,15 +626,15 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('sign/forgetstep1');?>",
+                            url: "<?php echo site_url('sign/forgetStep1');?>",
                             data: {
-                                email: app.forgetstep1form.email,
+                                email: app.forgetStep1form.email,
                             },
                             dataType: "json",
                             success: function (data) {
                                 if (data['status'] == true) {
-                                    Vue.set(app, 'forgetstep1', false);
-                                    Vue.set(app, 'forgetstep2', true);
+                                    Vue.set(app, 'forgetStep1', false);
+                                    Vue.set(app, 'forgetStep2', true);
                                 } else {
                                     alert(data['message']);
                                 }
@@ -651,15 +651,15 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('sign/forgetstep2');?>",
+                            url: "<?php echo site_url('sign/forgetStep2');?>",
                             data: {
-                                code: app.forgetstep2form.code,
+                                code: app.forgetStep2form.code,
                             },
                             dataType: "json",
                             success: function (data) {
                                 if (data['status'] == true) {
-                                    Vue.set(app, 'forgetstep2', false);
-                                    Vue.set(app, 'forgetstep3', true);
+                                    Vue.set(app, 'forgetStep2', false);
+                                    Vue.set(app, 'forgetStep3', true);
                                 } else {
                                     window.location.href = "<?php echo site_url('home/index');?>";
                                 }
@@ -676,10 +676,10 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('sign/forgetstep3');?>",
+                            url: "<?php echo site_url('sign/forgetStep3');?>",
                             data: {
-                                email: app.forgetstep1form.email,
-                                password: md5(app.forgetstep3form.password)
+                                email: app.forgetStep1form.email,
+                                password: md5(app.forgetStep3form.password)
                             },
                             dataType: "json",
                             success: function (data) {

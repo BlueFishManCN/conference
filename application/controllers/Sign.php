@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Sign
+ */
 class Sign extends CI_Controller
 {
+    /**
+     * Sign constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -15,6 +21,9 @@ class Sign extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function step1()
     {
         $postdata = $this->input->post();
@@ -47,6 +56,9 @@ class Sign extends CI_Controller
         return;
     }
 
+    /**
+     *
+     */
     public function step2()
     {
         $postdata = $this->input->post();
@@ -69,7 +81,10 @@ class Sign extends CI_Controller
         return;
     }
 
-    public function signup()
+    /**
+     *
+     */
+    public function signUp()
     {
         $postdata = $this->input->post();
 
@@ -114,7 +129,10 @@ class Sign extends CI_Controller
         return;
     }
 
-    public function signin()
+    /**
+     *
+     */
+    public function signIn()
     {
         $postdata = $this->input->post();
         $email = $postdata['email'];
@@ -146,7 +164,10 @@ class Sign extends CI_Controller
         return;
     }
 
-    public function signout()
+    /**
+     *
+     */
+    public function signOut()
     {
         $postdata = $this->input->post();
         $id = $postdata['id'];
@@ -163,7 +184,10 @@ class Sign extends CI_Controller
         }
     }
 
-    public function forgetstep1()
+    /**
+     *
+     */
+    public function forgetStep1()
     {
         $postdata = $this->input->post();
 
@@ -193,7 +217,10 @@ class Sign extends CI_Controller
         return;
     }
 
-    public function forgetstep2()
+    /**
+     *
+     */
+    public function forgetStep2()
     {
         $postdata = $this->input->post();
         $code = $postdata['code'];
@@ -215,7 +242,10 @@ class Sign extends CI_Controller
         return;
     }
 
-    public function forgetstep3()
+    /**
+     *
+     */
+    public function forgetStep3()
     {
         $postdata = $this->input->post();
         $email = $postdata['email'];

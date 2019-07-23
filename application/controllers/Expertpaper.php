@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Expertpaper
+ */
 class Expertpaper extends CI_Controller
 {
+    /**
+     * Expertpaper constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +23,9 @@ class Expertpaper extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {

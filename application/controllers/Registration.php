@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Registration
+ */
 class Registration extends CI_Controller
 {
+    /**
+     * Registration constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -18,6 +24,9 @@ class Registration extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {
@@ -46,7 +55,10 @@ class Registration extends CI_Controller
         }
     }
 
-    public function addattendee()
+    /**
+     *
+     */
+    public function addAttendee()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -69,7 +81,10 @@ class Registration extends CI_Controller
         }
     }
 
-    public function deleteattendee()
+    /**
+     *
+     */
+    public function deleteAttendee()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -88,6 +103,9 @@ class Registration extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function edit()
     {
         $postdata = $this->input->post();
@@ -112,6 +130,9 @@ class Registration extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function accept()
     {
         $postdata = $this->input->post();
@@ -141,7 +162,10 @@ class Registration extends CI_Controller
         }
     }
 
-    public function uploadfile()
+    /**
+     *
+     */
+    public function uploadFile()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -182,6 +206,9 @@ class Registration extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function attendee()
     {
         $postdata = $this->input->post();
@@ -200,7 +227,10 @@ class Registration extends CI_Controller
         }
     }
 
-    public function adminattendee()
+    /**
+     *
+     */
+    public function adminAttendee()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -219,7 +249,10 @@ class Registration extends CI_Controller
         }
     }
 
-    public function searchattendee()
+    /**
+     *
+     */
+    public function searchAttendee()
     {
 
         $postdata = $this->input->post();
@@ -241,6 +274,9 @@ class Registration extends CI_Controller
         }
     }
 
+    /**
+     *
+     */
     public function download()
     {
         $postdata = $this->input->post();

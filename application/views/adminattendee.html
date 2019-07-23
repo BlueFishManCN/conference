@@ -84,7 +84,7 @@
                             Paper
                         </a>
                         <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
-                           href="<?php echo site_url('adminattendee/index');?>">
+                           href="<?php echo site_url('adminAttendee/index');?>">
                             Participants
                         </a>
                         <!-- Right aligned menu below button -->
@@ -258,7 +258,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "<?php echo site_url('registration/adminattendee');?>",
+                url: "<?php echo site_url('registration/adminAttendee');?>",
                 data: {
                     id: "<?php echo $id; ?>",
                     firstname: "<?php echo $firstname; ?>",
@@ -278,7 +278,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname,
@@ -298,7 +298,7 @@
             getattendee() {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('registration/adminattendee');?>",
+                    url: "<?php echo site_url('registration/adminAttendee');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
@@ -321,7 +321,7 @@
             search(val) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('registration/searchattendee');?>",
+                    url: "<?php echo site_url('registration/searchAttendee');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",

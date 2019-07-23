@@ -351,7 +351,7 @@
             </div>
             <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-                        @click="subaddauthor = true">
+                        @click="subaddAuthor = true">
                     New Author
                 </button>
             </div>
@@ -384,41 +384,41 @@
                 <el-button type="primary" v-on:click="subUploadFile(add_paper_id)">Next: Upload full paper</el-button>
             </span>
     </el-dialog>
-    <!-- subaddauthor -->
-    <el-dialog title="Add author" :visible.sync="subaddauthor" width="50%">
-        <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="25%">
+    <!-- subaddAuthor -->
+    <el-dialog title="Add author" :visible.sync="subaddAuthor" width="50%">
+        <el-form ref="addAuthorform" :model="addAuthorform" status-icon :rules="addAuthorrules" label-width="25%">
             <el-form-item label="First name" prop="firstname">
-                <el-input v-model="addauthorform.firstname" placeholder="Please input the firstname"
+                <el-input v-model="addAuthorform.firstname" placeholder="Please input the firstname"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Last name" prop="lastname">
-                <el-input v-model="addauthorform.lastname" placeholder="Please input the lastname"
+                <el-input v-model="addAuthorform.lastname" placeholder="Please input the lastname"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Email" prop="email">
-                <el-input v-model="addauthorform.email" placeholder="Please input the email"
+                <el-input v-model="addAuthorform.email" placeholder="Please input the email"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Retype Email" prop="retypeemail">
-                <el-input v-model="addauthorform.retypeemail" placeholder="Please retype the email"
+                <el-input v-model="addAuthorform.retypeemail" placeholder="Please retype the email"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Country" prop="country">
-                <el-input v-model="addauthorform.country" placeholder="Please input the country"
+                <el-input v-model="addAuthorform.country" placeholder="Please input the country"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Organization" prop="organization">
-                <el-input v-model="addauthorform.organization" placeholder="Please input the organization"
+                <el-input v-model="addAuthorform.organization" placeholder="Please input the organization"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Corresponding" prop="corresponding">
-                <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
-                <el-radio v-model="addauthorform.corresponding" label="YES" border>YES</el-radio>
+                <el-radio v-model="addAuthorform.corresponding" label="NO" border>NO</el-radio>
+                <el-radio v-model="addAuthorform.corresponding" label="YES" border>YES</el-radio>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="subaddauthor = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="subAddAuthor('addauthorform')">Add</el-button>
+                <el-button v-on:click="subaddAuthor = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="subAddAuthor('addAuthorform')">Add</el-button>
             </span>
     </el-dialog>
     <!-- editaauthor -->
@@ -454,7 +454,7 @@
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="editaaddauthor = false">Cancel</el-button>
+                <el-button v-on:click="editaaddAuthor = false">Cancel</el-button>
                 <el-button type="primary" v-on:click="saveEditAuthor('editauthorform')">Save</el-button>
             </span>
     </el-dialog>
@@ -474,7 +474,7 @@
                              :percentage.sync="add_paper_percentage"></el-progress>
             </div>
         </div>
-        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>"
+        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadFile');?>"
                    :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed"
                    list-type="picture" :auto-upload="false" :limit="1">
             <el-button slot="trigger" size="small" type="primary">Select file</el-button>
@@ -571,7 +571,7 @@
             </div>
             <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-                        @click="editaddauthor = true">
+                        @click="editaddAuthor = true">
                     New Author
                 </button>
             </div>
@@ -604,36 +604,36 @@
                 <el-button type="info" v-on:click="editauthor = false">Finish</el-button>
             </span>
     </el-dialog>
-    <!-- editaddauthor -->
-    <el-dialog title="Add author" :visible.sync="editaddauthor" width="50%">
-        <el-form ref="addauthorform" :model="addauthorform" status-icon :rules="addauthorrules" label-width="25%">
+    <!-- editaddAuthor -->
+    <el-dialog title="Add author" :visible.sync="editaddAuthor" width="50%">
+        <el-form ref="addAuthorform" :model="addAuthorform" status-icon :rules="addAuthorrules" label-width="25%">
             <el-form-item label="First name" prop="firstname">
-                <el-input v-model="addauthorform.firstname" auto-complete="off"></el-input>
+                <el-input v-model="addAuthorform.firstname" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Last name" prop="lastname">
-                <el-input v-model="addauthorform.lastname" auto-complete="off"></el-input>
+                <el-input v-model="addAuthorform.lastname" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Email" prop="email">
-                <el-input v-model="addauthorform.email" auto-complete="off"></el-input>
+                <el-input v-model="addAuthorform.email" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Retype Email" prop="retypeemail">
-                <el-input v-model="addauthorform.retypeemail" placeholder="Please retype the email"
+                <el-input v-model="addAuthorform.retypeemail" placeholder="Please retype the email"
                           auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Country" prop="country">
-                <el-input v-model="addauthorform.country" auto-complete="off"></el-input>
+                <el-input v-model="addAuthorform.country" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Organization" prop="organization">
-                <el-input v-model="addauthorform.organization" auto-complete="off"></el-input>
+                <el-input v-model="addAuthorform.organization" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="Corresponding" prop="corresponding">
-                <el-radio v-model="addauthorform.corresponding" label="NO" border>NO</el-radio>
-                <el-radio v-model="addauthorform.corresponding" label="YES" border>YES</el-radio>
+                <el-radio v-model="addAuthorform.corresponding" label="NO" border>NO</el-radio>
+                <el-radio v-model="addAuthorform.corresponding" label="YES" border>YES</el-radio>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-                <el-button v-on:click="editaddauthor = false">Cancel</el-button>
-                <el-button type="primary" v-on:click="editAddAuthor('addauthorform')">Add</el-button>
+                <el-button v-on:click="editaddAuthor = false">Cancel</el-button>
+                <el-button type="primary" v-on:click="editAddAuthor('addAuthorform')">Add</el-button>
             </span>
     </el-dialog>
     <!-- edituploadfile -->
@@ -647,7 +647,7 @@
                              :percentage.sync="edit_paper_percentage"></el-progress>
             </div>
         </div>
-        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadfile');?>"
+        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('submission/uploadFile');?>"
                    :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed"
                    list-type="picture" :auto-upload="false" :limit="1">
             <el-button slot="trigger" size="small" type="primary">Select file</el-button>
@@ -677,7 +677,7 @@
 </body>
 <script type="text/javascript" charset="utf-8" async defer>
     var validateEmail = (rule, value, callback) => {
-        if (value !== app.addauthorform.email) {
+        if (value !== app.addAuthorform.email) {
             callback(new Error('The two entered email are inconsistent!'));
         } else {
             callback();
@@ -722,12 +722,12 @@
 
             subpaper: false,
             subauthor: false,
-            subaddauthor: false,
+            subaddAuthor: false,
             editaauthor: false,
             subuploadfile: false,
             editpaper: false,
             editauthor: false,
-            editaddauthor: false,
+            editaddAuthor: false,
             edituploadfile: false,
             editposter: false,
 
@@ -748,7 +748,7 @@
                 abstract: '',
                 keywords: '',
             },
-            addauthorform: {
+            addAuthorform: {
                 firstname: '',
                 lastname: '',
                 email: '',
@@ -795,7 +795,7 @@
                     {required: true, message: 'Please input the keywords', trigger: ['blur', 'change']},
                 ],
             },
-            addauthorrules: {
+            addAuthorrules: {
                 firstname: [
                     {required: true, message: 'Please input the firstname', trigger: ['blur', 'change']},
                 ],
@@ -897,7 +897,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname
@@ -992,17 +992,17 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('submission/addauthor');?>",
+                            url: "<?php echo site_url('submission/addAuthor');?>",
                             data: {
                                 id: "<?php echo $id; ?>",
                                 firstname: "<?php echo $firstname; ?>",
                                 paper_id: app.add_paper_id,
-                                authorfirstname: app.addauthorform.firstname,
-                                authorlastname: app.addauthorform.lastname,
-                                email: app.addauthorform.email,
-                                country: app.addauthorform.country,
-                                organization: app.addauthorform.organization,
-                                corresponding: app.addauthorform.corresponding
+                                authorfirstname: app.addAuthorform.firstname,
+                                authorlastname: app.addAuthorform.lastname,
+                                email: app.addAuthorform.email,
+                                country: app.addAuthorform.country,
+                                organization: app.addAuthorform.organization,
+                                corresponding: app.addAuthorform.corresponding
                             },
                             dataType: "json",
                             success: function (data) {
@@ -1010,14 +1010,14 @@
                                     Vue.set(app, "add_paper_percentage", parseInt(data['paper_percentage']));
                                     app.subAuthor(app.add_paper_id);
                                     app.getpaper();
-                                    Vue.set(app, "subaddauthor", false);
-                                    Vue.set(app.addauthorform, "firstname", "");
-                                    Vue.set(app.addauthorform, "lastname", "");
-                                    Vue.set(app.addauthorform, "email", "");
-                                    Vue.set(app.addauthorform, "retypeemail", "");
-                                    Vue.set(app.addauthorform, "country", "");
-                                    Vue.set(app.addauthorform, "organization", "");
-                                    Vue.set(app.addauthorform, "corresponding", "NO");
+                                    Vue.set(app, "subaddAuthor", false);
+                                    Vue.set(app.addAuthorform, "firstname", "");
+                                    Vue.set(app.addAuthorform, "lastname", "");
+                                    Vue.set(app.addAuthorform, "email", "");
+                                    Vue.set(app.addAuthorform, "retypeemail", "");
+                                    Vue.set(app.addAuthorform, "country", "");
+                                    Vue.set(app.addAuthorform, "organization", "");
+                                    Vue.set(app.addAuthorform, "corresponding", "NO");
                                 }
                             }
                         });
@@ -1046,7 +1046,7 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('submission/saveeditauthor');?>",
+                            url: "<?php echo site_url('submission/saveEditAuthor');?>",
                             data: {
                                 id: "<?php echo $id; ?>",
                                 firstname: "<?php echo $firstname; ?>",
@@ -1210,31 +1210,31 @@
                     if (valid) {
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo site_url('submission/addauthor');?>",
+                            url: "<?php echo site_url('submission/addAuthor');?>",
                             data: {
                                 id: "<?php echo $id; ?>",
                                 firstname: "<?php echo $firstname; ?>",
                                 paper_id: app.edit_paper_id,
-                                authorfirstname: app.addauthorform.firstname,
-                                authorlastname: app.addauthorform.lastname,
-                                email: app.addauthorform.email,
-                                country: app.addauthorform.country,
-                                organization: app.addauthorform.organization,
-                                corresponding: app.addauthorform.corresponding
+                                authorfirstname: app.addAuthorform.firstname,
+                                authorlastname: app.addAuthorform.lastname,
+                                email: app.addAuthorform.email,
+                                country: app.addAuthorform.country,
+                                organization: app.addAuthorform.organization,
+                                corresponding: app.addAuthorform.corresponding
                             },
                             dataType: "json",
                             success: function (data) {
                                 if (data['status'] == true) {
                                     app.editAuthor(app.edit_paper_id);
                                     app.getpaper();
-                                    Vue.set(app, "editaddauthor", false);
-                                    Vue.set(app.addauthorform, "firstname", "");
-                                    Vue.set(app.addauthorform, "lastname", "");
-                                    Vue.set(app.addauthorform, "email", "");
-                                    Vue.set(app.addauthorform, "retypeemail", "");
-                                    Vue.set(app.addauthorform, "country", "");
-                                    Vue.set(app.addauthorform, "organization", "");
-                                    Vue.set(app.addauthorform, "corresponding", "NO");
+                                    Vue.set(app, "editaddAuthor", false);
+                                    Vue.set(app.addAuthorform, "firstname", "");
+                                    Vue.set(app.addAuthorform, "lastname", "");
+                                    Vue.set(app.addAuthorform, "email", "");
+                                    Vue.set(app.addAuthorform, "retypeemail", "");
+                                    Vue.set(app.addAuthorform, "country", "");
+                                    Vue.set(app.addAuthorform, "organization", "");
+                                    Vue.set(app.addAuthorform, "corresponding", "NO");
                                     Vue.set(app, "edit_paper_percentage", parseInt(data['paper_percentage']));
                                 }
                             }
@@ -1306,7 +1306,7 @@
             posterPaper() {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('submission/posterpaper');?>",
+                    url: "<?php echo site_url('submission/posterPaper');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",

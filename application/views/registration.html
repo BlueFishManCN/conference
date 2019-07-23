@@ -113,7 +113,7 @@
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                         <button :disabled.sync="attendeeDue" isabled
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"
-                                @click="addattendee=true">
+                                @click="addAttendee=true">
                             New Registration
                         </button>
                     </div>
@@ -240,9 +240,9 @@
             </footer>
         </div>
     </div>
-    <!-- addattendee -->
-    <el-dialog title="Add participant" :visible.sync="addattendee" width="50%">
-        <el-table ref="multipleTable" :data="addattendeeindex" tooltip-effect="dark" style="width: 100%"
+    <!-- addAttendee -->
+    <el-dialog title="Add participant" :visible.sync="addAttendee" width="50%">
+        <el-table ref="multipleTable" :data="addAttendeeindex" tooltip-effect="dark" style="width: 100%"
                   @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -260,7 +260,7 @@
     </el-dialog>
     <!-- uploadfile -->
     <el-dialog title="Upload transfer voucher" :visible.sync="uploadfile" width="50%">
-        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('registration/uploadfile');?>"
+        <el-upload class="upload-demo" ref="upload" action="<?php echo site_url('registration/uploadFile');?>"
                    :data="uploaddata" :on-success="handleSuccess" :on-error="handleError" :on-exceed="handleExceed"
                    list-type="picture" :auto-upload="false" :limit="1">
             <el-button slot="trigger" size="small" type="primary">Select file</el-button>
@@ -311,7 +311,7 @@
             ],
 
             attendeeDue: false,
-            addattendee: false,
+            addAttendee: false,
             uploadfile: false,
             uploaddata: {
                 id: "<?php echo $id; ?>",
@@ -320,7 +320,7 @@
             },
             attendeeindex: [],
 
-            addattendeeindex: [],
+            addAttendeeindex: [],
             multipleSelection: [],
         },
 
@@ -343,7 +343,7 @@
                 success: function (data) {
                     if (data['status'] == true) {
                         Vue.set(app, "attendeeindex", data['index']);
-                        Vue.set(app, "addattendeeindex", data['addIndex']);
+                        Vue.set(app, "addAttendeeindex", data['addIndex']);
                     }
                 }
             });
@@ -353,7 +353,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname
@@ -382,7 +382,7 @@
                     success: function (data) {
                         if (data['status'] == true) {
                             Vue.set(app, "attendeeindex", data['index']);
-                            Vue.set(app, "addattendeeindex", data['addIndex']);
+                            Vue.set(app, "addAttendeeindex", data['addIndex']);
                         }
                     }
                 });
@@ -396,7 +396,7 @@
                 } else {
                     app.$refs.multipleTable.clearSelection();
                 }
-                Vue.set(app, 'addattendee', false);
+                Vue.set(app, 'addAttendee', false);
             },
 
             handleSelectionChange(val) {
@@ -411,7 +411,7 @@
                 if (authorid.length != 0) {
                     $.ajax({
                         type: "POST",
-                        url: "<?php echo site_url('registration/addattendee');?>",
+                        url: "<?php echo site_url('registration/addAttendee');?>",
                         data: {
                             id: "<?php echo $id; ?>",
                             firstname: "<?php echo $firstname; ?>",
@@ -421,14 +421,14 @@
                         success: function (data) {
                             if (data['status'] == true) {
                                 alert("Add participants successfully!");
-                                Vue.set(app, 'addattendee', false);
+                                Vue.set(app, 'addAttendee', false);
                                 app.getattendee();
                             }
                         }
                     });
                 } else {
                     alert("Add none!");
-                    Vue.set(app, 'addattendee', false);
+                    Vue.set(app, 'addAttendee', false);
                     app.getattendee();
                 }
             },
@@ -436,7 +436,7 @@
             deleteAttendee(id) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('registration/deleteattendee');?>",
+                    url: "<?php echo site_url('registration/deleteAttendee');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",

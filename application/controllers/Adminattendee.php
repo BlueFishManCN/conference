@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class Adminattendee
+ */
 class Adminattendee extends CI_Controller
 {
+    /**
+     * Adminattendee constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -16,6 +22,9 @@ class Adminattendee extends CI_Controller
         $this->load->helper('url_helper');
     }
 
+    /**
+     *
+     */
     public function index()
     {
         if (!$this->session->has_userdata('id')) {
@@ -31,7 +40,7 @@ class Adminattendee extends CI_Controller
             redirect('/expertpaper/index');
             return;
         } elseif ($this->session->userdata('id') == 2) {
-            $this->load->view('adminattendee.html', $data);
+            $this->load->view('adminAttendee.html', $data);
             return;
         } else {
             redirect('/home/index');

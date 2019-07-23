@@ -93,7 +93,7 @@
                             Paper
                         </a>
                         <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
-                           href="<?php echo site_url('adminattendee/index');?>">
+                           href="<?php echo site_url('adminAttendee/index');?>">
                             Participants
                         </a>
                         <!-- Right aligned menu below button -->
@@ -342,7 +342,7 @@
             signOut(formName) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('sign/signout');?>",
+                    url: "<?php echo site_url('sign/signOut');?>",
                     data: {
                         id: app.id,
                         firstname: app.firstname
@@ -416,7 +416,7 @@
             search(val) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('adminpaper/searchpaper');?>",
+                    url: "<?php echo site_url('adminpaper/searchPaper');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
