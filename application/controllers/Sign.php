@@ -74,7 +74,7 @@ class Sign extends CI_Controller
         $postdata = $this->input->post();
 
         $id = rand(1, 9999999);
-        while (!empty($this->User->getUserById($id))) {
+        while (!empty($this->User->getUserByID($id))) {
             $id = rand(1, 9999999);
         }
 
@@ -229,7 +229,7 @@ class Sign extends CI_Controller
             return;
         }
 
-        $this->User->resetPassword($email, $password_hash);
+        $this->User->resetPasswordByEmail($email, $password_hash);
 
         $this->email->from('jerrychangcn@163.com', 'GEG2018');
         $this->email->to($email);

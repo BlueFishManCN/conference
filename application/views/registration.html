@@ -343,7 +343,7 @@
                 success: function (data) {
                     if (data['status'] == true) {
                         Vue.set(app, "attendeeindex", data['index']);
-                        Vue.set(app, "addattendeeindex", data['addindex']);
+                        Vue.set(app, "addattendeeindex", data['addIndex']);
                     }
                 }
             });
@@ -382,7 +382,7 @@
                     success: function (data) {
                         if (data['status'] == true) {
                             Vue.set(app, "attendeeindex", data['index']);
-                            Vue.set(app, "addattendeeindex", data['addindex']);
+                            Vue.set(app, "addattendeeindex", data['addIndex']);
                         }
                     }
                 });

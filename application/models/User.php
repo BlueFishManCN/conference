@@ -39,7 +39,7 @@ class User extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getUserById($id)
+    public function getUserByID($id)
     {
         $this->db->select('*');
         $this->db->from('user');
@@ -69,7 +69,7 @@ class User extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getEmailById($id)
+    public function getEmailByID($id)
     {
         $this->db->select('email');
         $this->db->from('user');
@@ -84,7 +84,7 @@ class User extends CI_Model
      * @param $email
      * @param $password_hash
      */
-    public function resetPassword($email, $password_hash)
+    public function resetPasswordByEmail($email, $password_hash)
     {
         $data = array(
             'password_hash' => $password_hash,

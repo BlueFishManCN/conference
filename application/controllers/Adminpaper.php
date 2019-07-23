@@ -51,8 +51,8 @@ class Adminpaper extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $data['total'] = $this->Paper->adminindextotal();
-            $data['index'] = $this->Paper->adminindex($currentPage);
+            $data['total'] = $this->Paper->adminIndexTotal();
+            $data['index'] = $this->Paper->adminIndex($currentPage);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -73,15 +73,15 @@ class Adminpaper extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $data['total'] = $this->Paper->adminsearchtotal($status, $select, $keywords);
-            $data['index'] = $this->Paper->adminsearch($currentPage, $status, $select, $keywords);
+            $data['total'] = $this->Paper->adminSearchTotal($status, $select, $keywords);
+            $data['index'] = $this->Paper->adminSearch($currentPage, $status, $select, $keywords);
             $data['status'] = true;
             echo json_encode($data);
             return;
         }
     }
 
-    public function expertsearchpaper()
+    public function expertSearchpaper()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -95,8 +95,8 @@ class Adminpaper extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $data['total'] = $this->Paper->expertsearchtotal($status, $select, $keywords);
-            $data['index'] = $this->Paper->expertsearch($currentPage, $status, $select, $keywords);
+            $data['total'] = $this->Paper->expertSearchTotal($status, $select, $keywords);
+            $data['index'] = $this->Paper->expertSearch($currentPage, $status, $select, $keywords);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -155,7 +155,7 @@ class Adminpaper extends CI_Controller
         if ($user_id == $s_id && $firstname == $s_firstname) {
             $this->Paper->accept($paper_id, $is_accept);
 
-            $emails = $this->Author->getAuthorByPaperid($paper_id);
+            $emails = $this->Author->getAuthorByPaperID($paper_id);
             foreach ($emails as $item) {
                 $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($item->email);
@@ -177,7 +177,7 @@ class Adminpaper extends CI_Controller
         }
     }
 
-    public function expertaccept()
+    public function expertAccept()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -189,7 +189,7 @@ class Adminpaper extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $this->Paper->expertaccept($paper_id, $reviewers_comments);
+            $this->Paper->expertAccept($paper_id, $reviewers_comments);
 
             $data['status'] = true;
             echo json_encode($data);

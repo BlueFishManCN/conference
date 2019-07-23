@@ -36,7 +36,7 @@ class Registration extends CI_Controller
             redirect('/adminpaper/index');
             return;
         } else {
-            if ($this->Paper->checkaccept($data['id'])) {
+            if ($this->Paper->checkAccept($data['id'])) {
                 $this->load->view('registration.html', $data);
                 return;
             } else {
@@ -59,7 +59,7 @@ class Registration extends CI_Controller
         if ($user_id == $s_id && $firstname == $s_firstname) {
 
             foreach ($author_id as $item) {
-                $author = $this->Author->getAuthorById($item)[0];
+                $author = $this->Author->getAuthorByID($item)[0];
                 $this->Attendee->insert($user_id, $author->paper_id, $author->id, $author->firstname, $author->lastname, $author->email, $author->country, $author->organization);
             }
 
@@ -81,7 +81,7 @@ class Registration extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $this->Attendee->removeattendee($attendee_id);
+            $this->Attendee->removeAttendee($attendee_id);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -127,7 +127,7 @@ class Registration extends CI_Controller
             $this->Attendee->accept($attendee_id, $is_accept);
 
             if ($is_accept == 'Yes') {
-                $email = $this->Attendee->getEmailById($attendee_id);
+                $email = $this->Attendee->getEmailByID($attendee_id);
                 $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($email);
                 $this->email->subject('GEG2018: Registration message');
@@ -168,11 +168,11 @@ class Registration extends CI_Controller
                     ->set_status_header(400)
                     ->set_output($this->upload->display_errors('', ''));
             } else {
-                if (empty($this->Attendee->getFileById($attendee_id))) {
-                    $sum = $this->Attendee->getPercentageByid($attendee_id);
-                    $this->Attendee->addPercentageByid($attendee_id, $sum + 50);
+                if (empty($this->Attendee->getFileByID($attendee_id))) {
+                    $sum = $this->Attendee->getPercentageByID($attendee_id);
+                    $this->Attendee->addPercentageByID($attendee_id, $sum + 50);
                 }
-                $percentage = $this->Attendee->getPercentageByid($attendee_id);
+                $percentage = $this->Attendee->getPercentageByID($attendee_id);
                 $filename = $this->upload->data()['file_name'];
                 $this->Attendee->upload($attendee_id, $filename);
                 $this->output
@@ -193,7 +193,7 @@ class Registration extends CI_Controller
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
             $data['index'] = $this->Attendee->index($user_id);
-            $data['addindex'] = $this->Paper->addindex($user_id);
+            $data['addIndex'] = $this->Paper->addIndex($user_id);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -211,8 +211,8 @@ class Registration extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $data['total'] = $this->Attendee->adminindextotal();
-            $data['index'] = $this->Attendee->adminindex($currentPage);
+            $data['total'] = $this->Attendee->adminIndexTotal();
+            $data['index'] = $this->Attendee->adminIndex($currentPage);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -233,8 +233,8 @@ class Registration extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $data['total'] = $this->Attendee->adminsearchtotal($status, $keywords);
-            $data['index'] = $this->Attendee->adminsearch($currentPage, $status, $keywords);
+            $data['total'] = $this->Attendee->adminSearchTotal($status, $keywords);
+            $data['index'] = $this->Attendee->adminSearch($currentPage, $status, $keywords);
             $data['status'] = true;
             echo json_encode($data);
             return;

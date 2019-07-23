@@ -40,7 +40,7 @@ class Attendee extends CI_Model
     /**
      * @param $attendee_id
      */
-    public function removeattendee($attendee_id)
+    public function removeAttendee($attendee_id)
     {
         $data = array(
             'is_delete' => 1,
@@ -118,7 +118,7 @@ class Attendee extends CI_Model
     /**
      * @return mixed
      */
-    public function adminindextotal()
+    public function adminIndexTotal()
     {
         $this->db->select('*');
         $this->db->from('attendee');
@@ -130,7 +130,7 @@ class Attendee extends CI_Model
      * @param $currentPage
      * @return mixed
      */
-    public function adminindex($currentPage)
+    public function adminIndex($currentPage)
     {
         $this->db->select('*');
         $this->db->from('attendee');
@@ -147,7 +147,7 @@ class Attendee extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function adminsearchtotal($status, $keywords)
+    public function adminSearchTotal($status, $keywords)
     {
         $this->db->select('*');
         $this->db->from('attendee');
@@ -176,7 +176,7 @@ class Attendee extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function adminsearch($currentPage, $status, $keywords)
+    public function adminSearch($currentPage, $status, $keywords)
     {
         $this->db->select('*');
         $this->db->from('attendee');
@@ -210,7 +210,7 @@ class Attendee extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getFileById($id)
+    public function getFileByID($id)
     {
         $this->db->select('file');
         $this->db->from('attendee');
@@ -225,7 +225,7 @@ class Attendee extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getEmailById($id)
+    public function getEmailByID($id)
     {
         $this->db->select('email');
         $this->db->from('attendee');
@@ -240,7 +240,7 @@ class Attendee extends CI_Model
      * @param $id
      * @return int
      */
-    public function getPercentageByid($id)
+    public function getPercentageByID($id)
     {
         $this->db->select('percentage');
         $this->db->from('attendee');
@@ -255,7 +255,7 @@ class Attendee extends CI_Model
      * @param $paper_id
      * @param $sum
      */
-    public function addPercentageByid($paper_id, $sum)
+    public function addPercentageByID($paper_id, $sum)
     {
         $data = array(
             'percentage' => $sum,

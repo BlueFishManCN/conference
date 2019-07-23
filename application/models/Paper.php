@@ -41,7 +41,7 @@ class Paper extends CI_Model
     /**
      * @return mixed
      */
-    public function adminindextotal()
+    public function adminIndexTotal()
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -54,7 +54,7 @@ class Paper extends CI_Model
      * @param $currentPage
      * @return mixed
      */
-    public function adminindex($currentPage)
+    public function adminIndex($currentPage)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -82,7 +82,7 @@ class Paper extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function adminsearchtotal($status, $select, $keywords)
+    public function adminSearchTotal($status, $select, $keywords)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -111,7 +111,7 @@ class Paper extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function adminsearch($currentPage, $status, $select, $keywords)
+    public function adminSearch($currentPage, $status, $select, $keywords)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -153,7 +153,7 @@ class Paper extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function expertsearchtotal($status, $select, $keywords)
+    public function expertSearchTotal($status, $select, $keywords)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -182,7 +182,7 @@ class Paper extends CI_Model
      * @param $keywords
      * @return mixed
      */
-    public function expertsearch($currentPage, $status, $select, $keywords)
+    public function expertSearch($currentPage, $status, $select, $keywords)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -222,7 +222,7 @@ class Paper extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getPaperById($id)
+    public function getPaperByID($id)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -237,7 +237,7 @@ class Paper extends CI_Model
      * @param $id
      * @return int
      */
-    public function getPercentageByid($id)
+    public function getPercentageByID($id)
     {
         $this->db->select('percentage');
         $this->db->from('paper');
@@ -252,7 +252,7 @@ class Paper extends CI_Model
      * @param $paper_id
      * @param $sum
      */
-    public function addPercentageByid($paper_id, $sum)
+    public function addPercentageByID($paper_id, $sum)
     {
         $data = array(
             'percentage' => $sum,
@@ -266,7 +266,7 @@ class Paper extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getFileByid($id)
+    public function getFileByID($id)
     {
         $this->db->select('file');
         $this->db->from('paper');
@@ -281,7 +281,7 @@ class Paper extends CI_Model
      * @param $user_id
      * @return bool
      */
-    public function checkaccept($user_id)
+    public function checkAccept($user_id)
     {
         $this->db->select('*');
         $this->db->from('paper');
@@ -371,7 +371,7 @@ class Paper extends CI_Model
      * @param $paper_id
      * @param $reviewers_comments
      */
-    public function expertaccept($paper_id, $reviewers_comments)
+    public function expertAccept($paper_id, $reviewers_comments)
     {
         $data = array(
             'reviewers_comments' => $reviewers_comments,
@@ -385,7 +385,7 @@ class Paper extends CI_Model
      * @param $user_id
      * @return mixed
      */
-    public function addindex($user_id)
+    public function addIndex($user_id)
     {
         $this->db->select('id');
         $this->db->from('paper');

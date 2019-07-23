@@ -1081,7 +1081,7 @@
             subDeleteAuthor(id) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('submission/deleteauthor');?>",
+                    url: "<?php echo site_url('submission/deleteAuthor');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",
@@ -1249,7 +1249,7 @@
             editDeleteAuthor(id) {
                 $.ajax({
                     type: "POST",
-                    url: "<?php echo site_url('submission/deleteauthor');?>",
+                    url: "<?php echo site_url('submission/deleteAuthor');?>",
                     data: {
                         id: "<?php echo $id; ?>",
                         firstname: "<?php echo $firstname; ?>",

@@ -31,7 +31,7 @@ class Author extends CI_Model
      * @param $id
      * @return mixed
      */
-    public function getAuthorById($id)
+    public function getAuthorByID($id)
     {
         $this->db->select('*');
         $this->db->from('author');
@@ -46,7 +46,7 @@ class Author extends CI_Model
      * @param $paper_id
      * @return mixed
      */
-    public function getAuthorByPaperid($paper_id)
+    public function getAuthorByPaperID($paper_id)
     {
         $this->db->select('*');
         $this->db->from('author');
@@ -91,7 +91,7 @@ class Author extends CI_Model
      * @param $organization
      * @param $corresponding
      */
-    public function updateauthor($id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding)
+    public function updateAuthor($id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding)
     {
         $data = array(
             'firstname' => $authorfirstname,
@@ -109,7 +109,7 @@ class Author extends CI_Model
     /**
      * @param $author_id
      */
-    public function deleteauthor($author_id)
+    public function deleteAuthor($author_id)
     {
         $data = array(
             'is_delete' => 1,

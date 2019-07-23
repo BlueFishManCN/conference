@@ -70,7 +70,7 @@ class Submission extends CI_Controller
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
             $data['index'] = $this->Author->index($paper_id);
-            $data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
+            $data['paper_percentage'] = $this->Paper->getPercentageByID($paper_id);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -81,7 +81,7 @@ class Submission extends CI_Controller
     {
         $postdata = $this->input->post();
         $id = rand(1, 9999999);
-        while (!empty($this->Paper->getPaperById($id))) {
+        while (!empty($this->Paper->getPaperByID($id))) {
             $id = rand(1, 9999999);
         }
         $user_id = $postdata['id'];
@@ -134,7 +134,7 @@ class Submission extends CI_Controller
         $postdata = $this->input->post();
 
         $id = rand(1, 9999999);
-        while (!empty($this->Author->getAuthorById($id))) {
+        while (!empty($this->Author->getAuthorByID($id))) {
             $id = rand(1, 9999999);
         }
 
@@ -153,12 +153,12 @@ class Submission extends CI_Controller
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
             if (empty($this->Author->index($paper_id))) {
-                $sum = $this->Paper->getPercentageByid($paper_id);
-                $this->Paper->addPercentageByid($paper_id, $sum + 30);
+                $sum = $this->Paper->getPercentageByID($paper_id);
+                $this->Paper->addPercentageByID($paper_id, $sum + 30);
             }
             $this->Author->insert($id, $paper_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
 
-            $data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
+            $data['paper_percentage'] = $this->Paper->getPercentageByID($paper_id);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -183,7 +183,7 @@ class Submission extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $this->Author->updateauthor($author_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
+            $this->Author->updateAuthor($author_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding);
 
             $data['status'] = true;
             echo json_encode($data);
@@ -191,7 +191,7 @@ class Submission extends CI_Controller
         }
     }
 
-    public function deleteauthor()
+    public function deleteAuthor()
     {
         $postdata = $this->input->post();
         $user_id = $postdata['id'];
@@ -203,12 +203,12 @@ class Submission extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $this->Author->deleteauthor($author_id);
+            $this->Author->deleteAuthor($author_id);
             if (empty($this->Author->index($paper_id))) {
-                $sum = $this->Paper->getPercentageByid($paper_id);
-                $this->Paper->addPercentageByid($paper_id, $sum - 30);
+                $sum = $this->Paper->getPercentageByID($paper_id);
+                $this->Paper->addPercentageByID($paper_id, $sum - 30);
             }
-            $data['paper_percentage'] = $this->Paper->getPercentageByid($paper_id);
+            $data['paper_percentage'] = $this->Paper->getPercentageByID($paper_id);
             $data['status'] = true;
             echo json_encode($data);
             return;
@@ -226,14 +226,14 @@ class Submission extends CI_Controller
         $s_firstname = $this->session->userdata('firstname');
 
         if ($user_id == $s_id && $firstname == $s_firstname) {
-            $email = $this->User->getEmailById($user_id);
+            $email = $this->User->getEmailByID($user_id);
             $this->email->from('jerrychangcn@163.com', 'GEG2018');
             $this->email->to($email);
             $this->email->subject('GEG2018: Submission message');
             $this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your abstract submission is successful!</p><p>Please submit your full paper at your earliest convenience.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
             $this->email->send();
 
-            $emails = $this->Author->getAuthorByPaperid($paper_id);
+            $emails = $this->Author->getAuthorByPaperID($paper_id);
             foreach ($emails as $item) {
                 $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($item->email);
@@ -275,24 +275,24 @@ class Submission extends CI_Controller
                     ->set_status_header(400)
                     ->set_output($this->upload->display_errors('', ''));
             } else {
-                if (empty($this->Paper->getFileById($paper_id))) {
-                    $sum = $this->Paper->getPercentageByid($paper_id);
-                    $this->Paper->addPercentageByid($paper_id, $sum + 40);
+                if (empty($this->Paper->getFileByID($paper_id))) {
+                    $sum = $this->Paper->getPercentageByID($paper_id);
+                    $this->Paper->addPercentageByID($paper_id, $sum + 40);
                 }
-                $paper_percentage = $this->Paper->getPercentageByid($paper_id);
+                $paper_percentage = $this->Paper->getPercentageByID($paper_id);
                 $data = array('upload_data' => $this->upload->data());
                 $this->Paper->upload($paper_id, $data['upload_data']['file_name']);
                 $this->output
                     ->set_output(json_encode(array('status' => false, 'paper_percentage' => $paper_percentage)));
 
-                $email = $this->User->getEmailById($user_id);
+                $email = $this->User->getEmailByID($user_id);
                 $this->email->from('jerrychangcn@163.com', 'GEG2018');
                 $this->email->to($email);
                 $this->email->subject('GEG2018: Submission message');
                 $this->email->message('<h3>Dear ' . $firstname . '</h3><p>Your paper submission is successful!</p><p>You will be informed soon whether the paper is accepted or not.</p><p>Thank you for your cooperation!</p><h3>Sincerely,<br/>2018 GEG Conference Organizing Committee </h3>');
                 $this->email->send();
 
-                $emails = $this->Author->getAuthorByPaperid($paper_id);
+                $emails = $this->Author->getAuthorByPaperID($paper_id);
                 foreach ($emails as $item) {
                     $this->email->from('jerrychangcn@163.com', 'GEG2018');
                     $this->email->to($item->email);
