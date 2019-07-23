@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class Author
+ */
 class Author extends CI_Model
 {
     public function __construct()
@@ -9,6 +12,10 @@ class Author extends CI_Model
         $this->load->database();
     }
 
+    /**
+     * @param $paper_id
+     * @return mixed
+     */
     public function index($paper_id)
     {
         $this->db->select('*');
@@ -20,6 +27,10 @@ class Author extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getAuthorById($id)
     {
         $this->db->select('*');
@@ -31,6 +42,10 @@ class Author extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $paper_id
+     * @return mixed
+     */
     public function getAuthorByPaperid($paper_id)
     {
         $this->db->select('*');
@@ -42,6 +57,16 @@ class Author extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $id
+     * @param $paper_id
+     * @param $authorfirstname
+     * @param $authorlastname
+     * @param $email
+     * @param $country
+     * @param $organization
+     * @param $corresponding
+     */
     public function insert($id, $paper_id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding)
     {
         $data = array(
@@ -57,6 +82,15 @@ class Author extends CI_Model
         $this->db->insert("author", $data);
     }
 
+    /**
+     * @param $id
+     * @param $authorfirstname
+     * @param $authorlastname
+     * @param $email
+     * @param $country
+     * @param $organization
+     * @param $corresponding
+     */
     public function updateauthor($id, $authorfirstname, $authorlastname, $email, $country, $organization, $corresponding)
     {
         $data = array(
@@ -72,6 +106,9 @@ class Author extends CI_Model
         $this->db->update('author', $data);
     }
 
+    /**
+     * @param $author_id
+     */
     public function deleteauthor($author_id)
     {
         $data = array(

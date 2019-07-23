@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class Attendee
+ */
 class Attendee extends CI_Model
 {
     public function __construct()
@@ -9,6 +12,16 @@ class Attendee extends CI_Model
         $this->load->database();
     }
 
+    /**
+     * @param $user_id
+     * @param $paper_id
+     * @param $author_id
+     * @param $firstname
+     * @param $lastname
+     * @param $email
+     * @param $country
+     * @param $organization
+     */
     public function insert($user_id, $paper_id, $author_id, $firstname, $lastname, $email, $country, $organization)
     {
         $data = array(
@@ -24,6 +37,9 @@ class Attendee extends CI_Model
         $this->db->insert("attendee", $data);
     }
 
+    /**
+     * @param $attendee_id
+     */
     public function removeattendee($attendee_id)
     {
         $data = array(
@@ -34,6 +50,14 @@ class Attendee extends CI_Model
         $this->db->update('attendee', $data);
     }
 
+    /**
+     * @param $attendee_id
+     * @param $attendeefirstname
+     * @param $lastname
+     * @param $email
+     * @param $country
+     * @param $organization
+     */
     public function update($attendee_id, $attendeefirstname, $lastname, $email, $country, $organization)
     {
         $data = array(
@@ -48,6 +72,10 @@ class Attendee extends CI_Model
         $this->db->update("attendee", $data);
     }
 
+    /**
+     * @param $attendee_id
+     * @param $is_accept
+     */
     public function accept($attendee_id, $is_accept)
     {
         $data = array(
@@ -58,6 +86,10 @@ class Attendee extends CI_Model
         $this->db->update('attendee', $data);
     }
 
+    /**
+     * @param $attendee_id
+     * @param $filename
+     */
     public function upload($attendee_id, $filename)
     {
         $data = array(
@@ -68,6 +100,10 @@ class Attendee extends CI_Model
         $this->db->update("attendee", $data);
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function index($user_id)
     {
         $this->db->select('*');
@@ -79,6 +115,9 @@ class Attendee extends CI_Model
         return $query;
     }
 
+    /**
+     * @return mixed
+     */
     public function adminindextotal()
     {
         $this->db->select('*');
@@ -87,6 +126,10 @@ class Attendee extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * @param $currentPage
+     * @return mixed
+     */
     public function adminindex($currentPage)
     {
         $this->db->select('*');
@@ -99,6 +142,11 @@ class Attendee extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $status
+     * @param $keywords
+     * @return mixed
+     */
     public function adminsearchtotal($status, $keywords)
     {
         $this->db->select('*');
@@ -122,6 +170,12 @@ class Attendee extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * @param $currentPage
+     * @param $status
+     * @param $keywords
+     * @return mixed
+     */
     public function adminsearch($currentPage, $status, $keywords)
     {
         $this->db->select('*');
@@ -152,6 +206,10 @@ class Attendee extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getFileById($id)
     {
         $this->db->select('file');
@@ -163,6 +221,10 @@ class Attendee extends CI_Model
         return $query[0]->file;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getEmailById($id)
     {
         $this->db->select('email');
@@ -174,6 +236,10 @@ class Attendee extends CI_Model
         return $query[0]->email;
     }
 
+    /**
+     * @param $id
+     * @return int
+     */
     public function getPercentageByid($id)
     {
         $this->db->select('percentage');
@@ -185,6 +251,10 @@ class Attendee extends CI_Model
         return (int)$query[0]->percentage;
     }
 
+    /**
+     * @param $paper_id
+     * @param $sum
+     */
     public function addPercentageByid($paper_id, $sum)
     {
         $data = array(
