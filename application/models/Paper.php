@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class Paper
+ */
 class Paper extends CI_Model
 {
     public function __construct()
@@ -9,6 +12,10 @@ class Paper extends CI_Model
         $this->load->database();
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function index($user_id)
     {
         $this->db->select('*');
@@ -31,6 +38,9 @@ class Paper extends CI_Model
         return $query;
     }
 
+    /**
+     * @return mixed
+     */
     public function adminindextotal()
     {
         $this->db->select('*');
@@ -40,6 +50,10 @@ class Paper extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * @param $currentPage
+     * @return mixed
+     */
     public function adminindex($currentPage)
     {
         $this->db->select('*');
@@ -62,6 +76,12 @@ class Paper extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $status
+     * @param $select
+     * @param $keywords
+     * @return mixed
+     */
     public function adminsearchtotal($status, $select, $keywords)
     {
         $this->db->select('*');
@@ -84,6 +104,13 @@ class Paper extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * @param $currentPage
+     * @param $status
+     * @param $select
+     * @param $keywords
+     * @return mixed
+     */
     public function adminsearch($currentPage, $status, $select, $keywords)
     {
         $this->db->select('*');
@@ -120,6 +147,12 @@ class Paper extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $status
+     * @param $select
+     * @param $keywords
+     * @return mixed
+     */
     public function expertsearchtotal($status, $select, $keywords)
     {
         $this->db->select('*');
@@ -142,6 +175,13 @@ class Paper extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * @param $currentPage
+     * @param $status
+     * @param $select
+     * @param $keywords
+     * @return mixed
+     */
     public function expertsearch($currentPage, $status, $select, $keywords)
     {
         $this->db->select('*');
@@ -178,6 +218,10 @@ class Paper extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getPaperById($id)
     {
         $this->db->select('*');
@@ -189,6 +233,10 @@ class Paper extends CI_Model
         return $query;
     }
 
+    /**
+     * @param $id
+     * @return int
+     */
     public function getPercentageByid($id)
     {
         $this->db->select('percentage');
@@ -200,6 +248,10 @@ class Paper extends CI_Model
         return (int)$query[0]->percentage;
     }
 
+    /**
+     * @param $paper_id
+     * @param $sum
+     */
     public function addPercentageByid($paper_id, $sum)
     {
         $data = array(
@@ -210,6 +262,10 @@ class Paper extends CI_Model
         $this->db->update('paper', $data);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getFileByid($id)
     {
         $this->db->select('file');
@@ -221,6 +277,10 @@ class Paper extends CI_Model
         return $query[0]->file;
     }
 
+    /**
+     * @param $user_id
+     * @return bool
+     */
     public function checkaccept($user_id)
     {
         $this->db->select('*');
@@ -238,6 +298,14 @@ class Paper extends CI_Model
         }
     }
 
+    /**
+     * @param $id
+     * @param $user_id
+     * @param $topic
+     * @param $title
+     * @param $abstract
+     * @param $keywords
+     */
     public function insert($id, $user_id, $topic, $title, $abstract, $keywords)
     {
         $data = array(
@@ -251,6 +319,10 @@ class Paper extends CI_Model
         $this->db->insert("paper", $data);
     }
 
+    /**
+     * @param $paper_id
+     * @param $file
+     */
     public function upload($paper_id, $file)
     {
         $data = array(
@@ -261,6 +333,13 @@ class Paper extends CI_Model
         $this->db->update('paper', $data);
     }
 
+    /**
+     * @param $paper_id
+     * @param $topic
+     * @param $title
+     * @param $abstract
+     * @param $keywords
+     */
     public function update($paper_id, $topic, $title, $abstract, $keywords)
     {
         $data = array(
@@ -274,6 +353,10 @@ class Paper extends CI_Model
         $this->db->update('paper', $data);
     }
 
+    /**
+     * @param $paper_id
+     * @param $is_accept
+     */
     public function accept($paper_id, $is_accept)
     {
         $data = array(
@@ -284,6 +367,10 @@ class Paper extends CI_Model
         $this->db->update('paper', $data);
     }
 
+    /**
+     * @param $paper_id
+     * @param $reviewers_comments
+     */
     public function expertaccept($paper_id, $reviewers_comments)
     {
         $data = array(
@@ -294,6 +381,10 @@ class Paper extends CI_Model
         $this->db->update('paper', $data);
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function addindex($user_id)
     {
         $this->db->select('id');
