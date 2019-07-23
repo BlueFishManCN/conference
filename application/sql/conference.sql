@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 23, 2019 at 05:12 AM
+-- Generation Time: Jul 23, 2019 at 07:13 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -33,18 +33,18 @@ CREATE TABLE `attendee` (
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '用户id',
   `paper_id` int(11) UNSIGNED NOT NULL COMMENT '论文id',
   `author_id` int(11) UNSIGNED NOT NULL COMMENT '作者id',
-  `firstname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '名',
-  `lastname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '姓',
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '邮箱',
-  `country` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '国家',
-  `organization` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '组织',
-  `file` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '注册凭证',
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名',
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '姓',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '国家',
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '组织',
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '注册凭证',
   `percentage` int(11) UNSIGNED NOT NULL DEFAULT 50 COMMENT '进度',
-  `is_accept` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '确认状态',
+  `is_accept` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '确认状态',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
   `is_delete` tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除状态'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -55,16 +55,16 @@ CREATE TABLE `attendee` (
 CREATE TABLE `author` (
   `id` int(11) UNSIGNED NOT NULL,
   `paper_id` int(11) UNSIGNED NOT NULL COMMENT '论文id',
-  `firstname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '名',
-  `lastname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '姓',
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '邮箱',
-  `country` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '国家',
-  `organization` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '单位',
-  `corresponding` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'No' COMMENT '通讯作者',
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名',
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '姓',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '国家',
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '单位',
+  `corresponding` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No' COMMENT '通讯作者',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
   `is_delete` tinyint(4) UNSIGNED DEFAULT 0 COMMENT '删除状态'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -75,17 +75,17 @@ CREATE TABLE `author` (
 CREATE TABLE `paper` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL COMMENT '作者id',
-  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'topic',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '标题',
-  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '摘要',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '关键字',
-  `file` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '论文',
+  `topic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'topic',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `abstract` varchar(511) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '摘要',
+  `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '关键字',
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '论文',
   `percentage` int(11) UNSIGNED NOT NULL DEFAULT 30 COMMENT '进度',
-  `is_accept` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '录用状态',
+  `is_accept` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '录用状态',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
   `is_delete` tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除状态'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -95,16 +95,16 @@ CREATE TABLE `paper` (
 
 CREATE TABLE `user` (
   `id` int(11) UNSIGNED NOT NULL,
-  `firstname` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '名',
-  `lastname` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '姓',
-  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '邮箱',
-  `country` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '国家',
-  `organization` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '单位',
-  `password_hash` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '密码',
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名',
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '姓',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '邮箱',
+  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '国家',
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '单位',
+  `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建状态',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新状态',
   `is_delete` tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '删除状态'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user`
