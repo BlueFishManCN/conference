@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 23, 2019 at 07:13 AM
+-- Generation Time: Jul 23, 2019 at 08:38 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -39,7 +39,7 @@ CREATE TABLE `attendee` (
   `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '国家',
   `organization` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '组织',
   `file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '注册凭证',
-  `percentage` int(11) UNSIGNED NOT NULL DEFAULT 50 COMMENT '进度',
+  `percentage` tinyint(4) UNSIGNED NOT NULL DEFAULT 50 COMMENT '进度',
   `is_accept` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '确认状态',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
@@ -80,7 +80,7 @@ CREATE TABLE `paper` (
   `abstract` varchar(511) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '摘要',
   `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '关键字',
   `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '论文',
-  `percentage` int(11) UNSIGNED NOT NULL DEFAULT 30 COMMENT '进度',
+  `percentage` tinyint(4) UNSIGNED NOT NULL DEFAULT 30 COMMENT '进度',
   `is_accept` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '录用状态',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
