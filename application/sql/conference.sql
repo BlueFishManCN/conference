@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 23, 2019 at 10:50 AM
+-- Generation Time: Jul 25, 2019 at 03:16 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -124,28 +124,28 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `country`, `organiza
 --
 ALTER TABLE `attendee`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`) USING BTREE;
+  ADD KEY `user_id` (`user_id`,`is_delete`) USING BTREE;
 
 --
 -- Indexes for table `author`
 --
 ALTER TABLE `author`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `paper_id` (`paper_id`) USING BTREE;
+  ADD KEY `paper_id` (`paper_id`,`is_delete`) USING BTREE;
 
 --
 -- Indexes for table `paper`
 --
 ALTER TABLE `paper`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`,`is_accept`) USING BTREE;
+  ADD KEY `user_id` (`user_id`,`is_accept`,`is_delete`) USING BTREE;
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`) USING BTREE;
+  ADD UNIQUE KEY `email` (`email`,`is_delete`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
