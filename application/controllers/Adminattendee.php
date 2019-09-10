@@ -15,11 +15,6 @@ class Adminattendee extends CI_Controller
 
         $this->load->model('Paper');
         $this->load->model('Author');
-        $this->load->library('session');
-        $this->load->library('upload');
-        $this->load->helper('cookie');
-        $this->load->helper('download');
-        $this->load->helper('url_helper');
     }
 
     /**
